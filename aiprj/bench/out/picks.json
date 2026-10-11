@@ -1,0 +1,36 @@
+{
+  "verdict": "앱 기본 검출기로 RT-DETR-R18vd(표준 모드, conf 0.30)를 권고한다. 396 ms에 AP50 0.662, best_F1 0.728, 소형 재현율 0.431이고 Apache-2.0 라이선스다. 타일 모드 F1@0.25에서 Ultralytics가 1위인 것은 GT 점수 컷 때문에 생긴 인공물이므로, 순위는 표준 모드 AP50 기준으로 판단해야 한다.",
+  "trust": [
+    {"metric": "표준 AP50 (상대 순위)", "verdict": "신뢰", "note": "GT를 바꿔도 순위 상관 0.99. 단 차이가 약 0.08 미만이면 동률로 본다."},
+    {"metric": "표준 best_f1 + thr", "verdict": "주의", "note": "같은 데이터로 thr를 골라 낙관적이고, GT 누락 때문에 thr가 높게 편향된다 (sweep 하한 0.25)."},
+    {"metric": "표준 F1@0.25", "verdict": "주의", "note": "DETR(0.613, best 0.725)과 RT-DETR처럼 점수 척도가 다른 모델에 불리하다."},
+    {"metric": "타일 F1@0.25", "verdict": "비추천", "note": "GT 점수 컷(0.40) 효과이며 타일 AP50과 순위 상관이 -0.03이다. GT 기준을 0.25로 바꾸면 순위가 뒤집힌다."},
+    {"metric": "타일 AP50 / best_f1", "verdict": "주의", "note": "타일 모델끼리는 비교할 수 있지만, GT를 타일 검출로 만들어 표준 모드보다 유리하다."},
+    {"metric": "precision (절대값)", "verdict": "비추천", "note": "GT가 실제의 약 27%(175/645)뿐이라 GT가 커지면 올라간다 (RT-DETR-R50: 0.566에서 0.757)."},
+    {"metric": "recall_small", "verdict": "주의", "note": "GT 53명, 32~96px만 있고 tiny(<32px)는 측정되지 않는다."},
+    {"metric": "지연시간", "verdict": "신뢰", "note": "실제 대상 CPU에서 측정했다. 다만 이미지 6장이고 무거운 모델은 1회만 측정했다."}
+  ],
+  "caveats": [
+    "사람 손으로 만든 GT가 없다. GT는 타일 검출 합의 175명이고 실제는 약 645명이라 재현율이 높은 모델이 과소평가된다.",
+    "이미지가 6장뿐이라 짝지은 부트스트랩 기준 AP50 차이의 95% CI 반폭이 약 0.08이다. 그보다 작은 차이는 순위로 해석하면 안 된다.",
+    "Ultralytics의 타일 F1 1위는 같은 계열끼리의 합의 효과가 아니다. 계열을 GT에서 빼도 변화는 0.01 이내이고, 원인은 점수 0.25~0.40 구간이 GT에 들어가지 않은 데 있다.",
+    "best_f1_thr는 하한이 0.25이고 GT 누락 때문에 실제 최적값보다 높게 잡혔을 수 있다. 앱 사진으로 육안 점검해야 한다.",
+    "타일 대비 표준의 개선폭(dAP50 +0.11~+0.42)은 GT가 타일 기반이라 과대 추정됐다.",
+    "GPL-3.0(YOLOv6/7)과 AGPL-3.0(Ultralytics) 모델은 법무 검토 전에는 기본값으로 쓰지 않는다."
+  ],
+  "picks": [
+    {"id": "best-for-app", "label": "앱 기본 추천", "model": "RT-DETR-R18vd", "mode": "standard", "why": "396 ms에 AP50 0.662, best_F1 0.728, 소형 재현율 0.431이다. 비슷한 속도의 YOLOX-m(소형 재현율 0.229)보다 군중 속 작은 사람을 더 잘 찾고 Apache-2.0이다.", "tradeoff": "conf를 0.30에서 0.40으로 올리면 F1이 0.728에서 0.560으로 떨어질 만큼 임계값에 민감하고, YOLOX-m과의 AP50 차이(+0.039)는 통계적으로 동률이다.", "conf": 0.30},
+    {"id": "accuracy", "label": "최고 정확도", "model": "RT-DETR-R50vd", "mode": "standard", "why": "AP50 0.768(1위), best_F1 0.790, 소형 재현율 0.620이다. YOLOX-x보다 AP50이 +0.068(95% CI +0.020~+0.114) 높으면서 더 빠르다(1002 ms 대 1307 ms).", "tradeoff": "1002 ms로 1초 예산의 한계라 동시 요청이 몰리면 대기가 생긴다.", "conf": 0.30},
+    {"id": "fast-accurate", "label": "200 ms 이하 최고 성능", "model": "YOLOv6-N", "mode": "standard", "why": "63 ms에 best_F1 0.708, AP50 0.599로 RT-DETR-R18과 잡음 범위 안에서 비슷하고, YOLOv6-S(210 ms)와는 동률이다.", "tradeoff": "GPL-3.0이라 법무 확인이 필요하고 소형 재현율이 0.283으로 낮다.", "conf": 0.25},
+    {"id": "balanced-license", "label": "Apache 균형형 (교체 쉬움)", "model": "YOLOX-s", "mode": "standard", "why": "149 ms에 AP50 0.556, best_F1 0.679로 현재 YOLOX-Tiny보다 AP50이 +0.197(유의) 높고, 같은 계열이라 모델 파일과 입력 크기 640만 바꾸면 된다.", "tradeoff": "소형 재현율이 0.163이라 먼 사람을 많이 놓친다.", "conf": 0.25},
+    {"id": "lightest", "label": "초경량", "model": "NanoDet-Plus-m-1.5x", "mode": "standard", "why": "48 ms에 AP50 0.536, best_F1 0.629다. 거의 같은 속도의 YOLOX-Tiny(44 ms)보다 AP50이 +0.177(유의) 높고 Apache-2.0이다.", "tradeoff": "precision이 0.697로 오검출이 상대적으로 많고, YOLOv6-N보다 AP50이 0.062 낮다.", "conf": 0.25},
+    {"id": "crowd-tiling", "label": "군중 사진 타일 모드", "model": "YOLOX-s", "mode": "tiled", "why": "1073 ms에 타일 AP50 0.892, best_F1 0.885(thr 0.40), 소형 재현율 0.918로 YOLOX-x(10862 ms)의 AP50 0.920에 근접한다.", "tradeoff": "표준 모드보다 7.2배 느리고, 이 GT가 타일 모드에 유리해 개선폭이 과대 추정됐다.", "conf": 0.40}
+  ],
+  "avoid": [
+    {"model": "YOLOX-Tiny", "reason": "현재 앱 모델이다. AP50 0.359, 소형 재현율 0.075로 같은 속도의 NanoDet-1.5x보다 AP50이 0.177 낮고, 현재 conf 0.35에서는 F1이 0.399까지 떨어진다."},
+    {"model": "YOLOv10s", "reason": "표준 AP50 0.282, 소형 재현율 0.000이다. 점수가 압축돼 있고 AGPL-3.0이다 (YOLOv10n도 AP50 0.260으로 같다)."},
+    {"model": "YOLOv8m", "reason": "AGPL-3.0이고 표준 AP50 0.518, 소형 재현율 0.135다. 타일 F1 1위는 GT 인공물이다 (YOLO11/YOLOv8 계열 전체가 같다)."},
+    {"model": "SSD-MobileNetV1", "reason": "표준 AP50 0.138로 군중 사진에 쓸 수 없는 수준이다."},
+    {"model": "YOLOX-x", "reason": "1307 ms인데 RT-DETR-R50(1002 ms)보다 AP50이 유의하게 0.068 낮다."}
+  ]
+}

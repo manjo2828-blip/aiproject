@@ -1,0 +1,314 @@
+<title>군중 검출 모델 비교</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: lab-report column. Verdict + picks first, then speed/accuracy chart, sortable table, side-by-side photo viewer, method notes. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface2:#eceff4; --ink:#12161d; --ink2:#454d5b; --ink3:#6b7482; --line:#d6dbe4; --grid:#e4e8ef;
+  --accent:#2a78d6; --s1:#2a78d6; --s2:#eb6834; --s3:#1baf7a; --gt:#7a8394; --good:#1a7f4b; --warn:#a15c00; --bad:#b3261e; --ring:#ffffff;
+  --f-body:'IBM Plex Sans KR','Noto Sans KR','Malgun Gothic',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1319; --surface:#171c24; --surface2:#1f2630; --ink:#eaedf2; --ink2:#b7bfcc; --ink3:#8d97a6; --line:#2c3441; --grid:#232a35;
+  --accent:#4a93ec; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --gt:#9aa4b5; --good:#4cc38a; --warn:#e0a040; --bad:#ff7b72; --ring:#171c24; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --surface:#171c24; --surface2:#1f2630; --ink:#eaedf2; --ink2:#b7bfcc; --ink3:#8d97a6; --line:#2c3441; --grid:#232a35;
+  --accent:#4a93ec; --s1:#3987e5; --s2:#d95926; --s3:#199e70; --gt:#9aa4b5; --good:#4cc38a; --warn:#e0a040; --bad:#ff7b72; --ring:#171c24; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.6;padding-inline:16px;padding-block:28px 64px}
+.wrap{max-width:1040px;margin-inline:auto;display:flex;flex-direction:column;gap:44px}
+h1{font-size:clamp(26px,5vw,38px);line-height:1.2;margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:20px;margin:0 0 4px;font-weight:700;text-wrap:balance}
+p{margin:0}
+.sub{color:var(--ink2);max-width:68ch}
+.meta{font-family:var(--f-mono);font-size:12px;color:var(--ink3);margin-top:10px;display:flex;flex-wrap:wrap;gap:4px 16px}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.verdict{margin-top:16px;padding:14px 16px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--accent);border-radius:6px;max-width:72ch}
+section{min-width:0}
+.sechead{display:flex;flex-wrap:wrap;align-items:end;justify-content:space-between;gap:12px;margin-bottom:14px}
+.sechead p{color:var(--ink2);font-size:14px;max-width:62ch}
+.seg{display:inline-flex;border:1px solid var(--line);border-radius:6px;overflow:hidden;background:var(--surface)}
+.seg button{font:inherit;font-size:13px;padding:6px 12px;border:0;background:transparent;color:var(--ink2);cursor:pointer}
+.seg button[aria-pressed="true"]{background:var(--accent);color:#fff}
+.seg button:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible,summary:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.ctrls{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center}
+.ctrls label{font-size:13px;color:var(--ink2);display:inline-flex;gap:6px;align-items:center}
+select{font:inherit;font-size:13px;padding:6px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);max-width:100%}
+/* picks */
+.picks{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:12px}
+.picks .pick{grid-column:span 2}.picks .pick:nth-child(n+5){grid-column:span 3}
+@media (max-width:820px){.picks .pick,.picks .pick:nth-child(n+5){grid-column:1/-1}}
+.pick{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:8px;min-width:0}
+.picks .pick.main{grid-column:1/-1;border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.pick .tag{font-size:12px;font-weight:700;color:var(--ink3)}
+.pick.main .tag{color:var(--accent)}
+.pick .name{font-family:var(--f-mono);font-size:19px;font-weight:500;overflow-wrap:anywhere}
+.chips{display:flex;flex-wrap:wrap;gap:6px}
+.chip{font-family:var(--f-mono);font-size:11.5px;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+.chip.ok{color:var(--good)} .chip.cl{color:var(--warn)}
+.pick .why{font-size:14px} .pick .trade{font-size:13px;color:var(--ink3)}
+.pick button{align-self:flex-start;margin-top:auto;font:inherit;font-size:13px;padding:5px 10px;border-radius:6px;border:1px solid var(--line);background:var(--surface2);color:var(--ink);cursor:pointer}
+.pick button:hover{border-color:var(--accent)}
+/* chart */
+.card{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:50%}
+.legend i.dm{border-radius:2px;transform:rotate(45deg) scale(.85)}
+.chartbox{position:relative}
+svg.chart{width:100%;height:auto;display:block;overflow:visible}
+svg.chart text{font-family:var(--f-mono);font-size:11px;fill:var(--ink3)}
+svg.chart text.lbl{fill:var(--ink);font-family:var(--f-body);font-size:11.5px;font-weight:500;paint-order:stroke;stroke:var(--surface);stroke-width:3px}
+svg.chart text.ax{fill:var(--ink2);font-family:var(--f-body);font-size:12px}
+svg.chart .pt{cursor:pointer}
+.tip{position:absolute;pointer-events:none;background:var(--surface);color:var(--ink);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:12.5px;box-shadow:0 4px 14px rgba(0,0,0,.18);z-index:5;min-width:170px;max-width:240px}
+.tip b{font-family:var(--f-mono);font-weight:500;font-size:13px}
+.tip div{display:flex;justify-content:space-between;gap:12px} .tip span{color:var(--ink3)}
+.note{font-size:12.5px;color:var(--ink3);margin-top:8px}
+/* table */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:780px;font-size:13.5px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--grid);white-space:nowrap;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child{text-align:left}
+th.l,td.l{text-align:left}
+th{font-size:12px;color:var(--ink3);font-weight:500;background:var(--surface2);position:sticky;top:0}
+th button{all:unset;cursor:pointer;display:inline-flex;gap:4px;align-items:center}
+th button:focus-visible{outline:2px solid var(--accent)}
+th[aria-sort="ascending"] button::after{content:"▲";font-size:9px} th[aria-sort="descending"] button::after{content:"▼";font-size:9px}
+td.m{font-family:var(--f-mono);font-size:13px}
+tr.hl td{background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+tr:last-child td{border-bottom:0}
+.dot{display:inline-block;width:9px;height:9px;border-radius:50%;margin-right:7px}
+.dot.dm{border-radius:1px;transform:rotate(45deg) scale(.9)}
+.bar{display:inline-block;height:6px;border-radius:3px;background:var(--accent);vertical-align:middle;margin-right:6px;opacity:.75}
+.lic{font-size:11.5px;padding:1px 7px;border-radius:4px;border:1px solid var(--line)} .lic.ok{color:var(--good)} .lic.cl{color:var(--warn)}
+/* viewer */
+.tabs{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:12px}
+.tabs button{font:inherit;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+.pair{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:720px){.pair{grid-template-columns:1fr}}
+.pane{min-width:0;display:flex;flex-direction:column;gap:8px}
+.pane canvas{width:100%;height:auto;display:block;border-radius:6px;background:var(--surface2)}
+.stat{font-family:var(--f-mono);font-size:12.5px;color:var(--ink2);display:flex;flex-wrap:wrap;gap:2px 14px}
+.stat b{color:var(--ink);font-weight:500}
+input[type=range]{accent-color:var(--accent);width:150px}
+/* notes */
+details{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px 14px}
+details+details{margin-top:10px}
+summary{cursor:pointer;font-weight:700}
+details ul{margin:10px 0 0;padding-left:20px;color:var(--ink2);font-size:14px;display:flex;flex-direction:column;gap:6px}
+.credits{font-size:12.5px;color:var(--ink3)} .credits a{color:var(--accent)}
+.v-n{color:var(--good)} .v-w{color:var(--warn)} .v-b{color:var(--bad)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">객체 검출 · 군중 사진 벤치마크</div>
+  <h1>군중 검출 모델 비교</h1>
+  <p class="sub">사람이 많은 사진 6장에서 유명한 객체 검출 모델 24개를 같은 CPU에서 돌려, 정확도와 속도를 나란히 비교했습니다.</p>
+  <div class="meta"><span>24개 모델</span><span>사진 6장 · 기준 박스 175명</span><span>Intel i7-1165G7 · ONNX Runtime · 4 threads</span></div>
+  <div class="verdict" id="verdict"></div>
+</header>
+
+<section id="picks-sec">
+  <div class="sechead"><div><h2>용도별 추천</h2><p>지연 시간은 이 PC에서 사진 한 장을 처리하는 평균입니다.</p></div></div>
+  <div class="picks" id="picks"></div>
+</section>
+
+<section id="chart-sec">
+  <div class="sechead">
+    <div><h2>속도와 정확도</h2><p>왼쪽 위에 가까울수록 빠르고 정확합니다. 점을 누르면 아래 비교 화면에 불러옵니다.</p></div>
+    <div class="ctrls">
+      <div class="seg" role="group" aria-label="추론 방식" id="modeSeg"><button data-v="std" aria-pressed="true">한 번에 추론</button><button data-v="til" aria-pressed="false">타일 추론</button></div>
+      <label>세로축 <select id="ymetric"><option value="ap" selected>AP50</option><option value="bf">최적 F1</option><option value="coco">공식 COCO AP</option></select></label>
+      <label><input type="checkbox" id="permOnly"> Apache·MIT만</label>
+    </div>
+  </div>
+  <div class="card">
+    <div class="legend" id="legend"></div>
+    <div class="chartbox" id="chartbox"><svg class="chart" id="chart" viewBox="0 0 760 400" role="img" aria-label="지연 시간 대비 정확도 산점도. 표와 같은 값이 아래 표에 있습니다."></svg><div class="tip" id="tip" hidden></div></div>
+    <p class="note" id="chartnote"></p>
+  </div>
+</section>
+
+<section id="table-sec">
+  <div class="sechead"><div><h2>전체 비교표</h2><p>열 제목을 누르면 정렬됩니다. 위 선택(추론 방식)을 따라갑니다.</p></div></div>
+  <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+</section>
+
+<section id="view-sec">
+  <div class="sechead">
+    <div><h2>사진에서 직접 보기</h2><p>같은 사진에 두 모델의 박스를 나란히 그립니다. 점선은 기준 박스(여러 모델이 합의한 사람)입니다.</p></div>
+  </div>
+  <div class="tabs" id="photoTabs"></div>
+  <div class="ctrls" style="margin-bottom:12px">
+    <label>왼쪽 <select id="selA"></select></label>
+    <label>오른쪽 <select id="selB"></select></label>
+    <label>신뢰도 <input type="range" id="conf" min="0.25" max="0.9" step="0.05" value="0.35"><span id="confv" style="font-family:var(--f-mono)">0.35</span></label>
+    <label><input type="checkbox" id="showGT" checked> 기준 박스</label>
+  </div>
+  <div class="pair">
+    <div class="pane"><canvas id="cA" width="1000" height="667"></canvas><div class="stat" id="stA"></div></div>
+    <div class="pane"><canvas id="cB" width="1000" height="667"></canvas><div class="stat" id="stB"></div></div>
+  </div>
+  <p class="credits" id="credit" style="margin-top:10px"></p>
+</section>
+
+<section id="notes-sec">
+  <div class="sechead"><div><h2>결과를 읽는 법</h2></div></div>
+  <details open><summary>지표별로 얼마나 믿을 수 있나</summary><ul id="trust"></ul></details>
+  <details><summary>측정 방법과 한계</summary><ul id="caveats"></ul></details>
+  <details><summary>피하는 게 좋은 모델</summary><ul id="avoid"></ul></details>
+  <details><summary>사진 출처와 라이선스</summary><ul id="credits"></ul></details>
+</section>
+</div>
+
+<script>
+var D=__DATA__, P=__PICKS__;
+var $=function(s){return document.querySelector(s)};
+var MODE='std', YM='ap', PERM=false, PHOTO=0, SORT={k:'ap',d:-1};
+var GN=['YOLOX','Ultralytics YOLOv8·11·10','그 외 (RT-DETR, DETR, YOLOv6·7, NanoDet, SSD)'];
+var byName={}; D.models.forEach(function(m){byName[m.n]=m});
+function cv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function gcol(g){return cv(['--s1','--s2','--s3'][g])}
+function fx(v,d){return v==null?'–':v.toFixed(d==null?2:d)}
+function lat(v){return v>=1000?(v/1000).toFixed(2)+' s':Math.round(v)+' ms'}
+function M(m){return m[MODE]}
+function yval(m){return YM==='coco'?m.coco/100:(YM==='ap'?M(m).ap:M(m).bf)}
+function ylab(){return YM==='coco'?'공식 COCO AP (논문·공식 수치)':(YM==='ap'?'AP50 (기준 박스 대비)':'최적 F1 (신뢰도 임계값을 맞췄을 때)')}
+function esc(s){return String(s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+
+/* header + picks */
+$('#verdict').textContent=P.verdict||'';
+function renderPicks(){
+  var h='';
+  (P.picks||[]).forEach(function(p,i){
+    var m=byName[p.model]; if(!m)return;
+    var s=p.mode==='til'||p.mode==='tiled'?m.til:m.std;
+    h+='<div class="pick'+(i===0?' main':'')+'"><div class="tag">'+esc(p.label)+'</div><div class="name">'+esc(m.n)+'</div>'+
+    '<div class="chips"><span class="chip">'+(s===m.til?'타일 추론':'한 번에 추론')+'</span><span class="chip">'+lat(s.lat)+'</span><span class="chip">F1 '+fx(s.bf)+'</span><span class="chip">신뢰도 '+fx(p.conf)+'</span><span class="chip '+(m.perm?'ok':'cl')+'">'+esc(m.lic)+'</span></div>'+
+    '<p class="why">'+esc(p.why)+'</p><p class="trade">'+esc(p.tradeoff)+'</p><button data-m="'+esc(m.n)+'" data-mode="'+(s===m.til?'til':'std')+'">사진에서 보기</button></div>';
+  });
+  $('#picks').innerHTML=h;
+  $('#picks').querySelectorAll('button').forEach(function(b){b.onclick=function(){
+    setMode(b.dataset.mode); $('#selA').value=b.dataset.m; drawView(); $('#view-sec').scrollIntoView({behavior:'smooth'});}});
+}
+
+/* chart */
+var W=760,H=400,ML=54,MR=14,MT=12,MB=46;
+function visible(){return D.models.filter(function(m){return !PERM||m.perm})}
+function pareto(ms){
+  var s=ms.slice().sort(function(a,b){return M(a).lat-M(b).lat}),best=-1,out=[];
+  s.forEach(function(m){var y=yval(m); if(y>best){out.push(m.n);best=y}}); return out}
+var pos={};
+function renderChart(){
+  var ms=visible(), svg=$('#chart'), L=ms.map(function(m){return M(m).lat});
+  var xmin=Math.pow(10,Math.floor(Math.log10(Math.min.apply(0,L)*0.8)*2)/2), xmax=Math.max.apply(0,L)*1.35;
+  var ys=ms.map(yval), ymin=Math.floor((Math.min.apply(0,ys)-0.03)*20)/20, ymax=Math.min(1,Math.ceil((Math.max.apply(0,ys)+0.02)*20)/20);
+  var lx=function(v){return ML+(Math.log10(v)-Math.log10(xmin))/(Math.log10(xmax)-Math.log10(xmin))*(W-ML-MR)};
+  var ly=function(v){return MT+(1-(v-ymin)/(ymax-ymin))*(H-MT-MB)};
+  var g='',t;
+  var ticks=[10,20,50,100,200,500,1000,2000,5000,10000].filter(function(v){return v>=xmin&&v<=xmax});
+  ticks.forEach(function(v){g+='<line x1="'+lx(v)+'" x2="'+lx(v)+'" y1="'+MT+'" y2="'+(H-MB)+'" stroke="'+cv('--grid')+'"/><text x="'+lx(v)+'" y="'+(H-MB+16)+'" text-anchor="middle">'+(v>=1000?v/1000+'s':v+'ms')+'</text>'});
+  for(t=Math.ceil(ymin*10)/10;t<=ymax+1e-9;t+=0.1){g+='<line x1="'+ML+'" x2="'+(W-MR)+'" y1="'+ly(t)+'" y2="'+ly(t)+'" stroke="'+cv('--grid')+'"/><text x="'+(ML-8)+'" y="'+(ly(t)+4)+'" text-anchor="end">'+t.toFixed(1)+'</text>'}
+  g+='<text class="ax" x="'+((ML+W-MR)/2)+'" y="'+(H-6)+'" text-anchor="middle">사진 1장 처리 시간 (로그 축, 짧을수록 좋음)</text>';
+  g+='<text class="ax" transform="translate(12 '+((MT+H-MB)/2)+') rotate(-90)" text-anchor="middle">'+ylab()+'</text>';
+  var par=pareto(ms), picked={}; (P.picks||[]).forEach(function(p){picked[p.model]=1});
+  pos={}; var pl=[];
+  ms.slice().sort(function(a,b){return yval(a)-yval(b)}).forEach(function(m){
+    var x=lx(M(m).lat),y=ly(yval(m)),c=gcol(m.g); pos[m.n]={x:x,y:y};
+    var sel=(m.n===$('#selA').value||m.n===$('#selB').value);
+    g+='<g class="pt" data-n="'+esc(m.n)+'">'+(m.perm?'<circle cx="'+x+'" cy="'+y+'" r="6.5" fill="'+c+'" stroke="'+cv('--ring')+'" stroke-width="2"/>':'<rect x="'+(x-5.5)+'" y="'+(y-5.5)+'" width="11" height="11" transform="rotate(45 '+x+' '+y+')" fill="'+c+'" stroke="'+cv('--ring')+'" stroke-width="2"/>')+
+      (sel?'<circle cx="'+x+'" cy="'+y+'" r="11" fill="none" stroke="'+cv('--ink')+'" stroke-width="1.5" stroke-dasharray="3 2"/>':'')+'</g>';
+  });
+  var tops=ms.filter(function(m){return par.indexOf(m.n)>=0||picked[m.n]});
+  tops.sort(function(a,b){return M(a).lat-M(b).lat}).forEach(function(m){
+    var p=pos[m.n],w=m.n.length*6.6+4,cands=[[9,-9,'start'],[9,15,'start'],[-9,-9,'end'],[-9,15,'end']],ok=false;
+    for(var i=0;i<cands.length&&!ok;i++){var c=cands[i],lx0=p.x+c[0]-(c[2]==='end'?w:0),ly0=p.y+c[1]-11,r={x:lx0,y:ly0,w:w,h:13};
+      if(lx0<ML-4||lx0+w>W)continue; if(pl.some(function(q){return r.x<q.x+q.w&&r.x+r.w>q.x&&r.y<q.y+q.h&&r.y+r.h>q.y}))continue;
+      pl.push(r);ok=true;g+='<text class="lbl" x="'+(p.x+c[0])+'" y="'+(p.y+c[1])+'" text-anchor="'+c[2]+'">'+esc(m.n)+'</text>'}
+  });
+  svg.innerHTML=g;
+  svg.querySelectorAll('.pt').forEach(function(el){
+    el.addEventListener('mouseenter',function(e){showTip(el.dataset.n)});el.addEventListener('mouseleave',function(){$('#tip').hidden=true});
+    el.addEventListener('click',function(){$('#selA').value=el.dataset.n;drawView();$('#view-sec').scrollIntoView({behavior:'smooth'})});
+  });
+  $('#chartnote').textContent='동그라미는 Apache·MIT 등 상업 이용이 쉬운 라이선스, 마름모는 AGPL·GPL입니다. 선이 아닌 점만 보여주며, 이름이 붙은 점은 같은 시간대에서 가장 정확한 모델이거나 추천 모델입니다.';
+}
+function showTip(n){
+  var m=byName[n],s=M(m),p=pos[n],tip=$('#tip'),box=$('#chartbox'),k=box.clientWidth/W;
+  tip.innerHTML='<b>'+esc(m.n)+'</b><div><span>지연</span>'+lat(s.lat)+'</div><div><span>최적 F1</span>'+fx(s.bf)+'</div><div><span>AP50</span>'+fx(s.ap)+'</div><div><span>공식 COCO AP</span>'+m.coco+'</div><div><span>크기</span>'+m.mb+' MB</div><div><span>라이선스</span>'+esc(m.lic)+'</div>';
+  tip.hidden=false; var tx=p.x*k+14; if(tx+tip.offsetWidth>box.clientWidth) tx=p.x*k-tip.offsetWidth-14;
+  tip.style.left=Math.max(0,tx)+'px'; tip.style.top=Math.max(0,Math.min(p.y*k-20,box.clientHeight-tip.offsetHeight))+'px';
+}
+function renderLegend(){
+  var h='';GN.forEach(function(n,i){h+='<span><i style="background:'+gcol(i)+'"></i>'+n+'</span>'});
+  h+='<span><i style="background:var(--ink3)"></i>동그라미 = Apache·MIT</span><span><i class="dm" style="background:var(--ink3)"></i>마름모 = AGPL·GPL</span>';
+  $('#legend').innerHTML=h}
+
+/* table */
+var COLS=[['n','모델',1],['g','계열',1],['lic','라이선스',1],['mb','크기 MB'],['coco','공식 COCO AP'],['lat','지연'],['bf','최적 F1'],['ap','AP50'],['rs','작은 사람 재현율'],['np','검출 수']];
+function cell(m,k){var s=M(m);switch(k){case 'n':return m.n;case 'g':return GN[m.g].split(' (')[0];case 'lic':return m.lic;case 'mb':return m.mb;case 'coco':return m.coco;case 'lat':return s.lat;case 'bf':return s.bf;case 'ap':return s.ap;case 'rs':return s.rs;case 'np':return s.np}}
+function renderTable(){
+  var th='<tr>';COLS.forEach(function(c){th+='<th class="'+(c[2]?'l':'')+'" aria-sort="'+(SORT.k===c[0]?(SORT.d<0?'descending':'ascending'):'none')+'"><button data-k="'+c[0]+'">'+c[1]+'</button></th>'});
+  $('#tbl thead').innerHTML=th+'</tr>';
+  var ms=visible().slice().sort(function(a,b){var x=cell(a,SORT.k),y=cell(b,SORT.k);return (typeof x==='string'?x.localeCompare(y):(x||0)-(y||0))*SORT.d});
+  var mx=Math.max.apply(0,ms.map(function(m){return M(m).bf})),h='';
+  ms.forEach(function(m){var s=M(m);
+    h+='<tr class="'+((m.n===$('#selA').value||m.n===$('#selB').value)?'hl':'')+'"><td><span class="dot'+(m.perm?'':' dm')+'" style="background:'+gcol(m.g)+'"></span>'+esc(m.n)+'</td><td class="l">'+esc(GN[m.g].split(' (')[0])+'</td><td class="l"><span class="lic '+(m.perm?'ok':'cl')+'">'+esc(m.lic)+'</span></td>'+
+    '<td class="m">'+m.mb+'</td><td class="m">'+m.coco+'</td><td class="m">'+lat(s.lat)+'</td><td class="m"><span class="bar" style="width:'+Math.round(s.bf/mx*48)+'px"></span>'+fx(s.bf)+'</td><td class="m">'+fx(s.ap)+'</td><td class="m">'+fx(s.rs)+'</td><td class="m">'+s.np+'</td></tr>'});
+  $('#tbl tbody').innerHTML=h;
+  $('#tbl thead').querySelectorAll('button').forEach(function(b){b.onclick=function(){var k=b.dataset.k;SORT=SORT.k===k?{k:k,d:-SORT.d}:{k:k,d:(k==='n'||k==='g'||k==='lic'||k==='lat'||k==='mb')?1:-1};renderTable()}});
+}
+
+/* viewer */
+var imgs=[];
+function iou(a,b){var x1=Math.max(a[0],b[0]),y1=Math.max(a[1],b[1]),x2=Math.min(a[2],b[2]),y2=Math.min(a[3],b[3]),i=Math.max(0,x2-x1)*Math.max(0,y2-y1);return i/((a[2]-a[0])*(a[3]-a[1])+(b[2]-b[0])*(b[3]-b[1])-i||1)}
+function match(dets,gt){var used={},tp=0;dets.slice().sort(function(a,b){return b[4]-a[4]}).forEach(function(d){var bi=-1,bv=0.5;gt.forEach(function(g,i){if(used[i])return;var v=iou(d,g);if(v>=bv){bv=v;bi=i}});if(bi>=0){used[bi]=1;tp++}});return tp}
+function drawPane(cid,sid,name,col){
+  var m=byName[name],c=$(cid),ctx=c.getContext('2d'),im=imgs[PHOTO],k=c.width/D.images[PHOTO].w,conf=+$('#conf').value;
+  ctx.drawImage(im,0,0,c.width,c.height);
+  var gt=D.images[PHOTO].gt;
+  if($('#showGT').checked){ctx.save();ctx.setLineDash([5,4]);ctx.lineWidth=1.5;ctx.strokeStyle='rgba(255,255,255,.95)';gt.forEach(function(g){ctx.strokeRect(g[0]*k,g[1]*k,(g[2]-g[0])*k,(g[3]-g[1])*k)});ctx.restore()}
+  var all=(MODE==='std'?m.ds:m.dt)[PHOTO]||[],dets=all.filter(function(d){return d[4]>=conf});
+  ctx.lineWidth=2.5;dets.forEach(function(d){ctx.strokeStyle='rgba(0,0,0,.55)';ctx.lineWidth=4.5;ctx.strokeRect(d[0]*k,d[1]*k,(d[2]-d[0])*k,(d[3]-d[1])*k);ctx.strokeStyle=col;ctx.lineWidth=2.5;ctx.strokeRect(d[0]*k,d[1]*k,(d[2]-d[0])*k,(d[3]-d[1])*k)});
+  var tp=match(dets,gt),rec=gt.length?tp/gt.length:0,pre=dets.length?tp/dets.length:0;
+  $(sid).innerHTML='<span><b>'+esc(name)+'</b></span><span>검출 <b>'+dets.length+'</b>명</span><span>기준 박스 재현율 <b>'+Math.round(rec*100)+'%</b></span><span>정밀도 <b>'+Math.round(pre*100)+'%</b></span><span>'+lat(M(m).lat)+'</span>';
+}
+function drawView(){
+  if(!imgs[PHOTO]||!imgs[PHOTO].complete)return;
+  drawPane('#cA','#stA',$('#selA').value,cv('--s1'));drawPane('#cB','#stB',$('#selB').value,cv('--s2'));
+  var s=D.images[PHOTO].src;$('#credit').innerHTML='사진: '+esc(s.title)+' · '+esc(s.author)+' · '+esc(s.license)+' · 기준 박스 '+D.images[PHOTO].gt.length+'명 (점선)';
+  renderChart();renderTable();
+}
+function setMode(v){MODE=v;$('#modeSeg').querySelectorAll('button').forEach(function(b){b.setAttribute('aria-pressed',b.dataset.v===v)});renderChart();renderTable();drawView()}
+
+/* notes */
+function ul(id,items,fn){$(id).innerHTML=(items||[]).map(fn).join('')}
+ul('#trust',P.trust,function(t){var c=t.verdict==='신뢰'?'v-n':(t.verdict==='주의'?'v-w':'v-b');return '<li><b class="'+c+'">'+esc(t.verdict)+'</b> · <b>'+esc(t.metric)+'</b> — '+esc(t.note)+'</li>'});
+ul('#caveats',P.caveats,function(t){return '<li>'+esc(t)+'</li>'});
+ul('#avoid',P.avoid,function(t){return '<li><b style="font-family:var(--f-mono);font-weight:500">'+esc(t.model)+'</b> — '+esc(t.reason)+'</li>'});
+ul('#credits',D.images,function(i){return '<li>'+esc(i.name)+': '+esc(i.src.title)+' — '+esc(i.src.author)+', '+esc(i.src.license)+' (<a href="'+esc(i.src.url)+'" target="_blank" rel="noopener">Wikimedia Commons</a>)</li>'});
+
+/* init */
+(function(){
+  var opts=D.models.slice().sort(function(a,b){return a.n.localeCompare(b.n)}).map(function(m){return '<option>'+esc(m.n)+'</option>'}).join('');
+  $('#selA').innerHTML=opts;$('#selB').innerHTML=opts;
+  var best=(P.picks&&P.picks[0]&&byName[P.picks[0].model])?P.picks[0].model:D.models[0].n;
+  $('#selA').value=best;$('#selB').value=byName['YOLOX-Tiny']?'YOLOX-Tiny':D.models[1].n;
+  $('#photoTabs').innerHTML=D.images.map(function(i,n){return '<button data-i="'+n+'" aria-pressed="'+(n===0)+'">'+esc(i.short)+'</button>'}).join('');
+  $('#photoTabs').querySelectorAll('button').forEach(function(b){b.onclick=function(){PHOTO=+b.dataset.i;$('#photoTabs').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});drawView()}});
+  D.images.forEach(function(i,n){var im=new Image();im.onload=function(){if(n===PHOTO)drawView()};im.src=i.data;imgs[n]=im});
+  $('#modeSeg').querySelectorAll('button').forEach(function(b){b.onclick=function(){setMode(b.dataset.v)}});
+  $('#ymetric').onchange=function(){YM=this.value;renderChart()};
+  $('#permOnly').onchange=function(){PERM=this.checked;renderChart();renderTable()};
+  ['#selA','#selB','#showGT'].forEach(function(s){$(s).onchange=drawView});
+  $('#conf').oninput=function(){$('#confv').textContent=(+this.value).toFixed(2);drawView()};
+  renderPicks();renderLegend();renderChart();renderTable();
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',function(){renderLegend();renderChart();drawView()});
+  new MutationObserver(function(){renderLegend();renderChart();drawView()}).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+  $('#chartbox').addEventListener('mouseleave',function(){$('#tip').hidden=true});
+})();
+</script>

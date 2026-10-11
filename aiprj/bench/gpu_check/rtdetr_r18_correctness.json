@@ -1,0 +1,18 @@
+{
+ "street": {
+  "n_all_cpu": 8,
+  "n_all_gpu": 8,
+  "person_cpu": 4,
+  "person_gpu": 4,
+  "max_abs_box_diff_px": 0.0001220703125,
+  "max_score_diff": 3.606081008911133e-06
+ },
+ "perth_mall": {
+  "n_all_cpu": 41,
+  "n_all_gpu": 41,
+  "person_cpu": 28,
+  "person_gpu": 28,
+  "max_abs_box_diff_px": 0.0003662109375,
+  "max_score_diff": 2.652406692504883e-06
+ }
+}

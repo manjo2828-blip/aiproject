@@ -1,0 +1,27 @@
+detr_r50 ok 24s
+nanodet_plus ok 1s
+nanodet_plus_15x ok 1s
+rtdetr_r18 ok 10s
+rtdetr_r50 ok 25s
+ssd_mobilenet_v1 ok 25s
+yolo11m ok 9s
+yolo11n ok 1s
+yolo11s ok 3s
+yolov10n ok 2s
+yolov10s ok 4s
+yolov6n ok 2s
+yolov6s ok 5s
+yolov7 ok 14s
+yolov7_tiny ok 2s
+yolov8m ok 10s
+yolov8n ok 2s
+yolov8s ok 4s
+yolox_l ok 19s
+yolox_m ok 9s
+yolox_nano ok 0s
+yolox_s ok 4s
+yolox_tiny ok 1s
+yolox_x ok 33s
+C:\Users\Haakim\Documents\aiprj\bench\metrics.py:148: RuntimeWarning: Mean of empty slice
+  out[k] = float(np.sum(vals)) if k.startswith("n_") else float(np.nanmean(vals))
+done

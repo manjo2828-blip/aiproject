@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>{% block title %}AI 놀이터{% endblock %} · AI Playground</title>
+  <meta name="description" content="사진 한 장, 문장 한 줄이면 AI가 놀아줘요! 이미지 분류, 객체 인식, 포즈, 얼굴, 감정 읽기 놀이터.">
+  <link rel="icon" href="/static/img/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Jua&family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/app.css">
+  {% block head %}{% endblock %}
+</head>
+{% set path = request.url.path if request is defined and request else '' %}
+{% set cur = active if active is defined and active else (path.strip('/').split('/')[0] if path.strip('/') else 'home') %}
+<body class="{% block theme %}theme-home{% endblock %}">
+  <header class="site-header">
+    <div class="header-inner">
+      <a class="logo" href="/" aria-label="AI 놀이터 홈"><span class="logo-bot">🤖</span> AI 놀이터</a>
+      <nav class="nav" aria-label="놀이기구">
+        <a href="/classify" class="nav-link{% if cur == 'classify' %} active{% endif %}">🏷️ 뭐게?</a>
+        <a href="/detect" class="nav-link{% if cur == 'detect' %} active{% endif %}">📦 찾아봐</a>
+        <a href="/pose" class="nav-link{% if cur == 'pose' %} active{% endif %}">🕺 따라해</a>
+        <a href="/face" class="nav-link{% if cur == 'face' %} active{% endif %}">👯 닮은꼴</a>
+        <a href="/emotion" class="nav-link{% if cur == 'emotion' %} active{% endif %}">💬 마음읽기</a>
+      </nav>
+      <span id="status-dot" class="status-dot" title="서버 상태 확인 중" role="img" aria-label="서버 상태"></span>
+    </div>
+  </header>
+
+  <main class="container">
+    {% block content %}{% endblock %}
+  </main>
+
+  <footer class="site-footer">
+    <p>CPU에서 열심히 돌아가는 중 🐢 · 업로드한 사진은 저장되지 않아요</p>
+  </footer>
+
+  <div id="toast-root" aria-live="polite" aria-atomic="false"></div>
+  <div id="sr-live" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
+  <script src="/static/js/common.js"></script>
+  {% block scripts %}{% endblock %}
+</body>
+</html>

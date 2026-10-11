@@ -1,0 +1,66 @@
+{% extends "base.html" %}
+{% block title %}AI 놀이터{% endblock %}
+{% block theme %}theme-home{% endblock %}
+{% block content %}
+<section class="hero">
+  <div class="hero-floaters" aria-hidden="true">
+    <span class="floater f1">🏷️</span>
+    <span class="floater f2">📦</span>
+    <span class="floater f3">🕺</span>
+    <span class="floater f4">👯</span>
+    <span class="floater f5">💬</span>
+  </div>
+  <p class="hero-kicker">AI Playground</p>
+  <h1 class="hero-title">🤖 AI 놀이터</h1>
+  <p class="hero-tagline">사진 한 장, 문장 한 줄이면 AI가 놀아줘요!</p>
+  <a class="btn btn-primary btn-lg" href="#rides">놀러 가기 👇</a>
+</section>
+
+<section id="rides" class="rides" aria-label="놀이기구 5종">
+  <h2 class="section-title">오늘의 놀이기구</h2>
+  <div class="grid ride-grid">
+    <a class="card ride ride-classify" href="/classify" data-model="classify">
+      <span class="badge" data-badge hidden></span>
+      <span class="ride-icon">🏷️</span>
+      <h3 class="ride-name">이게 뭐게?</h3>
+      <p class="ride-desc">사진 속 정체를 맞혀요</p>
+      <span class="btn btn-accent">타러 가기</span>
+    </a>
+    <a class="card ride ride-detect" href="/detect" data-model="detect">
+      <span class="badge" data-badge hidden></span>
+      <span class="ride-icon">📦</span>
+      <h3 class="ride-name">다 찾아봐!</h3>
+      <p class="ride-desc">사진 속 물건을 전부 네모로 콕콕</p>
+      <span class="btn btn-accent">타러 가기</span>
+    </a>
+    <a class="card ride ride-pose" href="/pose" data-model="pose">
+      <span class="badge" data-badge hidden></span>
+      <span class="ride-icon">🕺</span>
+      <h3 class="ride-name">포즈 따라잡기</h3>
+      <p class="ride-desc">몸 관절을 점과 선으로 쏙</p>
+      <span class="btn btn-accent">타러 가기</span>
+    </a>
+    <a class="card ride ride-face" href="/face" data-model="face">
+      <span class="badge" data-badge hidden></span>
+      <span class="ride-icon">👯</span>
+      <h3 class="ride-name">닮은꼴 판독기</h3>
+      <p class="ride-desc">두 얼굴 닮은 정도를 %로</p>
+      <span class="btn btn-accent">타러 가기</span>
+    </a>
+    <a class="card ride ride-emotion" href="/emotion" data-model="emotion">
+      <span class="badge" data-badge hidden></span>
+      <span class="ride-icon">💬</span>
+      <h3 class="ride-name">마음 읽기</h3>
+      <p class="ride-desc">문장 속 감정을 게이지로</p>
+      <span class="btn btn-accent">타러 가기</span>
+    </a>
+  </div>
+</section>
+
+<section class="quote card" aria-label="오늘의 한마디">
+  <div class="quote-head">오늘의 한마디</div>
+  <p id="quote" class="quote-text">AI가 오늘의 한마디를 고르는 중… 🎲</p>
+  <button type="button" id="quote-more" class="btn btn-sm">🎲 다른 말 듣기</button>
+</section>
+{% endblock %}
+{% block scripts %}<script src="/static/js/index.js"></script>{% endblock %}

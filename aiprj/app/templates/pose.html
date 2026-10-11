@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}포즈 따라잡기{% endblock %}
+{% block theme %}theme-pose{% endblock %}
+{% block head %}
+<style>
+  .pose-guess { font-family: 'Jua', 'Noto Sans KR', sans-serif; font-size: 1.5rem; text-align: center; }
+  .pose-count { text-align: center; font-family: 'Jua', 'Noto Sans KR', sans-serif; }
+  .pose-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+  .pose-list li { display: flex; align-items: center; gap: 10px; padding: 8px 12px; border: 3px solid var(--ink); border-radius: var(--radius); background: var(--card); flex-wrap: wrap; }
+  .pose-list .swatch { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--ink); flex: none; }
+  .pose-live { display: flex; align-items: center; gap: 8px; }
+  #live-video { width: 100%; max-width: 320px; border: 3px solid var(--ink); border-radius: var(--radius); }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container stack">
+  <h1 class="page-title">🕺 포즈 따라잡기</h1>
+  <p class="page-sub">몸의 관절을 점과 선으로 쏙 뽑아줘요. 웹캠으로 직접 포즈를 취해보는 걸 강력 추천해요! 🙌</p>
+  <section class="card stack">
+    <h2 class="card-title">1. 사진 고르기</h2>
+    <div id="picker"></div>
+    <label class="pose-live muted" id="live-wrap" hidden>
+      <input type="checkbox" id="live"> 📹 웹캠 연속 모드 (1.5초마다 다시 찍어요)
+    </label>
+    <div id="live-slot"></div>
+  </section>
+  <section class="card stack" id="result-card" hidden>
+    <h2 class="card-title">2. 포즈 결과</h2>
+    <p class="pose-count" id="count"></p>
+    <p class="pose-guess" id="guess"></p>
+    <div class="canvas-wrap"><canvas id="cv"></canvas></div>
+    <ul class="pose-list" id="people"></ul>
+    <p class="comment" id="comment"></p>
+    <p class="muted center" id="meta"></p>
+  </section>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/pose.js"></script>{% endblock %}

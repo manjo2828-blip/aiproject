@@ -1,0 +1,38 @@
+{% extends "base.html" %}
+{% block title %}이게 뭐게?{% endblock %}
+{% block theme %}theme-classify{% endblock %}
+{% block head %}
+<style>
+  .cls-feedback { display: flex; gap: 10px; justify-content: center; align-items: center; flex-wrap: wrap; }
+  .cls-top { font-family: 'Jua', 'Noto Sans KR', sans-serif; font-size: 1.4rem; text-align: center; }
+  .cls-meta { text-align: center; font-size: .85rem; }
+</style>
+{% endblock %}
+{% block content %}
+<div class="container stack">
+  <h1 class="page-title">🏷️ 이게 뭐게?</h1>
+  <p class="page-sub">사진을 올리면 AI가 정체를 맞혀볼게요. 웹캠으로 주변 물건을 찍어봐도 좋아요!</p>
+  <div class="grid-2">
+    <section class="card stack">
+      <h2 class="card-title">1. 사진 고르기</h2>
+      <div id="picker"></div>
+    </section>
+    <section class="card stack" id="result-card">
+      <h2 class="card-title">2. AI의 대답</h2>
+      <p class="muted" id="placeholder">사진을 고르면 여기에 결과가 나와요 👀</p>
+      <div id="result" hidden class="stack">
+        <div class="cls-top" id="top-label"></div>
+        <div id="bars"></div>
+        <p class="comment" id="comment"></p>
+        <div class="cls-feedback" id="feedback">
+          <span class="muted">맞혔나요?</span>
+          <button class="btn btn-sm" id="fb-yes" type="button">👍 맞아요</button>
+          <button class="btn btn-sm" id="fb-no" type="button">👎 아니에요</button>
+        </div>
+        <div class="cls-meta muted" id="meta"></div>
+      </div>
+    </section>
+  </div>
+</div>
+{% endblock %}
+{% block scripts %}<script src="/static/js/classify.js"></script>{% endblock %}

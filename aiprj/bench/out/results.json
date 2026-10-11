@@ -1,0 +1,4177 @@
+{
+ "pseudo_gt_note": "NO human GT. Person-only pseudo GT = WBF(IoU 0.55) of ensemble ['yolox_x', 'yolox_l', 'yolov8m', 'yolo11m', 'yolov7', 'rtdetr_r50'] person dets (score>=0.3), kept if supported by >=3 distinct models; ensemble members are scored leave-one-out. AP = all-point interpolation over preds with score>=0.25; pseudoAP = mean over IoU 0.5:0.05:0.95.",
+ "images": [
+  {
+   "file": "01_perth_mall.jpg",
+   "w": 1600,
+   "h": 1066,
+   "gt_boxes": [
+    [
+     917.4,
+     885.2,
+     1110.1,
+     1063.6
+    ],
+    [
+     1182.6,
+     898.7,
+     1397.4,
+     1064.2
+    ],
+    [
+     765.8,
+     889.8,
+     921.4,
+     1064.0
+    ],
+    [
+     50.4,
+     904.7,
+     290.2,
+     1064.0
+    ],
+    [
+     977.2,
+     336.8,
+     1047.9,
+     437.6
+    ],
+    [
+     598.4,
+     905.8,
+     706.5,
+     1064.5
+    ],
+    [
+     1056.0,
+     340.2,
+     1135.9,
+     436.1
+    ],
+    [
+     1368.3,
+     938.1,
+     1476.7,
+     1064.5
+    ],
+    [
+     363.3,
+     930.1,
+     489.9,
+     1063.7
+    ],
+    [
+     829.6,
+     347.4,
+     874.6,
+     442.3
+    ],
+    [
+     468.5,
+     349.5,
+     530.1,
+     446.1
+    ],
+    [
+     1317.0,
+     907.4,
+     1387.1,
+     1015.5
+    ],
+    [
+     1214.5,
+     323.7,
+     1279.0,
+     432.4
+    ],
+    [
+     213.9,
+     925.0,
+     342.6,
+     1062.0
+    ],
+    [
+     1054.6,
+     910.4,
+     1162.6,
+     1063.5
+    ],
+    [
+     454.5,
+     910.1,
+     617.8,
+     1064.1
+    ],
+    [
+     688.8,
+     907.1,
+     757.3,
+     1064.5
+    ],
+    [
+     0.2,
+     913.6,
+     51.8,
+     1062.2
+    ],
+    [
+     1139.8,
+     922.8,
+     1213.3,
+     1062.3
+    ],
+    [
+     269.3,
+     894.4,
+     359.1,
+     1062.6
+    ],
+    [
+     347.8,
+     923.7,
+     412.9,
+     1056.4
+    ],
+    [
+     743.1,
+     363.5,
+     820.7,
+     444.0
+    ]
+   ],
+   "n_gt": 22
+  },
+  {
+   "file": "02_stadium.jpg",
+   "w": 1600,
+   "h": 1063,
+   "gt_boxes": [
+    [
+     0.8,
+     754.4,
+     330.9,
+     1058.8
+    ],
+    [
+     753.1,
+     704.9,
+     1047.6,
+     1058.8
+    ],
+    [
+     1343.5,
+     424.3,
+     1599.3,
+     989.9
+    ],
+    [
+     1043.8,
+     798.0,
+     1245.0,
+     1060.4
+    ],
+    [
+     1429.3,
+     839.8,
+     1598.2,
+     1060.6
+    ],
+    [
+     315.3,
+     906.8,
+     492.4,
+     1061.3
+    ],
+    [
+     409.9,
+     717.7,
+     652.6,
+     1059.4
+    ],
+    [
+     535.8,
+     692.5,
+     772.6,
+     1049.3
+    ],
+    [
+     1097.9,
+     449.6,
+     1408.9,
+     869.1
+    ],
+    [
+     921.6,
+     520.5,
+     1137.9,
+     894.2
+    ],
+    [
+     273.4,
+     446.1,
+     567.1,
+     835.5
+    ],
+    [
+     710.9,
+     484.1,
+     911.6,
+     824.2
+    ],
+    [
+     1196.1,
+     854.5,
+     1459.0,
+     1061.0
+    ],
+    [
+     969.8,
+     743.6,
+     1089.3,
+     980.6
+    ],
+    [
+     0.3,
+     671.2,
+     101.1,
+     935.5
+    ],
+    [
+     917.6,
+     969.2,
+     1052.0,
+     1062.0
+    ],
+    [
+     82.8,
+     558.7,
+     327.1,
+     808.0
+    ],
+    [
+     1132.6,
+     721.4,
+     1268.9,
+     896.2
+    ]
+   ],
+   "n_gt": 18
+  },
+  {
+   "file": "03_helsinki_plaza.jpg",
+   "w": 1600,
+   "h": 1067,
+   "gt_boxes": [
+    [
+     1300.3,
+     642.5,
+     1539.3,
+     1062.6
+    ],
+    [
+     35.9,
+     652.6,
+     296.8,
+     880.5
+    ],
+    [
+     746.5,
+     620.2,
+     953.5,
+     1061.2
+    ],
+    [
+     1012.5,
+     606.6,
+     1280.5,
+     1062.6
+    ],
+    [
+     909.6,
+     661.2,
+     1062.9,
+     1062.6
+    ],
+    [
+     947.7,
+     346.9,
+     1020.2,
+     572.6
+    ],
+    [
+     529.9,
+     699.5,
+     864.4,
+     1062.4
+    ],
+    [
+     882.3,
+     348.1,
+     956.2,
+     574.4
+    ],
+    [
+     1004.9,
+     371.7,
+     1089.3,
+     576.6
+    ],
+    [
+     857.0,
+     211.6,
+     958.5,
+     383.2
+    ],
+    [
+     236.5,
+     670.0,
+     361.2,
+     882.5
+    ],
+    [
+     868.9,
+     150.9,
+     959.6,
+     269.5
+    ],
+    [
+     67.7,
+     671.8,
+     138.6,
+     794.0
+    ],
+    [
+     0.0,
+     651.0,
+     77.4,
+     834.2
+    ],
+    [
+     795.4,
+     326.0,
+     880.8,
+     576.8
+    ],
+    [
+     311.2,
+     691.6,
+     422.1,
+     877.4
+    ],
+    [
+     1210.9,
+     533.5,
+     1274.1,
+     649.5
+    ],
+    [
+     451.4,
+     528.1,
+     525.3,
+     641.8
+    ]
+   ],
+   "n_gt": 18
+  },
+  {
+   "file": "04_zhengzhou_station.jpg",
+   "w": 1600,
+   "h": 1067,
+   "gt_boxes": [
+    [
+     1074.0,
+     886.6,
+     1125.6,
+     1047.4
+    ],
+    [
+     1414.1,
+     896.2,
+     1509.1,
+     1065.9
+    ],
+    [
+     674.8,
+     873.3,
+     717.1,
+     994.2
+    ],
+    [
+     1318.8,
+     864.6,
+     1372.0,
+     1014.7
+    ],
+    [
+     1170.9,
+     862.5,
+     1216.2,
+     967.3
+    ],
+    [
+     0.1,
+     952.8,
+     94.4,
+     1065.6
+    ],
+    [
+     464.9,
+     879.4,
+     506.1,
+     977.8
+    ],
+    [
+     247.1,
+     881.8,
+     302.1,
+     1017.7
+    ],
+    [
+     105.3,
+     879.4,
+     149.8,
+     992.7
+    ],
+    [
+     592.7,
+     867.0,
+     634.3,
+     987.7
+    ],
+    [
+     1118.0,
+     860.3,
+     1150.2,
+     957.2
+    ],
+    [
+     182.0,
+     869.8,
+     221.2,
+     987.4
+    ],
+    [
+     359.9,
+     861.1,
+     393.2,
+     966.9
+    ],
+    [
+     566.7,
+     867.0,
+     602.1,
+     988.9
+    ],
+    [
+     1015.8,
+     857.9,
+     1045.2,
+     938.8
+    ],
+    [
+     922.0,
+     872.7,
+     947.6,
+     953.6
+    ],
+    [
+     394.1,
+     865.5,
+     422.3,
+     960.4
+    ],
+    [
+     884.1,
+     872.6,
+     911.8,
+     960.8
+    ],
+    [
+     518.1,
+     869.6,
+     545.4,
+     956.6
+    ],
+    [
+     1052.7,
+     865.6,
+     1078.8,
+     934.2
+    ],
+    [
+     540.7,
+     866.8,
+     571.1,
+     964.7
+    ],
+    [
+     1234.1,
+     855.7,
+     1262.5,
+     925.9
+    ]
+   ],
+   "n_gt": 22
+  },
+  {
+   "file": "05_night_street.jpg",
+   "w": 1600,
+   "h": 1064,
+   "gt_boxes": [
+    [
+     496.1,
+     542.9,
+     614.6,
+     946.9
+    ],
+    [
+     382.5,
+     578.8,
+     507.4,
+     894.6
+    ],
+    [
+     295.7,
+     565.0,
+     387.7,
+     803.8
+    ],
+    [
+     774.9,
+     531.1,
+     819.4,
+     740.9
+    ],
+    [
+     638.6,
+     519.7,
+     676.6,
+     614.9
+    ],
+    [
+     735.3,
+     522.6,
+     774.6,
+     607.3
+    ],
+    [
+     356.1,
+     526.6,
+     412.1,
+     661.1
+    ],
+    [
+     189.8,
+     527.2,
+     287.6,
+     689.0
+    ],
+    [
+     596.4,
+     511.7,
+     620.4,
+     592.4
+    ],
+    [
+     693.1,
+     516.9,
+     718.3,
+     594.4
+    ],
+    [
+     1117.5,
+     544.2,
+     1147.4,
+     584.3
+    ]
+   ],
+   "n_gt": 11
+  },
+  {
+   "file": "06_flushing_traffic.jpg",
+   "w": 1600,
+   "h": 1067,
+   "gt_boxes": [
+    [
+     770.2,
+     301.8,
+     969.4,
+     959.7
+    ],
+    [
+     122.6,
+     285.3,
+     282.3,
+     655.2
+    ],
+    [
+     393.5,
+     277.0,
+     629.6,
+     974.5
+    ],
+    [
+     1201.9,
+     268.2,
+     1360.1,
+     688.4
+    ],
+    [
+     1393.8,
+     450.0,
+     1511.1,
+     706.4
+    ],
+    [
+     347.9,
+     244.0,
+     466.3,
+     897.1
+    ],
+    [
+     1010.7,
+     304.4,
+     1096.4,
+     563.3
+    ],
+    [
+     931.3,
+     356.1,
+     1034.7,
+     654.8
+    ],
+    [
+     1510.2,
+     302.3,
+     1599.5,
+     714.5
+    ],
+    [
+     664.0,
+     328.4,
+     741.1,
+     538.7
+    ],
+    [
+     1086.9,
+     281.3,
+     1172.2,
+     568.2
+    ],
+    [
+     1153.7,
+     252.4,
+     1228.0,
+     560.4
+    ],
+    [
+     567.3,
+     277.1,
+     642.4,
+     514.6
+    ],
+    [
+     914.2,
+     250.2,
+     981.5,
+     415.0
+    ],
+    [
+     961.9,
+     287.9,
+     1031.2,
+     424.9
+    ],
+    [
+     734.3,
+     340.8,
+     811.3,
+     528.8
+    ]
+   ],
+   "n_gt": 16
+  }
+ ],
+ "models": [
+  {
+   "name": "DETR-R50",
+   "family": "DETR",
+   "license": "Apache-2.0",
+   "params_m": 41.0,
+   "file_mb": 166.8,
+   "coco_ap": 42.0,
+   "input": "800 short side (max 1333)",
+   "load_ms": 869.7,
+   "module": "detr_r50",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 929.5,
+    "02_stadium.jpg": 952.1,
+    "03_helsinki_plaza.jpg": 948.6,
+    "04_zhengzhou_station.jpg": 969.6,
+    "05_night_street.jpg": 976.7,
+    "06_flushing_traffic.jpg": 955.7
+   },
+   "latency_ms_mean": 955.4,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 52,
+     "precision@0.25": 0.40384615384615385,
+     "recall@0.25": 0.9545454545454546,
+     "f1@0.25": 0.5675675675675677,
+     "precision@0.5": 0.6,
+     "recall@0.5": 0.9545454545454546,
+     "f1@0.5": 0.7368421052631579,
+     "AP50": 0.8824219640009114,
+     "pseudoAP": 0.617133955265112,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 55,
+     "precision@0.25": 0.3090909090909091,
+     "recall@0.25": 0.9444444444444444,
+     "f1@0.25": 0.4657534246575342,
+     "precision@0.5": 0.4857142857142857,
+     "recall@0.5": 0.9444444444444444,
+     "f1@0.5": 0.6415094339622641,
+     "AP50": 0.863014403292181,
+     "pseudoAP": 0.5737876115653894,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 55,
+     "precision@0.25": 0.2545454545454545,
+     "recall@0.25": 0.7777777777777778,
+     "f1@0.25": 0.38356164383561636,
+     "precision@0.5": 0.37142857142857144,
+     "recall@0.5": 0.7222222222222222,
+     "f1@0.5": 0.490566037735849,
+     "AP50": 0.668968253968254,
+     "pseudoAP": 0.48740476190476195,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 43,
+     "precision@0.25": 0.46511627906976744,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.6153846153846153,
+     "precision@0.5": 0.6666666666666666,
+     "recall@0.5": 0.9090909090909091,
+     "f1@0.5": 0.7692307692307692,
+     "AP50": 0.8687565308254964,
+     "pseudoAP": 0.5373039889589488,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 46,
+     "precision@0.25": 0.21739130434782608,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.3508771929824562,
+     "precision@0.5": 0.2857142857142857,
+     "recall@0.5": 0.9090909090909091,
+     "f1@0.5": 0.43478260869565216,
+     "AP50": 0.7785018012290739,
+     "pseudoAP": 0.5979169315532952,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 31,
+     "precision@0.25": 0.4838709677419355,
+     "recall@0.25": 0.9375,
+     "f1@0.25": 0.6382978723404255,
+     "precision@0.5": 0.5769230769230769,
+     "recall@0.5": 0.9375,
+     "f1@0.5": 0.7142857142857143,
+     "AP50": 0.9019170168067228,
+     "pseudoAP": 0.6174504049871697,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 282.0,
+     "precision@0.25": 0.35564351144034106,
+     "recall@0.25": 0.9054082491582491,
+     "f1@0.25": 0.5035737194613692,
+     "precision@0.5": 0.49774114774114775,
+     "recall@0.5": 0.89614898989899,
+     "f1@0.5": 0.6312027781955678,
+     "AP50": 0.8272633283537733,
+     "pseudoAP": 0.5718329423724462,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 282,
+     "precision@0.25": 0.34397163120567376,
+     "recall@0.25": 0.9065420560747663,
+     "f1@0.25": 0.4987146529562982,
+     "precision@0.5": 0.4897959183673469,
+     "recall@0.5": 0.897196261682243,
+     "f1@0.5": 0.6336633663366337,
+     "AP50": 0.8033080611890526,
+     "pseudoAP": 0.5403713657600216,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 70,
+    "02_stadium.jpg": 58,
+    "03_helsinki_plaza.jpg": 59,
+    "04_zhengzhou_station.jpg": 95,
+    "05_night_street.jpg": 86,
+    "06_flushing_traffic.jpg": 76
+   }
+  },
+  {
+   "name": "NanoDet-Plus-m",
+   "family": "NanoDet",
+   "license": "Apache-2.0",
+   "params_m": 1.17,
+   "file_mb": 4.8,
+   "coco_ap": 30.4,
+   "input": "416x416",
+   "load_ms": 61.2,
+   "module": "nanodet_plus",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 34.1,
+    "02_stadium.jpg": 34.4,
+    "03_helsinki_plaza.jpg": 33.6,
+    "04_zhengzhou_station.jpg": 35.2,
+    "05_night_street.jpg": 36.5,
+    "06_flushing_traffic.jpg": 38.0
+   },
+   "latency_ms_mean": 35.3,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 33,
+     "precision@0.25": 0.6060606060606061,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.7272727272727273,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.8087466642560929,
+     "pseudoAP": 0.46008923547447333,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 29,
+     "precision@0.25": 0.5172413793103449,
+     "recall@0.25": 0.8333333333333334,
+     "f1@0.25": 0.6382978723404256,
+     "precision@0.5": 0.5,
+     "recall@0.5": 0.05555555555555555,
+     "f1@0.5": 0.09999999999999999,
+     "AP50": 0.5893416927899687,
+     "pseudoAP": 0.298267734819459,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 25,
+     "precision@0.25": 0.48,
+     "recall@0.25": 0.6666666666666666,
+     "f1@0.25": 0.5581395348837209,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.16666666666666666,
+     "f1@0.5": 0.2857142857142857,
+     "AP50": 0.5175574425574425,
+     "pseudoAP": 0.3296668024957498,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 30,
+     "precision@0.25": 0.5666666666666667,
+     "recall@0.25": 0.7727272727272727,
+     "f1@0.25": 0.6538461538461539,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.09090909090909091,
+     "f1@0.5": 0.16666666666666669,
+     "AP50": 0.6520143156506792,
+     "pseudoAP": 0.355392637665365,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 14,
+     "precision@0.25": 0.5714285714285714,
+     "recall@0.25": 0.7272727272727273,
+     "f1@0.25": 0.64,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.604978354978355,
+     "pseudoAP": 0.35685425685425687,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 26,
+     "precision@0.25": 0.5769230769230769,
+     "recall@0.25": 0.9375,
+     "f1@0.25": 0.7142857142857143,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4375,
+     "f1@0.5": 0.6086956521739131,
+     "AP50": 0.8870325854700855,
+     "pseudoAP": 0.5269571921134422,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 157.0,
+     "precision@0.25": 0.5530533833982109,
+     "recall@0.25": 0.8077651515151515,
+     "f1@0.25": 0.6553070004381237,
+     "precision@0.5": 0.9166666666666666,
+     "recall@0.5": 0.18571127946127944,
+     "f1@0.5": 0.2960768699899135,
+     "AP50": 0.6766118426171039,
+     "pseudoAP": 0.387871309903791,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 157,
+     "precision@0.25": 0.554140127388535,
+     "recall@0.25": 0.8130841121495327,
+     "f1@0.25": 0.6590909090909091,
+     "precision@0.5": 0.95,
+     "recall@0.5": 0.17757009345794392,
+     "f1@0.5": 0.2992125984251969,
+     "AP50": 0.6671515930546046,
+     "pseudoAP": 0.3679096512989024,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 33,
+    "02_stadium.jpg": 31,
+    "03_helsinki_plaza.jpg": 25,
+    "04_zhengzhou_station.jpg": 30,
+    "05_night_street.jpg": 29,
+    "06_flushing_traffic.jpg": 39
+   }
+  },
+  {
+   "name": "NanoDet-Plus-m-1.5x",
+   "family": "NanoDet",
+   "license": "Apache-2.0",
+   "params_m": 2.44,
+   "file_mb": 9.9,
+   "coco_ap": 34.1,
+   "input": "416x416",
+   "load_ms": 61.6,
+   "module": "nanodet_plus_15x",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 50.7,
+    "02_stadium.jpg": 48.5,
+    "03_helsinki_plaza.jpg": 48.8,
+    "04_zhengzhou_station.jpg": 46.8,
+    "05_night_street.jpg": 45.0,
+    "06_flushing_traffic.jpg": 46.8
+   },
+   "latency_ms_mean": 47.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 37,
+     "precision@0.25": 0.5405405405405406,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.6779661016949153,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.7813037450664785,
+     "pseudoAP": 0.45822500950028344,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 24,
+     "precision@0.25": 0.6666666666666666,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.761904761904762,
+     "precision@0.5": 0.8333333333333334,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4166666666666667,
+     "AP50": 0.7788257780517842,
+     "pseudoAP": 0.3818234184784753,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 27,
+     "precision@0.25": 0.5185185185185185,
+     "recall@0.25": 0.7777777777777778,
+     "f1@0.25": 0.6222222222222222,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3636363636363636,
+     "AP50": 0.6746392496392496,
+     "pseudoAP": 0.4224137899137899,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 28,
+     "precision@0.25": 0.6071428571428571,
+     "recall@0.25": 0.7727272727272727,
+     "f1@0.25": 0.68,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.7221817398287986,
+     "pseudoAP": 0.456028857623285,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 13,
+     "precision@0.25": 0.6923076923076923,
+     "recall@0.25": 0.8181818181818182,
+     "f1@0.25": 0.7500000000000001,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.6902097902097902,
+     "pseudoAP": 0.31851027760118666,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.6818181818181818,
+     "recall@0.25": 0.9375,
+     "f1@0.25": 0.7894736842105263,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.6666666666666666,
+     "AP50": 0.9148065476190477,
+     "pseudoAP": 0.5832638888888889,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 151.0,
+     "precision@0.25": 0.6178324094990763,
+     "recall@0.25": 0.8506944444444445,
+     "f1@0.25": 0.713594461672071,
+     "precision@0.5": 0.9722222222222223,
+     "recall@0.5": 0.2575757575757576,
+     "f1@0.5": 0.39500777000777004,
+     "AP50": 0.7603278084025248,
+     "pseudoAP": 0.4367108736676515,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 151,
+     "precision@0.25": 0.6026490066225165,
+     "recall@0.25": 0.8504672897196262,
+     "f1@0.25": 0.7054263565891473,
+     "precision@0.5": 0.9642857142857143,
+     "recall@0.5": 0.2523364485981308,
+     "f1@0.5": 0.39999999999999997,
+     "AP50": 0.7553774278244029,
+     "pseudoAP": 0.42449828696000613,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 39,
+    "02_stadium.jpg": 28,
+    "03_helsinki_plaza.jpg": 29,
+    "04_zhengzhou_station.jpg": 28,
+    "05_night_street.jpg": 28,
+    "06_flushing_traffic.jpg": 34
+   }
+  },
+  {
+   "name": "RT-DETR-R18vd",
+   "family": "RT-DETR",
+   "license": "Apache-2.0",
+   "params_m": 20.0,
+   "file_mb": 82.6,
+   "coco_ap": 46.5,
+   "input": "640x640",
+   "load_ms": 651.5,
+   "module": "rtdetr_r18",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 347.7,
+    "02_stadium.jpg": 350.6,
+    "03_helsinki_plaza.jpg": 401.4,
+    "04_zhengzhou_station.jpg": 444.4,
+    "05_night_street.jpg": 426.4,
+    "06_flushing_traffic.jpg": 404.6
+   },
+   "latency_ms_mean": 395.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 28,
+     "precision@0.25": 0.7142857142857143,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.8,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.8641907964158603,
+     "pseudoAP": 0.7271711136844246,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 33,
+     "precision@0.25": 0.48484848484848486,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.6274509803921569,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3888888888888889,
+     "f1@0.5": 0.56,
+     "AP50": 0.8009314637604111,
+     "pseudoAP": 0.5400254302404377,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 32,
+     "precision@0.25": 0.5,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.64,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3636363636363636,
+     "AP50": 0.7695256132756132,
+     "pseudoAP": 0.5443296055796056,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 33,
+     "precision@0.25": 0.6666666666666666,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.9749783549783549,
+     "pseudoAP": 0.770616501145913,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 27,
+     "precision@0.25": 0.37037037037037035,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.5263157894736842,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.9090909090909091,
+     "pseudoAP": 0.7056818181818181,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.7272727272727273,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8421052631578948,
+     "precision@0.5": 0.9230769230769231,
+     "recall@0.5": 0.75,
+     "f1@0.5": 0.8275862068965517,
+     "AP50": 0.9736111111111111,
+     "pseudoAP": 0.7928307109557109,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 175.0,
+     "precision@0.25": 0.5772406605739939,
+     "recall@0.25": 0.9326599326599326,
+     "f1@0.25": 0.7059786721706226,
+     "precision@0.5": 0.9871794871794872,
+     "recall@0.5": 0.438973063973064,
+     "f1@0.5": 0.5872952650234597,
+     "AP50": 0.8820547081053767,
+     "pseudoAP": 0.6801091966313183,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 175,
+     "precision@0.25": 0.5714285714285714,
+     "recall@0.25": 0.9345794392523364,
+     "f1@0.25": 0.7092198581560284,
+     "precision@0.5": 0.9782608695652174,
+     "recall@0.5": 0.4205607476635514,
+     "f1@0.5": 0.588235294117647,
+     "AP50": 0.8707699837794651,
+     "pseudoAP": 0.6579718422839942,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 41,
+    "02_stadium.jpg": 38,
+    "03_helsinki_plaza.jpg": 36,
+    "04_zhengzhou_station.jpg": 55,
+    "05_night_street.jpg": 70,
+    "06_flushing_traffic.jpg": 55
+   }
+  },
+  {
+   "name": "RT-DETR-R50vd",
+   "family": "RT-DETR",
+   "license": "Apache-2.0",
+   "params_m": 42.0,
+   "file_mb": 175.4,
+   "coco_ap": 53.1,
+   "input": "640x640",
+   "load_ms": 1135.8,
+   "module": "rtdetr_r50",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 1092.4,
+    "02_stadium.jpg": 1025.7,
+    "03_helsinki_plaza.jpg": 1015.5,
+    "04_zhengzhou_station.jpg": 969.4,
+    "05_night_street.jpg": 945.8,
+    "06_flushing_traffic.jpg": 962.2
+   },
+   "latency_ms_mean": 1001.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 27,
+     "precision@0.25": 0.8148148148148148,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8979591836734693,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.45454545454545453,
+     "f1@0.5": 0.625,
+     "AP50": 0.9869264069264069,
+     "pseudoAP": 0.8704915318599531,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 17,
+     "n_pred_persons": 33,
+     "precision@0.25": 0.5151515151515151,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.6799999999999999,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.7058823529411765,
+     "f1@0.5": 0.8275862068965517,
+     "AP50": 0.9573669467787116,
+     "pseudoAP": 0.7401824406530289,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 15,
+     "n_pred_persons": 37,
+     "precision@0.25": 0.3783783783783784,
+     "recall@0.25": 0.9333333333333333,
+     "f1@0.25": 0.5384615384615385,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4,
+     "f1@0.5": 0.5714285714285715,
+     "AP50": 0.8458333333333332,
+     "pseudoAP": 0.6897936507936506,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 19,
+     "n_pred_persons": 37,
+     "precision@0.25": 0.4864864864864865,
+     "recall@0.25": 0.9473684210526315,
+     "f1@0.25": 0.6428571428571428,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5263157894736842,
+     "f1@0.5": 0.6896551724137931,
+     "AP50": 0.9220095693779904,
+     "pseudoAP": 0.7065333927383789,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 8,
+     "n_pred_persons": 29,
+     "precision@0.25": 0.27586206896551724,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.4324324324324324,
+     "precision@0.5": 0.8,
+     "recall@0.5": 1.0,
+     "f1@0.5": 0.888888888888889,
+     "AP50": 0.9861111111111112,
+     "pseudoAP": 0.8678571428571429,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 14,
+     "n_pred_persons": 21,
+     "precision@0.25": 0.6666666666666666,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8571428571428571,
+     "f1@0.5": 0.923076923076923,
+     "AP50": 0.9747899159663865,
+     "pseudoAP": 0.8276257321110261,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 95.0,
+     "n_pred_persons": 184.0,
+     "precision@0.25": 0.5228933217438965,
+     "recall@0.25": 0.9801169590643276,
+     "f1@0.25": 0.6652850495707638,
+     "precision@0.5": 0.9666666666666667,
+     "recall@0.5": 0.6573144090171954,
+     "f1@0.5": 0.7542726271174547,
+     "AP50": 0.9455062139156567,
+     "pseudoAP": 0.7837473151688634,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 95,
+     "n_pred_persons": 184,
+     "precision@0.25": 0.5054347826086957,
+     "recall@0.25": 0.9789473684210527,
+     "f1@0.25": 0.6666666666666667,
+     "precision@0.5": 0.9666666666666667,
+     "recall@0.5": 0.6105263157894737,
+     "f1@0.5": 0.7483870967741936,
+     "AP50": 0.9250707747075483,
+     "pseudoAP": 0.752101876240424,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 37,
+    "02_stadium.jpg": 37,
+    "03_helsinki_plaza.jpg": 42,
+    "04_zhengzhou_station.jpg": 69,
+    "05_night_street.jpg": 68,
+    "06_flushing_traffic.jpg": 43
+   }
+  },
+  {
+   "name": "SSD-MobileNetV1",
+   "family": "SSD",
+   "license": "Apache-2.0",
+   "params_m": 6.8,
+   "file_mb": 29.5,
+   "coco_ap": 21.0,
+   "input": "300x300 uint8 RGB (resized inside graph)",
+   "load_ms": 23923.6,
+   "module": "ssd_mobilenet_v1",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 41.0,
+    "02_stadium.jpg": 45.5,
+    "03_helsinki_plaza.jpg": 46.3,
+    "04_zhengzhou_station.jpg": 50.8,
+    "05_night_street.jpg": 46.8,
+    "06_flushing_traffic.jpg": 46.0
+   },
+   "latency_ms_mean": 46.1,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 8,
+     "precision@0.25": 0.5,
+     "recall@0.25": 0.18181818181818182,
+     "f1@0.25": 0.26666666666666666,
+     "precision@0.5": 0.6666666666666666,
+     "recall@0.5": 0.09090909090909091,
+     "f1@0.5": 0.16,
+     "AP50": 0.15151515151515152,
+     "pseudoAP": 0.04166666666666667,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 11,
+     "precision@0.25": 0.45454545454545453,
+     "recall@0.25": 0.2777777777777778,
+     "f1@0.25": 0.3448275862068966,
+     "precision@0.5": 0.5,
+     "recall@0.5": 0.05555555555555555,
+     "f1@0.5": 0.09999999999999999,
+     "AP50": 0.154320987654321,
+     "pseudoAP": 0.09598765432098766,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 8,
+     "precision@0.25": 0.625,
+     "recall@0.25": 0.2777777777777778,
+     "f1@0.25": 0.3846153846153846,
+     "precision@0.5": 0.8,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3478260869565218,
+     "AP50": 0.2314814814814815,
+     "pseudoAP": 0.14185185185185187,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 16,
+     "precision@0.25": 0.125,
+     "recall@0.25": 0.09090909090909091,
+     "f1@0.25": 0.10526315789473685,
+     "precision@0.5": 0.125,
+     "recall@0.5": 0.045454545454545456,
+     "f1@0.5": 0.06666666666666667,
+     "AP50": 0.03282828282828283,
+     "pseudoAP": 0.022474747474747477,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 3,
+     "precision@0.25": 0.3333333333333333,
+     "recall@0.25": 0.09090909090909091,
+     "f1@0.25": 0.14285714285714288,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.09090909090909091,
+     "f1@0.5": 0.16666666666666669,
+     "AP50": 0.09090909090909091,
+     "pseudoAP": 0.06363636363636363,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 9,
+     "precision@0.25": 0.7777777777777778,
+     "recall@0.25": 0.4375,
+     "f1@0.25": 0.56,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3125,
+     "f1@0.5": 0.47619047619047616,
+     "AP50": 0.4296875,
+     "pseudoAP": 0.2765625,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 55.0,
+     "precision@0.25": 0.4692760942760943,
+     "recall@0.25": 0.22611531986531988,
+     "f1@0.25": 0.3007049897068046,
+     "precision@0.5": 0.6819444444444445,
+     "recall@0.5": 0.13625841750841752,
+     "f1@0.5": 0.21955831608005524,
+     "AP50": 0.18179041573138796,
+     "pseudoAP": 0.10702996399176956,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 55,
+     "precision@0.25": 0.43636363636363634,
+     "recall@0.25": 0.22429906542056074,
+     "f1@0.25": 0.29629629629629634,
+     "precision@0.5": 0.5833333333333334,
+     "recall@0.5": 0.1308411214953271,
+     "f1@0.5": 0.21374045801526714,
+     "AP50": 0.1585576259489303,
+     "pseudoAP": 0.08863056539153653,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 8,
+    "02_stadium.jpg": 11,
+    "03_helsinki_plaza.jpg": 8,
+    "04_zhengzhou_station.jpg": 16,
+    "05_night_street.jpg": 3,
+    "06_flushing_traffic.jpg": 11
+   }
+  },
+  {
+   "name": "YOLO11m",
+   "family": "YOLO11",
+   "license": "AGPL-3.0",
+   "params_m": 20.1,
+   "file_mb": 80.6,
+   "coco_ap": 51.5,
+   "input": "640x640",
+   "load_ms": 240.5,
+   "module": "yolo11m",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 361.8,
+    "02_stadium.jpg": 356.1,
+    "03_helsinki_plaza.jpg": 331.2,
+    "04_zhengzhou_station.jpg": 343.5,
+    "05_night_street.jpg": 351.3,
+    "06_flushing_traffic.jpg": 355.0
+   },
+   "latency_ms_mean": 349.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 18,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.8181818181818182,
+     "f1@0.25": 0.9,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.8181818181818182,
+     "pseudoAP": 0.7410873440285206,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 16,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.9411764705882353,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3888888888888889,
+     "f1@0.5": 0.56,
+     "AP50": 0.8888888888888888,
+     "pseudoAP": 0.7425859788359789,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 10,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.5555555555555556,
+     "f1@0.25": 0.7142857142857143,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.5555555555555556,
+     "pseudoAP": 0.44076719576719575,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 16,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.7272727272727273,
+     "f1@0.25": 0.8421052631578948,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.7272727272727273,
+     "pseudoAP": 0.6385402097902099,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 9,
+     "n_pred_persons": 11,
+     "precision@0.25": 0.7272727272727273,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.7999999999999999,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5555555555555556,
+     "f1@0.5": 0.7142857142857143,
+     "AP50": 0.8585858585858586,
+     "pseudoAP": 0.7585858585858586,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 15,
+     "precision@0.25": 0.9333333333333333,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.9032258064516129,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.625,
+     "f1@0.5": 0.7692307692307693,
+     "AP50": 0.8708333333333333,
+     "pseudoAP": 0.7925480769230769,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 105.0,
+     "n_pred_persons": 86.0,
+     "precision@0.25": 0.9434343434343435,
+     "recall@0.25": 0.7922979797979798,
+     "f1@0.25": 0.8501322090805763,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3836279461279461,
+     "f1@0.5": 0.5365066388254794,
+     "AP50": 0.7865530303030304,
+     "pseudoAP": 0.6856857773218068,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 105,
+     "n_pred_persons": 86,
+     "precision@0.25": 0.9534883720930233,
+     "recall@0.25": 0.780952380952381,
+     "f1@0.25": 0.8586387434554973,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3523809523809524,
+     "f1@0.5": 0.5211267605633803,
+     "AP50": 0.766205557690681,
+     "pseudoAP": 0.6610087162929152,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 22,
+    "02_stadium.jpg": 16,
+    "03_helsinki_plaza.jpg": 12,
+    "04_zhengzhou_station.jpg": 19,
+    "05_night_street.jpg": 21,
+    "06_flushing_traffic.jpg": 23
+   }
+  },
+  {
+   "name": "YOLO11n",
+   "family": "YOLO11",
+   "license": "AGPL-3.0",
+   "params_m": 2.6,
+   "file_mb": 10.7,
+   "coco_ap": 39.5,
+   "input": "640x640",
+   "load_ms": 91.3,
+   "module": "yolo11n",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 54.0,
+    "02_stadium.jpg": 55.8,
+    "03_helsinki_plaza.jpg": 51.8,
+    "04_zhengzhou_station.jpg": 52.7,
+    "05_night_street.jpg": 57.1,
+    "06_flushing_traffic.jpg": 54.9
+   },
+   "latency_ms_mean": 54.4,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 17,
+     "precision@0.25": 0.8235294117647058,
+     "recall@0.25": 0.6363636363636364,
+     "f1@0.25": 0.717948717948718,
+     "precision@0.5": 0.8,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.2962962962962963,
+     "AP50": 0.5727866904337492,
+     "pseudoAP": 0.39740344622697565,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 13,
+     "precision@0.25": 0.8461538461538461,
+     "recall@0.25": 0.6111111111111112,
+     "f1@0.25": 0.7096774193548387,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.5792972459639126,
+     "pseudoAP": 0.3617762176095509,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 7,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.3333333333333333,
+     "f1@0.25": 0.48,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.1111111111111111,
+     "f1@0.5": 0.19999999999999998,
+     "AP50": 0.32539682539682535,
+     "pseudoAP": 0.2482804232804232,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 10,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.625,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.13636363636363635,
+     "f1@0.5": 0.24000000000000002,
+     "AP50": 0.45454545454545453,
+     "pseudoAP": 0.360530303030303,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 5,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.625,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2727272727272727,
+     "f1@0.5": 0.42857142857142855,
+     "AP50": 0.45454545454545453,
+     "pseudoAP": 0.3281818181818182,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 12,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.75,
+     "f1@0.25": 0.8571428571428571,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.6666666666666666,
+     "AP50": 0.75,
+     "pseudoAP": 0.5728077651515152,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 64.0,
+     "precision@0.25": 0.9211376858435681,
+     "recall@0.25": 0.5399831649831649,
+     "f1@0.25": 0.6691281657410689,
+     "precision@0.5": 0.9666666666666667,
+     "recall@0.5": 0.24663299663299662,
+     "f1@0.5": 0.37771950003834065,
+     "AP50": 0.522761945147566,
+     "pseudoAP": 0.37816332891343096,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 64,
+     "precision@0.25": 0.90625,
+     "recall@0.25": 0.5420560747663551,
+     "f1@0.25": 0.6783625730994153,
+     "precision@0.5": 0.9615384615384616,
+     "recall@0.5": 0.2336448598130841,
+     "f1@0.5": 0.37593984962406013,
+     "AP50": 0.5231254748194001,
+     "pseudoAP": 0.37046713534812953,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 18,
+    "02_stadium.jpg": 13,
+    "03_helsinki_plaza.jpg": 8,
+    "04_zhengzhou_station.jpg": 10,
+    "05_night_street.jpg": 7,
+    "06_flushing_traffic.jpg": 15
+   }
+  },
+  {
+   "name": "YOLO11s",
+   "family": "YOLO11",
+   "license": "AGPL-3.0",
+   "params_m": 9.4,
+   "file_mb": 38.0,
+   "coco_ap": 47.0,
+   "input": "640x640",
+   "load_ms": 145.0,
+   "module": "yolo11s",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 129.7,
+    "02_stadium.jpg": 129.9,
+    "03_helsinki_plaza.jpg": 132.0,
+    "04_zhengzhou_station.jpg": 132.8,
+    "05_night_street.jpg": 137.7,
+    "06_flushing_traffic.jpg": 125.9
+   },
+   "latency_ms_mean": 131.3,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.9090909090909091,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6363636363636364,
+     "f1@0.5": 0.7777777777777778,
+     "AP50": 0.9069264069264069,
+     "pseudoAP": 0.7921220231436948,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 15,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.8333333333333334,
+     "f1@0.25": 0.9090909090909091,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3636363636363636,
+     "AP50": 0.8333333333333334,
+     "pseudoAP": 0.6935671889838557,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 12,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.6666666666666666,
+     "f1@0.25": 0.8,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.16666666666666666,
+     "f1@0.5": 0.2857142857142857,
+     "AP50": 0.6666666666666666,
+     "pseudoAP": 0.5394444444444444,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 19,
+     "precision@0.25": 0.8947368421052632,
+     "recall@0.25": 0.7727272727272727,
+     "f1@0.25": 0.8292682926829269,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.7652687869406135,
+     "pseudoAP": 0.6547955734417878,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 10,
+     "precision@0.25": 0.8,
+     "recall@0.25": 0.7272727272727273,
+     "f1@0.25": 0.761904761904762,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.45454545454545453,
+     "f1@0.5": 0.625,
+     "AP50": 0.7070707070707071,
+     "pseudoAP": 0.5555555555555556,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 14,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.9333333333333333,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.625,
+     "f1@0.5": 0.7692307692307693,
+     "AP50": 0.875,
+     "pseudoAP": 0.7693131868131868,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 92.0,
+     "precision@0.25": 0.9339712918660288,
+     "recall@0.25": 0.7973484848484849,
+     "f1@0.25": 0.85711470101714,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4114057239057239,
+     "f1@0.5": 0.5591154216154216,
+     "AP50": 0.7923776501562879,
+     "pseudoAP": 0.6674663287304208,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 92,
+     "precision@0.25": 0.9347826086956522,
+     "recall@0.25": 0.8037383177570093,
+     "f1@0.25": 0.864321608040201,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.411214953271028,
+     "f1@0.5": 0.5827814569536424,
+     "AP50": 0.7972117511507888,
+     "pseudoAP": 0.6699973191501793,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 25,
+    "02_stadium.jpg": 15,
+    "03_helsinki_plaza.jpg": 13,
+    "04_zhengzhou_station.jpg": 20,
+    "05_night_street.jpg": 15,
+    "06_flushing_traffic.jpg": 19
+   }
+  },
+  {
+   "name": "YOLOv10n",
+   "family": "YOLOv10",
+   "license": "AGPL-3.0",
+   "params_m": 2.3,
+   "file_mb": 9.4,
+   "coco_ap": 38.5,
+   "input": "640x640",
+   "load_ms": 96.5,
+   "module": "yolov10n",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 58.8,
+    "02_stadium.jpg": 54.6,
+    "03_helsinki_plaza.jpg": 57.1,
+    "04_zhengzhou_station.jpg": 58.9,
+    "05_night_street.jpg": 60.8,
+    "06_flushing_traffic.jpg": 61.9
+   },
+   "latency_ms_mean": 58.7,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 11,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.6060606060606061,
+     "precision@0.5": 0.75,
+     "recall@0.5": 0.13636363636363635,
+     "f1@0.5": 0.23076923076923075,
+     "AP50": 0.4256198347107438,
+     "pseudoAP": 0.3760461760461761,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 8,
+     "precision@0.25": 0.875,
+     "recall@0.25": 0.3888888888888889,
+     "f1@0.25": 0.5384615384615385,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3636363636363636,
+     "AP50": 0.375,
+     "pseudoAP": 0.2886507936507937,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 4,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.2222222222222222,
+     "f1@0.25": 0.3636363636363636,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.05555555555555555,
+     "f1@0.5": 0.10526315789473684,
+     "AP50": 0.2222222222222222,
+     "pseudoAP": 0.18703703703703703,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 7,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.2727272727272727,
+     "f1@0.25": 0.41379310344827586,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.045454545454545456,
+     "f1@0.5": 0.08695652173913045,
+     "AP50": 0.24675324675324672,
+     "pseudoAP": 0.21614718614718612,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 4,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.36363636363636365,
+     "f1@0.25": 0.5333333333333333,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.36363636363636365,
+     "pseudoAP": 0.2909090909090909,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 12,
+     "precision@0.25": 0.9166666666666666,
+     "recall@0.25": 0.6875,
+     "f1@0.25": 0.7857142857142857,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5625,
+     "f1@0.5": 0.72,
+     "AP50": 0.6822916666666666,
+     "pseudoAP": 0.5549404761904762,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 46.0,
+     "precision@0.25": 0.9263167388167388,
+     "recall@0.25": 0.398253367003367,
+     "f1@0.25": 0.5401665384424005,
+     "precision@0.5": 0.9583333333333334,
+     "recall@0.5": 0.20065235690235692,
+     "f1@0.5": 0.3023862636219616,
+     "AP50": 0.3859205556648739,
+     "pseudoAP": 0.31895512666346,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 46,
+     "precision@0.25": 0.9130434782608695,
+     "recall@0.25": 0.3925233644859813,
+     "f1@0.25": 0.5490196078431373,
+     "precision@0.5": 0.9523809523809523,
+     "recall@0.5": 0.18691588785046728,
+     "f1@0.5": 0.3125,
+     "AP50": 0.3785677254830529,
+     "pseudoAP": 0.3087284629738466,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 12,
+    "02_stadium.jpg": 8,
+    "03_helsinki_plaza.jpg": 4,
+    "04_zhengzhou_station.jpg": 7,
+    "05_night_street.jpg": 7,
+    "06_flushing_traffic.jpg": 15
+   }
+  },
+  {
+   "name": "YOLOv10s",
+   "family": "YOLOv10",
+   "license": "AGPL-3.0",
+   "params_m": 7.2,
+   "file_mb": 29.2,
+   "coco_ap": 46.3,
+   "input": "640x640",
+   "load_ms": 153.0,
+   "module": "yolov10s",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 140.3,
+    "02_stadium.jpg": 141.7,
+    "03_helsinki_plaza.jpg": 132.0,
+    "04_zhengzhou_station.jpg": 138.8,
+    "05_night_street.jpg": 141.5,
+    "06_flushing_traffic.jpg": 167.0
+   },
+   "latency_ms_mean": 143.5,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 9,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.4090909090909091,
+     "f1@0.25": 0.5806451612903226,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.4090909090909091,
+     "pseudoAP": 0.37859848484848485,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 9,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.5,
+     "f1@0.25": 0.6666666666666666,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.1111111111111111,
+     "f1@0.5": 0.19999999999999998,
+     "AP50": 0.5,
+     "pseudoAP": 0.4203703703703704,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 7,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.3888888888888889,
+     "f1@0.25": 0.56,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.1111111111111111,
+     "f1@0.5": 0.19999999999999998,
+     "AP50": 0.3888888888888889,
+     "pseudoAP": 0.3551851851851852,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 7,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.2727272727272727,
+     "f1@0.25": 0.41379310344827586,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.045454545454545456,
+     "f1@0.5": 0.08695652173913045,
+     "AP50": 0.2727272727272727,
+     "pseudoAP": 0.23787878787878786,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 6,
+     "precision@0.25": 0.8333333333333334,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.5882352941176471,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2727272727272727,
+     "f1@0.5": 0.42857142857142855,
+     "AP50": 0.4393939393939394,
+     "pseudoAP": 0.4075757575757576,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 12,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.75,
+     "f1@0.25": 0.8571428571428571,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.625,
+     "f1@0.5": 0.7692307692307693,
+     "AP50": 0.75,
+     "pseudoAP": 0.6776562499999998,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 50.0,
+     "precision@0.25": 0.9484126984126985,
+     "recall@0.25": 0.46254208754208753,
+     "f1@0.25": 0.6110805137776283,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.23211279461279463,
+     "f1@0.5": 0.3425215149852831,
+     "AP50": 0.460016835016835,
+     "pseudoAP": 0.41287747264309765,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 50,
+     "precision@0.25": 0.96,
+     "recall@0.25": 0.4485981308411215,
+     "f1@0.25": 0.6114649681528662,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.21495327102803738,
+     "f1@0.5": 0.35384615384615387,
+     "AP50": 0.4461186343696357,
+     "pseudoAP": 0.39621799579517736,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 11,
+    "02_stadium.jpg": 9,
+    "03_helsinki_plaza.jpg": 8,
+    "04_zhengzhou_station.jpg": 7,
+    "05_night_street.jpg": 8,
+    "06_flushing_traffic.jpg": 18
+   }
+  },
+  {
+   "name": "YOLOv6-N",
+   "family": "YOLOv6",
+   "license": "GPL-3.0",
+   "params_m": 4.7,
+   "file_mb": 18.8,
+   "coco_ap": 37.5,
+   "input": "640x640",
+   "load_ms": 75.9,
+   "module": "yolov6n",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 66.6,
+    "02_stadium.jpg": 64.6,
+    "03_helsinki_plaza.jpg": 63.0,
+    "04_zhengzhou_station.jpg": 62.4,
+    "05_night_street.jpg": 60.4,
+    "06_flushing_traffic.jpg": 63.3
+   },
+   "latency_ms_mean": 63.4,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 30,
+     "precision@0.25": 0.7333333333333333,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.846153846153846,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.7272727272727273,
+     "f1@0.5": 0.8421052631578948,
+     "AP50": 0.9604455353259183,
+     "pseudoAP": 0.6922375501292966,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 17,
+     "precision@0.25": 0.8823529411764706,
+     "recall@0.25": 0.8333333333333334,
+     "f1@0.25": 0.8571428571428571,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3888888888888889,
+     "f1@0.5": 0.56,
+     "AP50": 0.8267973856209151,
+     "pseudoAP": 0.5531141715945637,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 29,
+     "precision@0.25": 0.5172413793103449,
+     "recall@0.25": 0.8333333333333334,
+     "f1@0.25": 0.6382978723404256,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2222222222222222,
+     "f1@0.5": 0.3636363636363636,
+     "AP50": 0.7772271588061063,
+     "pseudoAP": 0.5222210830105567,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 25,
+     "precision@0.25": 0.72,
+     "recall@0.25": 0.8181818181818182,
+     "f1@0.25": 0.7659574468085107,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.7669022154316273,
+     "pseudoAP": 0.589006847798408,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 10,
+     "precision@0.25": 0.9,
+     "recall@0.25": 0.8181818181818182,
+     "f1@0.25": 0.8571428571428572,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2727272727272727,
+     "f1@0.5": 0.42857142857142855,
+     "AP50": 0.8181818181818182,
+     "pseudoAP": 0.5196969696969698,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.7,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.7777777777777777,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5625,
+     "f1@0.5": 0.72,
+     "AP50": 0.8221988795518207,
+     "pseudoAP": 0.6150764472455649,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 131.0,
+     "precision@0.25": 0.7421546089700247,
+     "recall@0.25": 0.8630050505050506,
+     "f1@0.25": 0.7904121095610458,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4001473063973064,
+     "f1@0.5": 0.5474472376226762,
+     "AP50": 0.8286254988197009,
+     "pseudoAP": 0.5818921782458932,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 131,
+     "precision@0.25": 0.7099236641221374,
+     "recall@0.25": 0.8691588785046729,
+     "f1@0.25": 0.7815126050420168,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.411214953271028,
+     "f1@0.5": 0.5827814569536424,
+     "AP50": 0.8246875483666407,
+     "pseudoAP": 0.5757553036390426,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 31,
+    "02_stadium.jpg": 19,
+    "03_helsinki_plaza.jpg": 30,
+    "04_zhengzhou_station.jpg": 25,
+    "05_night_street.jpg": 26,
+    "06_flushing_traffic.jpg": 32
+   }
+  },
+  {
+   "name": "YOLOv6-S",
+   "family": "YOLOv6",
+   "license": "GPL-3.0",
+   "params_m": 18.5,
+   "file_mb": 74.3,
+   "coco_ap": 45.0,
+   "input": "640x640",
+   "load_ms": 191.9,
+   "module": "yolov6s",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 209.1,
+    "02_stadium.jpg": 205.6,
+    "03_helsinki_plaza.jpg": 215.2,
+    "04_zhengzhou_station.jpg": 211.6,
+    "05_night_street.jpg": 205.6,
+    "06_flushing_traffic.jpg": 211.5
+   },
+   "latency_ms_mean": 209.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 30,
+     "precision@0.25": 0.7333333333333333,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.846153846153846,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.9823546019198194,
+     "pseudoAP": 0.8272210828229396,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 19,
+     "precision@0.25": 0.8421052631578947,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.8648648648648649,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3333333333333333,
+     "f1@0.5": 0.5,
+     "AP50": 0.8703703703703703,
+     "pseudoAP": 0.604985754985755,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.7272727272727273,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.7999999999999999,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.8888888888888888,
+     "pseudoAP": 0.6524305555555555,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 21,
+     "precision@0.25": 0.9047619047619048,
+     "recall@0.25": 0.8636363636363636,
+     "f1@0.25": 0.8837209302325582,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.8522727272727271,
+     "pseudoAP": 0.7356057100793941,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 15,
+     "precision@0.25": 0.6,
+     "recall@0.25": 0.8181818181818182,
+     "f1@0.25": 0.6923076923076923,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.7814508723599634,
+     "pseudoAP": 0.6316804407713499,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 18,
+     "precision@0.25": 0.7777777777777778,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.823529411764706,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5625,
+     "f1@0.5": 0.72,
+     "AP50": 0.8625,
+     "pseudoAP": 0.688219696969697,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 125.0,
+     "precision@0.25": 0.7642085010506063,
+     "recall@0.25": 0.8890993265993266,
+     "f1@0.25": 0.8184294575539446,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3774200336700337,
+     "f1@0.5": 0.5336151004437449,
+     "AP50": 0.8729729101352949,
+     "pseudoAP": 0.6900238735307819,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 125,
+     "precision@0.25": 0.768,
+     "recall@0.25": 0.897196261682243,
+     "f1@0.25": 0.8275862068965518,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.37383177570093457,
+     "f1@0.5": 0.5442176870748299,
+     "AP50": 0.8799759633970379,
+     "pseudoAP": 0.6861552222771952,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 32,
+    "02_stadium.jpg": 19,
+    "03_helsinki_plaza.jpg": 23,
+    "04_zhengzhou_station.jpg": 21,
+    "05_night_street.jpg": 23,
+    "06_flushing_traffic.jpg": 28
+   }
+  },
+  {
+   "name": "YOLOv7",
+   "family": "YOLOv7",
+   "license": "GPL-3.0",
+   "params_m": 36.9,
+   "file_mb": 147.8,
+   "coco_ap": 51.2,
+   "input": "640x640",
+   "load_ms": 394.6,
+   "module": "yolov7",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 520.2,
+    "02_stadium.jpg": 509.4,
+    "03_helsinki_plaza.jpg": 546.8,
+    "04_zhengzhou_station.jpg": 551.1,
+    "05_night_street.jpg": 559.8,
+    "06_flushing_traffic.jpg": 578.7
+   },
+   "latency_ms_mean": 544.3,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 21,
+     "n_pred_persons": 26,
+     "precision@0.25": 0.8076923076923077,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8936170212765957,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8095238095238095,
+     "f1@0.5": 0.8947368421052632,
+     "AP50": 0.9935064935064936,
+     "pseudoAP": 0.8959499759499762,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 18,
+     "precision@0.25": 0.9444444444444444,
+     "recall@0.25": 0.9444444444444444,
+     "f1@0.25": 0.9444444444444444,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8333333333333334,
+     "f1@0.5": 0.9090909090909091,
+     "AP50": 0.9444444444444444,
+     "pseudoAP": 0.747183317771553,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 17,
+     "n_pred_persons": 16,
+     "precision@0.25": 0.875,
+     "recall@0.25": 0.8235294117647058,
+     "f1@0.25": 0.8484848484848485,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5294117647058824,
+     "f1@0.5": 0.6923076923076924,
+     "AP50": 0.8196078431372549,
+     "pseudoAP": 0.6976818279759456,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 21,
+     "n_pred_persons": 25,
+     "precision@0.25": 0.76,
+     "recall@0.25": 0.9047619047619048,
+     "f1@0.25": 0.8260869565217391,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.42857142857142855,
+     "f1@0.5": 0.6,
+     "AP50": 0.8964803312629399,
+     "pseudoAP": 0.7559956247456247,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 8,
+     "n_pred_persons": 14,
+     "precision@0.25": 0.5,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.6363636363636364,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.625,
+     "f1@0.5": 0.7692307692307693,
+     "AP50": 0.7916666666666667,
+     "pseudoAP": 0.7375,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 15,
+     "precision@0.25": 0.9333333333333333,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.9032258064516129,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.625,
+     "f1@0.5": 0.7692307692307693,
+     "AP50": 0.875,
+     "pseudoAP": 0.7372395833333334,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 101.0,
+     "n_pred_persons": 114.0,
+     "precision@0.25": 0.8034116809116809,
+     "recall@0.25": 0.9037892934951758,
+     "f1@0.25": 0.8420371189238129,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6418067226890756,
+     "f1@0.5": 0.7724328303275673,
+     "AP50": 0.8867842965029666,
+     "pseudoAP": 0.7619250549627387,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 101,
+     "n_pred_persons": 114,
+     "precision@0.25": 0.8070175438596491,
+     "recall@0.25": 0.9108910891089109,
+     "f1@0.25": 0.8558139534883721,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6435643564356436,
+     "f1@0.5": 0.7831325301204819,
+     "AP50": 0.9022392321499298,
+     "pseudoAP": 0.7626975555904295,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 33,
+    "02_stadium.jpg": 19,
+    "03_helsinki_plaza.jpg": 17,
+    "04_zhengzhou_station.jpg": 27,
+    "05_night_street.jpg": 26,
+    "06_flushing_traffic.jpg": 24
+   }
+  },
+  {
+   "name": "YOLOv7-tiny",
+   "family": "YOLOv7",
+   "license": "GPL-3.0",
+   "params_m": 6.2,
+   "file_mb": 25.0,
+   "coco_ap": 38.7,
+   "input": "640x640",
+   "load_ms": 111.5,
+   "module": "yolov7_tiny",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 90.0,
+    "02_stadium.jpg": 90.5,
+    "03_helsinki_plaza.jpg": 97.1,
+    "04_zhengzhou_station.jpg": 97.6,
+    "05_night_street.jpg": 89.6,
+    "06_flushing_traffic.jpg": 91.1
+   },
+   "latency_ms_mean": 92.7,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 23,
+     "precision@0.25": 0.8260869565217391,
+     "recall@0.25": 0.8636363636363636,
+     "f1@0.25": 0.8444444444444444,
+     "precision@0.5": 0.9166666666666666,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.6470588235294118,
+     "AP50": 0.8119894598155468,
+     "pseudoAP": 0.571252153643458,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 19,
+     "precision@0.25": 0.7368421052631579,
+     "recall@0.25": 0.7777777777777778,
+     "f1@0.25": 0.7567567567567567,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.6666666666666666,
+     "AP50": 0.7654320987654321,
+     "pseudoAP": 0.5019278252611585,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 11,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.5555555555555556,
+     "f1@0.25": 0.6896551724137931,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.16666666666666666,
+     "f1@0.5": 0.2857142857142857,
+     "AP50": 0.5404040404040403,
+     "pseudoAP": 0.33981481481481474,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.95,
+     "recall@0.25": 0.8636363636363636,
+     "f1@0.25": 0.9047619047619048,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.8454545454545452,
+     "pseudoAP": 0.6159064286871774,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 6,
+     "precision@0.25": 0.8333333333333334,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.5882352941176471,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.45454545454545453,
+     "pseudoAP": 0.3036363636363636,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 18,
+     "precision@0.25": 0.8333333333333334,
+     "recall@0.25": 0.9375,
+     "f1@0.25": 0.8823529411764706,
+     "precision@0.5": 0.9166666666666666,
+     "recall@0.5": 0.6875,
+     "f1@0.5": 0.7857142857142857,
+     "AP50": 0.9176470588235295,
+     "pseudoAP": 0.6930252100840336,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 97.0,
+     "precision@0.25": 0.848114439590412,
+     "recall@0.25": 0.742108585858586,
+     "f1@0.25": 0.7777010856118362,
+     "precision@0.5": 0.9722222222222222,
+     "recall@0.5": 0.4075126262626263,
+     "f1@0.5": 0.5481429608880589,
+     "AP50": 0.7225787763014248,
+     "pseudoAP": 0.5042604660211677,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 97,
+     "precision@0.25": 0.845360824742268,
+     "recall@0.25": 0.7663551401869159,
+     "f1@0.25": 0.8039215686274509,
+     "precision@0.5": 0.9555555555555556,
+     "recall@0.5": 0.40186915887850466,
+     "f1@0.5": 0.5657894736842105,
+     "AP50": 0.7347172399385646,
+     "pseudoAP": 0.5017899198519121,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 25,
+    "02_stadium.jpg": 19,
+    "03_helsinki_plaza.jpg": 11,
+    "04_zhengzhou_station.jpg": 21,
+    "05_night_street.jpg": 12,
+    "06_flushing_traffic.jpg": 24
+   }
+  },
+  {
+   "name": "YOLOv8m",
+   "family": "YOLOv8",
+   "license": "AGPL-3.0",
+   "params_m": 25.9,
+   "file_mb": 103.8,
+   "coco_ap": 50.2,
+   "input": "640x640",
+   "load_ms": 298.3,
+   "module": "yolov8m",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 428.3,
+    "02_stadium.jpg": 409.9,
+    "03_helsinki_plaza.jpg": 404.1,
+    "04_zhengzhou_station.jpg": 400.1,
+    "05_night_street.jpg": 410.1,
+    "06_flushing_traffic.jpg": 417.6
+   },
+   "latency_ms_mean": 411.7,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 21,
+     "n_pred_persons": 23,
+     "precision@0.25": 0.9130434782608695,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.9545454545454545,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6666666666666666,
+     "f1@0.5": 0.8,
+     "AP50": 0.9913240658582273,
+     "pseudoAP": 0.9168874699638311,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.85,
+     "recall@0.25": 0.9444444444444444,
+     "f1@0.25": 0.8947368421052632,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6111111111111112,
+     "f1@0.5": 0.7586206896551725,
+     "AP50": 0.9263071895424837,
+     "pseudoAP": 0.7804738562091502,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 16,
+     "precision@0.25": 0.9375,
+     "recall@0.25": 0.8333333333333334,
+     "f1@0.25": 0.8823529411764706,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4444444444444444,
+     "f1@0.5": 0.6153846153846153,
+     "AP50": 0.8125000000000001,
+     "pseudoAP": 0.6627314814814816,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 21,
+     "n_pred_persons": 18,
+     "precision@0.25": 0.8888888888888888,
+     "recall@0.25": 0.7619047619047619,
+     "f1@0.25": 0.8205128205128205,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.42857142857142855,
+     "f1@0.5": 0.6,
+     "AP50": 0.7563025210084033,
+     "pseudoAP": 0.6244701213818862,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 7,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.6363636363636364,
+     "f1@0.25": 0.7777777777777778,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.6363636363636364,
+     "pseudoAP": 0.5818181818181818,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 15,
+     "precision@0.25": 0.9333333333333333,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.9032258064516129,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6875,
+     "f1@0.5": 0.8148148148148148,
+     "AP50": 0.8708333333333333,
+     "pseudoAP": 0.8025160256410256,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 105.0,
+     "n_pred_persons": 99.0,
+     "precision@0.25": 0.9204609500805153,
+     "recall@0.25": 0.8418410293410293,
+     "f1@0.25": 0.8721919404282331,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5336550024050024,
+     "f1@0.5": 0.6870255755313227,
+     "AP50": 0.8322717910176807,
+     "pseudoAP": 0.7281495227492596,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 105,
+     "n_pred_persons": 99,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.8571428571428571,
+     "f1@0.25": 0.8823529411764706,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5428571428571428,
+     "f1@0.5": 0.7037037037037037,
+     "AP50": 0.8475344089204354,
+     "pseudoAP": 0.7364196654227032,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 27,
+    "02_stadium.jpg": 20,
+    "03_helsinki_plaza.jpg": 17,
+    "04_zhengzhou_station.jpg": 19,
+    "05_night_street.jpg": 13,
+    "06_flushing_traffic.jpg": 26
+   }
+  },
+  {
+   "name": "YOLOv8n",
+   "family": "YOLOv8",
+   "license": "AGPL-3.0",
+   "params_m": 3.2,
+   "file_mb": 12.8,
+   "coco_ap": 37.3,
+   "input": "640x640",
+   "load_ms": 85.3,
+   "module": "yolov8n",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 65.6,
+    "02_stadium.jpg": 62.6,
+    "03_helsinki_plaza.jpg": 62.5,
+    "04_zhengzhou_station.jpg": 61.4,
+    "05_night_street.jpg": 62.7,
+    "06_flushing_traffic.jpg": 65.6
+   },
+   "latency_ms_mean": 63.4,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 18,
+     "precision@0.25": 0.8333333333333334,
+     "recall@0.25": 0.6818181818181818,
+     "f1@0.25": 0.7499999999999999,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2727272727272727,
+     "f1@0.5": 0.42857142857142855,
+     "AP50": 0.6517893870835046,
+     "pseudoAP": 0.41274372686137395,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 14,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.6666666666666666,
+     "f1@0.25": 0.75,
+     "precision@0.5": 0.875,
+     "recall@0.5": 0.3888888888888889,
+     "f1@0.5": 0.5384615384615385,
+     "AP50": 0.6356421356421356,
+     "pseudoAP": 0.49790043290043295,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 7,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.3333333333333333,
+     "f1@0.25": 0.48,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.16666666666666666,
+     "f1@0.5": 0.2857142857142857,
+     "AP50": 0.30952380952380953,
+     "pseudoAP": 0.2861111111111111,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 15,
+     "precision@0.25": 0.9333333333333333,
+     "recall@0.25": 0.6363636363636364,
+     "f1@0.25": 0.7567567567567568,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.6212121212121211,
+     "pseudoAP": 0.4721356421356421,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 4,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.36363636363636365,
+     "f1@0.25": 0.5333333333333333,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2727272727272727,
+     "f1@0.5": 0.42857142857142855,
+     "AP50": 0.36363636363636365,
+     "pseudoAP": 0.27954545454545454,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 13,
+     "precision@0.25": 0.9230769230769231,
+     "recall@0.25": 0.75,
+     "f1@0.25": 0.8275862068965517,
+     "precision@0.5": 0.8888888888888888,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.64,
+     "AP50": 0.7211538461538463,
+     "pseudoAP": 0.568269230769231,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 71.0,
+     "precision@0.25": 0.9006715506715507,
+     "recall@0.25": 0.5719696969696969,
+     "f1@0.25": 0.6829460494977736,
+     "precision@0.5": 0.9606481481481483,
+     "recall@0.5": 0.2971380471380471,
+     "f1@0.5": 0.4381684981684982,
+     "AP50": 0.5504929438752968,
+     "pseudoAP": 0.41945093305387426,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 71,
+     "precision@0.25": 0.8873239436619719,
+     "recall@0.25": 0.5887850467289719,
+     "f1@0.25": 0.7078651685393258,
+     "precision@0.5": 0.9393939393939394,
+     "recall@0.5": 0.2897196261682243,
+     "f1@0.5": 0.4428571428571429,
+     "AP50": 0.5644899341703553,
+     "pseudoAP": 0.4178087626034303,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 19,
+    "02_stadium.jpg": 14,
+    "03_helsinki_plaza.jpg": 7,
+    "04_zhengzhou_station.jpg": 16,
+    "05_night_street.jpg": 5,
+    "06_flushing_traffic.jpg": 18
+   }
+  },
+  {
+   "name": "YOLOv8s",
+   "family": "YOLOv8",
+   "license": "AGPL-3.0",
+   "params_m": 11.2,
+   "file_mb": 44.8,
+   "coco_ap": 44.9,
+   "input": "640x640",
+   "load_ms": 157.0,
+   "module": "yolov8s",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 162.1,
+    "02_stadium.jpg": 162.0,
+    "03_helsinki_plaza.jpg": 167.4,
+    "04_zhengzhou_station.jpg": 167.9,
+    "05_night_street.jpg": 165.5,
+    "06_flushing_traffic.jpg": 170.4
+   },
+   "latency_ms_mean": 165.9,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.9090909090909091,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.8925619834710744,
+     "pseudoAP": 0.8036070936639119,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 16,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.9411764705882353,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.3888888888888889,
+     "f1@0.5": 0.56,
+     "AP50": 0.8888888888888888,
+     "pseudoAP": 0.7856481481481481,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 14,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.6666666666666666,
+     "f1@0.25": 0.75,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.6507936507936508,
+     "pseudoAP": 0.5208730158730159,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 15,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.6818181818181818,
+     "f1@0.25": 0.8108108108108109,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.22727272727272727,
+     "f1@0.5": 0.37037037037037035,
+     "AP50": 0.6818181818181818,
+     "pseudoAP": 0.5438975418520873,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 7,
+     "precision@0.25": 0.8571428571428571,
+     "recall@0.25": 0.5454545454545454,
+     "f1@0.25": 0.6666666666666665,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.5454545454545454,
+     "pseudoAP": 0.4984848484848484,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 16,
+     "precision@0.25": 0.875,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.875,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6875,
+     "f1@0.5": 0.8148148148148148,
+     "AP50": 0.8545673076923077,
+     "pseudoAP": 0.7187421953046952,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 90.0,
+     "precision@0.25": 0.9163961038961039,
+     "recall@0.25": 0.7611531986531986,
+     "f1@0.25": 0.8254574761927703,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4150883838383838,
+     "f1@0.5": 0.5698639133592245,
+     "AP50": 0.7523474263531081,
+     "pseudoAP": 0.6452088072211178,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 90,
+     "precision@0.25": 0.9222222222222223,
+     "recall@0.25": 0.7757009345794392,
+     "f1@0.25": 0.8426395939086295,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.411214953271028,
+     "f1@0.5": 0.5827814569536424,
+     "AP50": 0.7653954022250241,
+     "pseudoAP": 0.6515450334982487,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 24,
+    "02_stadium.jpg": 16,
+    "03_helsinki_plaza.jpg": 15,
+    "04_zhengzhou_station.jpg": 17,
+    "05_night_street.jpg": 9,
+    "06_flushing_traffic.jpg": 23
+   }
+  },
+  {
+   "name": "YOLOX-l",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 54.2,
+   "file_mb": 206.7,
+   "coco_ap": 49.7,
+   "input": "640x640",
+   "load_ms": 699.0,
+   "module": "yolox_l",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 774.2,
+    "02_stadium.jpg": 770.7,
+    "03_helsinki_plaza.jpg": 742.9,
+    "04_zhengzhou_station.jpg": 751.2,
+    "05_night_street.jpg": 747.2,
+    "06_flushing_traffic.jpg": 762.4
+   },
+   "latency_ms_mean": 758.1,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.9090909090909091,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.9008264462809917,
+     "pseudoAP": 0.8172146792601339,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 17,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.7727272727272727,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8717948717948718,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.9411764705882353,
+     "f1@0.5": 0.9696969696969697,
+     "AP50": 1.0,
+     "pseudoAP": 0.8129879463097456,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.75,
+     "recall@0.25": 0.9375,
+     "f1@0.25": 0.8333333333333334,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6875,
+     "f1@0.5": 0.8148148148148148,
+     "AP50": 0.93359375,
+     "pseudoAP": 0.7885010822510823,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 19,
+     "n_pred_persons": 24,
+     "precision@0.25": 0.7916666666666666,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8837209302325582,
+     "precision@0.5": 0.9,
+     "recall@0.5": 0.47368421052631576,
+     "f1@0.5": 0.6206896551724138,
+     "AP50": 0.9309511236284692,
+     "pseudoAP": 0.7472489764841928,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 8,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.7272727272727273,
+     "f1@0.25": 0.8421052631578948,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.7272727272727273,
+     "pseudoAP": 0.6713636363636364,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 14,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.7,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8235294117647058,
+     "precision@0.5": 0.9285714285714286,
+     "recall@0.5": 0.9285714285714286,
+     "f1@0.5": 0.9285714285714286,
+     "AP50": 0.9873949579831933,
+     "pseudoAP": 0.9023928802290146,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 99.0,
+     "n_pred_persons": 116.0,
+     "precision@0.25": 0.820580808080808,
+     "recall@0.25": 0.9289772727272728,
+     "f1@0.25": 0.8605957865623788,
+     "precision@0.5": 0.9714285714285715,
+     "recall@0.5": 0.6869735334325117,
+     "f1@0.5": 0.7909229290229965,
+     "AP50": 0.9133398341942303,
+     "pseudoAP": 0.7899515334829675,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 99,
+     "n_pred_persons": 116,
+     "precision@0.25": 0.8017241379310345,
+     "recall@0.25": 0.9393939393939394,
+     "f1@0.25": 0.8651162790697674,
+     "precision@0.5": 0.9710144927536232,
+     "recall@0.5": 0.6767676767676768,
+     "f1@0.5": 0.7976190476190476,
+     "AP50": 0.9193026661636632,
+     "pseudoAP": 0.785251933437827,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 28,
+    "02_stadium.jpg": 22,
+    "03_helsinki_plaza.jpg": 21,
+    "04_zhengzhou_station.jpg": 28,
+    "05_night_street.jpg": 19,
+    "06_flushing_traffic.jpg": 32
+   }
+  },
+  {
+   "name": "YOLOX-m",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 25.3,
+   "file_mb": 96.6,
+   "coco_ap": 46.9,
+   "input": "640x640",
+   "load_ms": 307.6,
+   "module": "yolox_m",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 376.9,
+    "02_stadium.jpg": 372.5,
+    "03_helsinki_plaza.jpg": 385.1,
+    "04_zhengzhou_station.jpg": 379.1,
+    "05_night_street.jpg": 369.0,
+    "06_flushing_traffic.jpg": 372.1
+   },
+   "latency_ms_mean": 375.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 24,
+     "precision@0.25": 0.8333333333333334,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.8695652173913043,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.6818181818181818,
+     "f1@0.5": 0.8108108108108109,
+     "AP50": 0.9015151515151515,
+     "pseudoAP": 0.7679623665807876,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 23,
+     "precision@0.25": 0.7391304347826086,
+     "recall@0.25": 0.9444444444444444,
+     "f1@0.25": 0.8292682926829269,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8333333333333334,
+     "f1@0.5": 0.9090909090909091,
+     "AP50": 0.941358024691358,
+     "pseudoAP": 0.6932842312008978,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 27,
+     "precision@0.25": 0.6296296296296297,
+     "recall@0.25": 0.9444444444444444,
+     "f1@0.25": 0.7555555555555556,
+     "precision@0.5": 0.9230769230769231,
+     "recall@0.5": 0.6666666666666666,
+     "f1@0.5": 0.7741935483870968,
+     "AP50": 0.9103284832451499,
+     "pseudoAP": 0.7301763668430336,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 29,
+     "precision@0.25": 0.7586206896551724,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8627450980392156,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5454545454545454,
+     "f1@0.5": 0.7058823529411764,
+     "AP50": 0.9549482834340407,
+     "pseudoAP": 0.7966189239107326,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 5,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.625,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.45454545454545453,
+     "pseudoAP": 0.42727272727272725,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.7272727272727273,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8421052631578948,
+     "precision@0.5": 0.9333333333333333,
+     "recall@0.5": 0.875,
+     "f1@0.5": 0.9032258064516129,
+     "AP50": 0.9734002976190477,
+     "pseudoAP": 0.7955774260461761,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 130.0,
+     "precision@0.25": 0.7813311357789119,
+     "recall@0.25": 0.8754208754208753,
+     "f1@0.25": 0.797373237804483,
+     "precision@0.5": 0.9760683760683762,
+     "recall@0.5": 0.6609848484848485,
+     "f1@0.5": 0.7727561268358233,
+     "AP50": 0.8560159491750335,
+     "pseudoAP": 0.7018153403090591,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 130,
+     "precision@0.25": 0.7461538461538462,
+     "recall@0.25": 0.9065420560747663,
+     "f1@0.25": 0.8185654008438819,
+     "precision@0.5": 0.972972972972973,
+     "recall@0.5": 0.6728971962616822,
+     "f1@0.5": 0.7955801104972376,
+     "AP50": 0.8850481522460175,
+     "pseudoAP": 0.7123126456467611,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 28,
+    "02_stadium.jpg": 23,
+    "03_helsinki_plaza.jpg": 28,
+    "04_zhengzhou_station.jpg": 31,
+    "05_night_street.jpg": 13,
+    "06_flushing_traffic.jpg": 33
+   }
+  },
+  {
+   "name": "YOLOX-Nano",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 0.91,
+   "file_mb": 3.5,
+   "coco_ap": 25.8,
+   "input": "416x416",
+   "load_ms": 73.9,
+   "module": "yolox_nano",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 16.0,
+    "02_stadium.jpg": 13.9,
+    "03_helsinki_plaza.jpg": 15.1,
+    "04_zhengzhou_station.jpg": 16.2,
+    "05_night_street.jpg": 15.6,
+    "06_flushing_traffic.jpg": 18.9
+   },
+   "latency_ms_mean": 15.9,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 9,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.4090909090909091,
+     "f1@0.25": 0.5806451612903226,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.13636363636363635,
+     "f1@0.5": 0.24000000000000002,
+     "AP50": 0.4090909090909091,
+     "pseudoAP": 0.2228030303030303,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 10,
+     "precision@0.25": 0.5,
+     "recall@0.25": 0.2777777777777778,
+     "f1@0.25": 0.35714285714285715,
+     "precision@0.5": 0.75,
+     "recall@0.5": 0.16666666666666666,
+     "f1@0.5": 0.27272727272727276,
+     "AP50": 0.2006172839506173,
+     "pseudoAP": 0.07708333333333334,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 9,
+     "precision@0.25": 0.7777777777777778,
+     "recall@0.25": 0.3888888888888889,
+     "f1@0.25": 0.5185185185185185,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.3819444444444444,
+     "pseudoAP": 0.2520833333333333,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 9,
+     "precision@0.25": 0.8888888888888888,
+     "recall@0.25": 0.36363636363636365,
+     "f1@0.25": 0.5161290322580644,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.045454545454545456,
+     "f1@0.5": 0.08695652173913045,
+     "AP50": 0.35353535353535354,
+     "pseudoAP": 0.21141414141414144,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 3,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.2727272727272727,
+     "f1@0.25": 0.42857142857142855,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.2727272727272727,
+     "pseudoAP": 0.20909090909090908,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 17,
+     "precision@0.25": 0.8235294117647058,
+     "recall@0.25": 0.875,
+     "f1@0.25": 0.8484848484848485,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.75,
+     "f1@0.5": 0.8571428571428571,
+     "AP50": 0.8556372549019609,
+     "pseudoAP": 0.46146613190730845,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 57.0,
+     "precision@0.25": 0.8316993464052286,
+     "recall@0.25": 0.4311868686868687,
+     "f1@0.25": 0.5415819743776733,
+     "precision@0.5": 0.9583333333333334,
+     "recall@0.5": 0.2596801346801347,
+     "f1@0.5": 0.36655026133287,
+     "AP50": 0.4122587531084263,
+     "pseudoAP": 0.238990146563676,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 57,
+     "precision@0.25": 0.8070175438596491,
+     "recall@0.25": 0.42990654205607476,
+     "f1@0.25": 0.5609756097560976,
+     "precision@0.5": 0.9629629629629629,
+     "recall@0.5": 0.24299065420560748,
+     "f1@0.5": 0.3880597014925373,
+     "AP50": 0.4041914353522813,
+     "pseudoAP": 0.22134894421262913,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 9,
+    "02_stadium.jpg": 10,
+    "03_helsinki_plaza.jpg": 9,
+    "04_zhengzhou_station.jpg": 9,
+    "05_night_street.jpg": 7,
+    "06_flushing_traffic.jpg": 19
+   }
+  },
+  {
+   "name": "YOLOX-s",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 9.0,
+   "file_mb": 34.2,
+   "coco_ap": 40.5,
+   "input": "640x640",
+   "load_ms": 114.4,
+   "module": "yolox_s",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 155.1,
+    "02_stadium.jpg": 141.5,
+    "03_helsinki_plaza.jpg": 150.5,
+    "04_zhengzhou_station.jpg": 155.9,
+    "05_night_street.jpg": 153.2,
+    "06_flushing_traffic.jpg": 140.1
+   },
+   "latency_ms_mean": 149.4,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 22,
+     "precision@0.25": 0.9090909090909091,
+     "recall@0.25": 0.9090909090909091,
+     "f1@0.25": 0.9090909090909091,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5909090909090909,
+     "f1@0.5": 0.7428571428571429,
+     "AP50": 0.9025974025974026,
+     "pseudoAP": 0.6742809070014951,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 25,
+     "precision@0.25": 0.64,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.7441860465116279,
+     "precision@0.5": 0.8461538461538461,
+     "recall@0.5": 0.6111111111111112,
+     "f1@0.5": 0.7096774193548387,
+     "AP50": 0.8140901771336553,
+     "pseudoAP": 0.5126042864810981,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.8,
+     "recall@0.25": 0.8888888888888888,
+     "f1@0.25": 0.8421052631578948,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5555555555555556,
+     "f1@0.5": 0.7142857142857143,
+     "AP50": 0.8790849673202614,
+     "pseudoAP": 0.6360258505111447,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 19,
+     "precision@0.25": 0.8947368421052632,
+     "recall@0.25": 0.7727272727272727,
+     "f1@0.25": 0.8292682926829269,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.4090909090909091,
+     "f1@0.5": 0.5806451612903226,
+     "AP50": 0.7702020202020202,
+     "pseudoAP": 0.5933712121212122,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 6,
+     "precision@0.25": 1.0,
+     "recall@0.25": 0.5454545454545454,
+     "f1@0.25": 0.7058823529411764,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.36363636363636365,
+     "f1@0.5": 0.5333333333333333,
+     "AP50": 0.5454545454545454,
+     "pseudoAP": 0.41060606060606053,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 20,
+     "precision@0.25": 0.8,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.888888888888889,
+     "precision@0.5": 0.9285714285714286,
+     "recall@0.5": 0.8125,
+     "f1@0.5": 0.8666666666666666,
+     "AP50": 0.9718137254901961,
+     "pseudoAP": 0.6905610994397758,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 112.0,
+     "precision@0.25": 0.8406379585326954,
+     "recall@0.25": 0.8341750841750842,
+     "f1@0.25": 0.8199036255455708,
+     "precision@0.5": 0.9624542124542126,
+     "recall@0.5": 0.5571338383838383,
+     "f1@0.5": 0.6912442396313363,
+     "AP50": 0.8138738063663468,
+     "pseudoAP": 0.5862415693601312,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 112,
+     "precision@0.25": 0.8125,
+     "recall@0.25": 0.8504672897196262,
+     "f1@0.25": 0.8310502283105022,
+     "precision@0.5": 0.9523809523809523,
+     "recall@0.5": 0.5607476635514018,
+     "f1@0.5": 0.7058823529411765,
+     "AP50": 0.8208133359183714,
+     "pseudoAP": 0.5763296619077437,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 24,
+    "02_stadium.jpg": 25,
+    "03_helsinki_plaza.jpg": 21,
+    "04_zhengzhou_station.jpg": 20,
+    "05_night_street.jpg": 13,
+    "06_flushing_traffic.jpg": 30
+   }
+  },
+  {
+   "name": "YOLOX-Tiny",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 5.06,
+   "file_mb": 19.3,
+   "coco_ap": 32.8,
+   "input": "416x416",
+   "load_ms": 111.8,
+   "module": "yolox_tiny",
+   "leave_one_out": false,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 46.1,
+    "02_stadium.jpg": 40.2,
+    "03_helsinki_plaza.jpg": 42.7,
+    "04_zhengzhou_station.jpg": 43.4,
+    "05_night_street.jpg": 45.4,
+    "06_flushing_traffic.jpg": 44.7
+   },
+   "latency_ms_mean": 43.8,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 13,
+     "precision@0.25": 0.7692307692307693,
+     "recall@0.25": 0.45454545454545453,
+     "f1@0.25": 0.5714285714285714,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.4307409761955216,
+     "pseudoAP": 0.2928291405564133,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 14,
+     "precision@0.25": 0.6428571428571429,
+     "recall@0.25": 0.5,
+     "f1@0.25": 0.5625000000000001,
+     "precision@0.5": 0.8571428571428571,
+     "recall@0.5": 0.3333333333333333,
+     "f1@0.5": 0.48,
+     "AP50": 0.4652777777777778,
+     "pseudoAP": 0.2793981481481481,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 9,
+     "precision@0.25": 0.8888888888888888,
+     "recall@0.25": 0.4444444444444444,
+     "f1@0.25": 0.5925925925925926,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.2777777777777778,
+     "f1@0.5": 0.4347826086956522,
+     "AP50": 0.4444444444444444,
+     "pseudoAP": 0.30925925925925923,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 22,
+     "n_pred_persons": 17,
+     "precision@0.25": 0.8235294117647058,
+     "recall@0.25": 0.6363636363636364,
+     "f1@0.25": 0.717948717948718,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.6082956259426847,
+     "pseudoAP": 0.41195718497189093,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 11,
+     "n_pred_persons": 4,
+     "precision@0.25": 0.75,
+     "recall@0.25": 0.2727272727272727,
+     "f1@0.25": 0.39999999999999997,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.18181818181818182,
+     "f1@0.5": 0.3076923076923077,
+     "AP50": 0.2727272727272727,
+     "pseudoAP": 0.1909090909090909,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 16,
+     "n_pred_persons": 19,
+     "precision@0.25": 0.8421052631578947,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.9142857142857143,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.75,
+     "f1@0.5": 0.8571428571428571,
+     "AP50": 0.9722222222222222,
+     "pseudoAP": 0.6822668650793652,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 107.0,
+     "n_pred_persons": 76.0,
+     "precision@0.25": 0.7861019126499001,
+     "recall@0.25": 0.5513468013468014,
+     "f1@0.25": 0.6264592660425994,
+     "precision@0.5": 0.9761904761904763,
+     "recall@0.5": 0.31776094276094274,
+     "f1@0.5": 0.44916706481923874,
+     "AP50": 0.5322847198849873,
+     "pseudoAP": 0.3611032814873613,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 107,
+     "n_pred_persons": 76,
+     "precision@0.25": 0.7894736842105263,
+     "recall@0.25": 0.5607476635514018,
+     "f1@0.25": 0.6557377049180327,
+     "precision@0.5": 0.9705882352941176,
+     "recall@0.5": 0.308411214953271,
+     "f1@0.5": 0.46808510638297873,
+     "AP50": 0.5303758663892939,
+     "pseudoAP": 0.3536638870971317,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 13,
+    "02_stadium.jpg": 14,
+    "03_helsinki_plaza.jpg": 10,
+    "04_zhengzhou_station.jpg": 17,
+    "05_night_street.jpg": 6,
+    "06_flushing_traffic.jpg": 25
+   }
+  },
+  {
+   "name": "YOLOX-x",
+   "family": "YOLOX",
+   "license": "Apache-2.0",
+   "params_m": 99.1,
+   "file_mb": 377.8,
+   "coco_ap": 51.1,
+   "input": "640x640",
+   "load_ms": 1208.0,
+   "module": "yolox_x",
+   "leave_one_out": true,
+   "latency_ms_median_by_image": {
+    "01_perth_mall.jpg": 1315.1,
+    "02_stadium.jpg": 1308.2,
+    "03_helsinki_plaza.jpg": 1310.0,
+    "04_zhengzhou_station.jpg": 1313.1,
+    "05_night_street.jpg": 1302.3,
+    "06_flushing_traffic.jpg": 1293.0
+   },
+   "latency_ms_mean": 1307.0,
+   "metrics_by_image": {
+    "01_perth_mall.jpg": {
+     "n_gt_persons": 21,
+     "n_pred_persons": 25,
+     "precision@0.25": 0.84,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.9130434782608696,
+     "precision@0.5": 1.0,
+     "recall@0.5": 1.0,
+     "f1@0.5": 1.0,
+     "AP50": 1.0,
+     "pseudoAP": 0.9291713048855905,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "02_stadium.jpg": {
+     "n_gt_persons": 17,
+     "n_pred_persons": 23,
+     "precision@0.25": 0.7391304347826086,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.85,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8823529411764706,
+     "f1@0.5": 0.9375,
+     "AP50": 0.9823529411764707,
+     "pseudoAP": 0.7627657378740971,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "03_helsinki_plaza.jpg": {
+     "n_gt_persons": 15,
+     "n_pred_persons": 30,
+     "precision@0.25": 0.5,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.6666666666666666,
+     "precision@0.5": 0.8571428571428571,
+     "recall@0.5": 0.8,
+     "f1@0.5": 0.8275862068965518,
+     "AP50": 0.9478876678876679,
+     "pseudoAP": 0.7946735486735486,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "04_zhengzhou_station.jpg": {
+     "n_gt_persons": 18,
+     "n_pred_persons": 27,
+     "precision@0.25": 0.6666666666666666,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.8,
+     "precision@0.5": 0.9230769230769231,
+     "recall@0.5": 0.6666666666666666,
+     "f1@0.5": 0.7741935483870968,
+     "AP50": 0.9136693845133742,
+     "pseudoAP": 0.8025285446768823,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "05_night_street.jpg": {
+     "n_gt_persons": 10,
+     "n_pred_persons": 13,
+     "precision@0.25": 0.6923076923076923,
+     "recall@0.25": 0.9,
+     "f1@0.25": 0.7826086956521738,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.5,
+     "f1@0.5": 0.6666666666666666,
+     "AP50": 0.816958041958042,
+     "pseudoAP": 0.7430069930069931,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    },
+    "06_flushing_traffic.jpg": {
+     "n_gt_persons": 14,
+     "n_pred_persons": 23,
+     "precision@0.25": 0.6086956521739131,
+     "recall@0.25": 1.0,
+     "f1@0.25": 0.7567567567567568,
+     "precision@0.5": 1.0,
+     "recall@0.5": 0.8571428571428571,
+     "f1@0.5": 0.923076923076923,
+     "AP50": 0.9785714285714285,
+     "pseudoAP": 0.8449053724053724,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "metrics_overall": {
+    "macro": {
+     "n_gt_persons": 95.0,
+     "n_pred_persons": 141.0,
+     "precision@0.25": 0.6744667409884801,
+     "recall@0.25": 0.9833333333333334,
+     "f1@0.25": 0.7948459328894112,
+     "precision@0.5": 0.9633699633699634,
+     "recall@0.5": 0.784360410830999,
+     "f1@0.5": 0.8548372241712064,
+     "AP50": 0.9399065773511639,
+     "pseudoAP": 0.812841916920414,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0.0
+    },
+    "pooled": {
+     "n_gt_persons": 95,
+     "n_pred_persons": 141,
+     "precision@0.25": 0.6666666666666666,
+     "recall@0.25": 0.9894736842105263,
+     "f1@0.25": 0.7966101694915254,
+     "precision@0.5": 0.9625,
+     "recall@0.5": 0.8105263157894737,
+     "f1@0.5": 0.88,
+     "AP50": 0.956798512611947,
+     "pseudoAP": 0.8159706737390156,
+     "small_recall@0.25": NaN,
+     "n_small_gt": 0
+    }
+   },
+   "n_dets_all_classes": {
+    "01_perth_mall.jpg": 33,
+    "02_stadium.jpg": 23,
+    "03_helsinki_plaza.jpg": 31,
+    "04_zhengzhou_station.jpg": 32,
+    "05_night_street.jpg": 25,
+    "06_flushing_traffic.jpg": 37
+   }
+  }
+ ]
+}

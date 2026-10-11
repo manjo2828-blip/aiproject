@@ -1,0 +1,273 @@
+<title>군중 검출 정량 평가</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/*__BASECSS__*/
+/* eval-specific */
+:root{--s4:#eda100;--s5:#e87ba4;--hit:#1a7f4b;--miss:#d93025;--fp:#e08a00}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){--s4:#c98500;--s5:#d55181;--hit:#4cc38a;--miss:#ff6b61;--fp:#f0a030}}
+:root[data-theme="dark"]{--s4:#c98500;--s5:#d55181;--hit:#4cc38a;--miss:#ff6b61;--fp:#f0a030}
+.rank{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:10px}
+.rk{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:6px;min-width:0}
+.rk.top{border-color:var(--accent);box-shadow:0 0 0 1px var(--accent) inset}
+.rk .n{font-family:var(--f-mono);font-size:15px;font-weight:500;display:flex;align-items:center;gap:8px;overflow-wrap:anywhere}
+.rk .pos{font-family:var(--f-mono);font-size:12px;color:var(--ink3)}
+.rk .big{font-family:var(--f-mono);font-size:26px;line-height:1.1}
+.rk .big small{font-size:12px;color:var(--ink3);display:block;font-family:var(--f-body)}
+.rk .why{font-size:12.5px;color:var(--ink2)}
+.sw{display:inline-block;width:11px;height:11px;border-radius:50%}
+.ft{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:16px;display:flex;flex-direction:column;gap:10px}
+.ft ul{margin:0;padding-left:20px;color:var(--ink2);font-size:14px;display:flex;flex-direction:column;gap:5px}
+.hm td,.hm th{text-align:center}
+.hm td.cell{font-family:var(--f-mono);font-size:12.5px;min-width:64px}
+.hm th.grp{background:var(--surface);color:var(--ink2);border-bottom:1px solid var(--line)}
+.mx td.cell{font-family:var(--f-mono);font-size:12px;min-width:84px}
+.mx .sig-up{color:var(--good);font-weight:500} .mx .sig-dn{color:var(--bad);font-weight:500} .mx .ns{color:var(--ink3)}
+.mx td.diag{background:var(--surface2)}
+.leg2{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2);margin-bottom:8px}
+.leg2 i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border:2px solid}
+.pane canvas{cursor:crosshair}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">객체 검출 · 사람 수 recall 중심 정량 평가</div>
+  <h1>군중 검출 정량 평가</h1>
+  <p class="sub">군중 사진 100장에 사람이 직접 라벨링한 공개 데이터셋(CrowdHuman val)으로, recall이 높은 상위 5개 모델을 같은 조건에서 비교했습니다.</p>
+  <div class="meta" id="meta"></div>
+  <div class="verdict" id="verdict"></div>
+</header>
+
+<section>
+  <div class="sechead"><div><h2>최종 순위</h2><p>오탐을 이미지당 2개까지 허용했을 때 찾아낸 사람 비율(recall@FPPI=2) 기준입니다. 모델마다 점수 눈금이 달라서 같은 오탐 수에서 비교해야 공정합니다.</p></div></div>
+  <div class="rank" id="rank"></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>오탐을 더 허용하면 얼마나 더 찾나</h2><p>가로축은 이미지 한 장당 오탐 수(FPPI), 세로축은 찾아낸 사람 비율입니다. 위로 높을수록 좋습니다.</p></div>
+  </div>
+  <div class="card">
+    <div class="legend" id="legend"></div>
+    <div class="chartbox" id="boxA"><svg class="chart" id="chartA" viewBox="0 0 760 380" role="img" aria-label="FPPI별 recall 곡선. 값은 아래 표에 있습니다."></svg><div class="tip" id="tipA" hidden></div></div>
+    <p class="note">점선은 이미지당 오탐 2개 지점입니다. 값은 IoU 0.5 기준입니다.</p>
+  </div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>점수와 신뢰구간</h2><p>막대는 이미지 100장을 2000번 다시 뽑아 구한 95% 신뢰구간입니다. 구간이 겹치면 순위가 뒤바뀔 수 있습니다.</p></div>
+    <div class="ctrls"><label>지표 <select id="cim"><option value="recall_fppi2">recall@FPPI=2</option><option value="recall25">recall@신뢰도 0.25</option><option value="ap50">AP50</option><option value="f2_25">F2@0.25</option></select></label></div>
+  </div>
+  <div class="card"><svg class="chart" id="chartB" viewBox="0 0 760 250" role="img" aria-label="모델별 점수와 95% 신뢰구간"></svg></div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>전체 지표표</h2><p>열 제목을 누르면 정렬됩니다. 괄호 안은 95% 신뢰구간입니다.</p></div></div>
+  <div class="tablewrap"><table id="tbl"><thead></thead><tbody></tbody></table></div>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>어떤 사람을 놓치나</h2><p>사람 유형별 recall입니다. 진할수록 많이 찾았습니다.</p></div>
+    <div class="seg" role="group" aria-label="신뢰도" id="hmSeg"><button data-v="conf0.25" aria-pressed="true">신뢰도 0.25</button><button data-v="conf0.10" aria-pressed="false">신뢰도 0.10</button></div>
+  </div>
+  <div class="tablewrap"><table class="hm" id="hm"></table></div>
+  <p class="note">키 32px 미만은 50명뿐이라 해석에 주의하세요. 가려짐은 보이는 면적 ÷ 전체 면적입니다.</p>
+</section>
+
+<section>
+  <div class="sechead">
+    <div><h2>모델끼리 차이가 진짜인가</h2><p>같은 100장에서 이미지별로 짝지어 비교한 차이(행 − 열, %p)입니다. 굵은 색은 95% 신뢰구간이 0을 넘지 않는 차이입니다.</p></div>
+    <div class="ctrls"><label>지표 <select id="pwm"><option value="recall_fppi2">recall@FPPI=2</option><option value="recall25">recall@신뢰도 0.25</option><option value="ap50">AP50</option></select></label></div>
+  </div>
+  <div class="tablewrap"><table class="mx" id="mx"></table></div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>사진에서 직접 보기</h2><p>같은 사진에서 두 모델을 나란히 봅니다. 초록은 찾은 사람, 빨강은 놓친 사람, 주황 선은 오탐입니다.</p></div></div>
+  <div class="tabs" id="photoTabs"></div>
+  <div class="ctrls" style="margin-bottom:12px">
+    <label>왼쪽 <select id="selA"></select></label>
+    <label>오른쪽 <select id="selB"></select></label>
+    <label>신뢰도 <input type="range" id="conf" min="0.1" max="0.7" step="0.05" value="0.25"><span id="confv" style="font-family:var(--f-mono)">0.25</span></label>
+    <label><input type="checkbox" id="showFP" checked> 오탐 보기</label>
+  </div>
+  <div class="leg2"><span><i style="border-color:var(--hit)"></i>찾음</span><span><i style="border-color:var(--miss);border-style:dashed"></i>놓침</span><span><i style="border-color:var(--fp);border-width:1px"></i>오탐</span></div>
+  <div class="pair">
+    <div class="pane"><canvas id="cA" width="900" height="600"></canvas><div class="stat" id="stA"></div></div>
+    <div class="pane"><canvas id="cB" width="900" height="600"></canvas><div class="stat" id="stB"></div></div>
+  </div>
+  <p class="credits" id="vcredit" style="margin-top:10px"></p>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>다음 단계: 파인튜닝</h2></div></div>
+  <div class="ft" id="ft"></div>
+</section>
+
+<section>
+  <div class="sechead"><div><h2>결과를 읽는 법</h2></div></div>
+  <details open><summary>어떤 지표를 믿을 수 있나</summary><ul id="trust"></ul></details>
+  <details><summary>통계적으로 확실한 차이</summary><ul id="sig"></ul></details>
+  <details><summary>평가 방법과 한계</summary><ul id="caveats"></ul></details>
+  <details><summary>데이터셋과 라이선스</summary><ul id="dsinfo"></ul></details>
+</section>
+</div>
+
+<script>
+var D=__DATA__, P=__PICKS__;
+var $=function(s){return document.querySelector(s)};
+var COL={'RT-DETR-R18vd':'--s1','RT-DETR-R50vd':'--s2','YOLOX-m':'--s3','YOLOX-x':'--s4','DETR-R50':'--s5'};
+var byName={}; D.models.forEach(function(m){byName[m.name]=m});
+function cv(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim()}
+function mc(n){return cv(COL[n]||'--s1')}
+function pc(v,d){return v==null?'–':(v*100).toFixed(d==null?1:d)+'%'}
+function lat(v){return v>=1000?(v/1000).toFixed(2)+' s':Math.round(v)+' ms'}
+function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]})}
+var SORT={k:'recall_fppi2',d:-1};
+
+/* header */
+$('#meta').innerHTML='<span>CrowdHuman val · 무작위 100장 (seed '+D.dataset.seed+')</span><span>정답 사람 '+D.dataset.n_gt_nonignore.toLocaleString()+'명</span><span>CPU 추론 · IoU 0.5</span>';
+$('#verdict').textContent=P.verdict||'';
+
+/* ranking cards */
+var order=D.models.slice().sort(function(a,b){return b.recall_at_fppi['2']-a.recall_at_fppi['2']});
+var rkmap={};(P.ranking||[]).forEach(function(r){rkmap[r.model]=r});
+$('#rank').innerHTML=order.map(function(m,i){var r=rkmap[m.name]||{};
+  return '<div class="rk'+(m.name===P.headline_model?' top':'')+'"><div class="pos">'+(r.rank||i+1)+'위'+(m.name===P.headline_model?' · 추천':'')+'</div><div class="n"><span class="sw" style="background:'+mc(m.name)+'"></span>'+esc(m.name)+'</div>'+
+  '<div class="big">'+pc(m.recall_at_fppi['2'])+'<small>recall@FPPI=2</small></div><div class="chips"><span class="chip">'+lat(m.latency.median)+'</span><span class="chip ok">'+esc(m.license)+'</span></div><p class="why">'+esc(r.why||'')+'</p></div>'}).join('');
+
+/* line chart A */
+var FP=['0.5','1','2','5','10'];
+var W=760,H=380,ML=52,MR=96,MT=14,MB=44;
+var posA=[];
+function renderA(){
+  var svg=$('#chartA'),lx=function(v){return ML+(Math.log10(v)-Math.log10(0.4))/(Math.log10(13)-Math.log10(0.4))*(W-ML-MR)};
+  var ymax=Math.ceil(Math.max.apply(0,D.models.map(function(m){return m.recall_at_fppi['10']}))*10+0.5)/10;
+  var ly=function(v){return MT+(1-v/ymax)*(H-MT-MB)},g='',t;
+  [0.5,1,2,5,10].forEach(function(v){g+='<line x1="'+lx(v)+'" x2="'+lx(v)+'" y1="'+MT+'" y2="'+(H-MB)+'" stroke="'+cv('--grid')+'"/><text x="'+lx(v)+'" y="'+(H-MB+16)+'" text-anchor="middle">'+v+'</text>'});
+  for(t=0;t<=ymax+1e-9;t+=0.1){g+='<line x1="'+ML+'" x2="'+(W-MR)+'" y1="'+ly(t)+'" y2="'+ly(t)+'" stroke="'+cv('--grid')+'"/><text x="'+(ML-8)+'" y="'+(ly(t)+4)+'" text-anchor="end">'+Math.round(t*100)+'%</text>'}
+  g+='<line x1="'+lx(2)+'" x2="'+lx(2)+'" y1="'+MT+'" y2="'+(H-MB)+'" stroke="'+cv('--ink3')+'" stroke-dasharray="4 3"/>';
+  g+='<text class="ax" x="'+((ML+W-MR)/2)+'" y="'+(H-6)+'" text-anchor="middle">이미지 한 장당 오탐 수 (로그 축, 많이 허용할수록 오른쪽)</text>';
+  g+='<text class="ax" transform="translate(12 '+((MT+H-MB)/2)+') rotate(-90)" text-anchor="middle">찾아낸 사람 비율</text>';
+  posA=[];var ends=[];
+  D.models.forEach(function(m){
+    var pts=FP.map(function(f){return [lx(+f),ly(m.recall_at_fppi[f]),f,m.recall_at_fppi[f]]}),c=mc(m.name);
+    g+='<polyline fill="none" stroke="'+c+'" stroke-width="2.4" stroke-linejoin="round" points="'+pts.map(function(p){return p[0]+','+p[1]}).join(' ')+'"/>';
+    pts.forEach(function(p){g+='<circle cx="'+p[0]+'" cy="'+p[1]+'" r="3.8" fill="'+c+'" stroke="'+cv('--ring')+'" stroke-width="1.5"/>';posA.push({x:p[0],y:p[1],n:m.name,f:p[2],r:p[3]})});
+    ends.push({n:m.name,y:pts[4][1],x:pts[4][0],c:c});
+  });
+  ends.sort(function(a,b){return a.y-b.y});for(var i=1;i<ends.length;i++)if(ends[i].y-ends[i-1].y<14)ends[i].y=ends[i-1].y+14;
+  ends.forEach(function(e){g+='<text class="lbl" x="'+(e.x+10)+'" y="'+(e.y+4)+'">'+esc(e.n)+'</text>'});
+  svg.innerHTML=g;
+}
+$('#chartA').addEventListener('mousemove',function(e){
+  var r=this.getBoundingClientRect(),k=W/r.width,x=(e.clientX-r.left)*k,y=(e.clientY-r.top)*k,best=null,bd=18;
+  posA.forEach(function(p){var d=Math.hypot(p.x-x,p.y-y);if(d<bd){bd=d;best=p}});
+  var tip=$('#tipA');if(!best){tip.hidden=true;return}
+  tip.innerHTML='<b>'+esc(best.n)+'</b><div><span>오탐 수/장</span>'+best.f+'</div><div><span>recall</span>'+pc(best.r)+'</div>';tip.hidden=false;
+  var bw=$('#boxA').clientWidth,tx=best.x/k+14;if(tx+tip.offsetWidth>bw)tx=best.x/k-tip.offsetWidth-14;tip.style.left=tx+'px';tip.style.top=Math.max(0,best.y/k-20)+'px'});
+$('#chartA').addEventListener('mouseleave',function(){$('#tipA').hidden=true});
+
+/* CI chart B */
+function pt(m,k){return k==='recall_fppi2'?m.recall_at_fppi['2']:(k==='recall25'?m.recall25:(k==='ap50'?m.ap50:m.cis[k].mean))}
+function renderB(){
+  var key=$('#cim').value,svg=$('#chartB'),ms=D.models.slice().sort(function(a,b){return pt(b,key)-pt(a,key)}),
+  W2=760,ML2=130,MR2=20,rowH=40,top=8,hi=Math.max.apply(0,ms.map(function(m){return m.cis[key].ci[1]})),mx=Math.ceil(hi*20)/20,lo=Math.floor(Math.min.apply(0,ms.map(function(m){return m.cis[key].ci[0]}))*20)/20;
+  var sx=function(v){return ML2+(v-lo)/(mx-lo)*(W2-ML2-MR2)},g='',t;
+  for(t=lo;t<=mx+1e-9;t+=0.05){g+='<line x1="'+sx(t)+'" x2="'+sx(t)+'" y1="'+top+'" y2="'+(top+rowH*ms.length)+'" stroke="'+cv('--grid')+'"/><text x="'+sx(t)+'" y="'+(top+rowH*ms.length+16)+'" text-anchor="middle">'+Math.round(t*100)+'%</text>'}
+  ms.forEach(function(m,i){var c=m.cis[key],y=top+i*rowH+rowH/2,col=mc(m.name);
+    g+='<text class="lbl" x="'+(ML2-10)+'" y="'+(y+4)+'" text-anchor="end" style="stroke:none">'+esc(m.name)+'</text>';
+    g+='<line x1="'+sx(c.ci[0])+'" x2="'+sx(c.ci[1])+'" y1="'+y+'" y2="'+y+'" stroke="'+col+'" stroke-width="3" stroke-linecap="round" opacity=".55"/>';
+    g+='<circle cx="'+sx(pt(m,key))+'" cy="'+y+'" r="6" fill="'+col+'" stroke="'+cv('--ring')+'" stroke-width="2"/>';
+    g+='<text x="'+(sx(c.ci[1])+10)+'" y="'+(y+4)+'">'+pc(pt(m,key))+' ('+pc(c.ci[0],0)+'–'+pc(c.ci[1],0)+')</text>'});
+  svg.setAttribute('viewBox','0 0 760 '+(top+rowH*ms.length+26));svg.innerHTML=g;
+}
+$('#cim').onchange=renderB;
+
+/* table */
+var COLS=[['name','모델',1],['license','라이선스',1],['recall_fppi2','recall@FPPI=2'],['recall_fppi10','recall@FPPI=10'],['recall25','recall@0.25'],['recall10','recall@0.10'],['ap50','AP50'],['ar100','AR@100'],['latency','지연']];
+function cell(m,k){switch(k){case 'recall_fppi2':return m.recall_at_fppi['2'];case 'recall_fppi10':return m.recall_at_fppi['10'];case 'latency':return m.latency.median;default:return m[k]}}
+function ciTxt(m,k){var c=m.cis[k];return c?' <span style="color:var(--ink3);font-size:11.5px">('+pc(c.ci[0],0)+'–'+pc(c.ci[1],0)+')</span>':''}
+function renderT(){
+  $('#tbl thead').innerHTML='<tr>'+COLS.map(function(c){return '<th class="'+(c[2]?'l':'')+'" aria-sort="'+(SORT.k===c[0]?(SORT.d<0?'descending':'ascending'):'none')+'"><button data-k="'+c[0]+'">'+c[1]+'</button></th>'}).join('')+'</tr>';
+  var ms=D.models.slice().sort(function(a,b){var x=cell(a,SORT.k),y=cell(b,SORT.k);return (typeof x==='string'?x.localeCompare(y):x-y)*SORT.d});
+  $('#tbl tbody').innerHTML=ms.map(function(m){return '<tr><td><span class="dot" style="background:'+mc(m.name)+'"></span>'+esc(m.name)+'</td><td class="l"><span class="lic ok">'+esc(m.license)+'</span></td>'+
+   '<td class="m">'+pc(m.recall_at_fppi['2'])+ciTxt(m,'recall_fppi2')+'</td><td class="m">'+pc(m.recall_at_fppi['10'])+'</td><td class="m">'+pc(m.recall25)+ciTxt(m,'recall25')+'</td><td class="m">'+pc(m.recall10)+'</td><td class="m">'+pc(m.ap50)+ciTxt(m,'ap50')+'</td><td class="m">'+pc(m.ar100)+'</td><td class="m">'+lat(m.latency.median)+'</td></tr>'}).join('');
+  $('#tbl thead').querySelectorAll('button').forEach(function(b){b.onclick=function(){var k=b.dataset.k;SORT=SORT.k===k?{k:k,d:-SORT.d}:{k:k,d:(k==='name'||k==='license'||k==='latency')?1:-1};renderT()}});
+}
+
+/* heatmap */
+var BK=[['크기','h<32','키 <32px'],['크기','h32-96','32–96px'],['크기','h>=96','≥96px'],['가려짐','vis<0.5','심함'],['가려짐','vis0.5-0.8','중간'],['가려짐','vis>0.8','거의 없음'],['혼잡도','crowd<=20','≤20명'],['혼잡도','crowd21-40','21–40명'],['혼잡도','crowd>40','>40명']];
+var HC='conf0.25';
+function renderH(){
+  var g1='',g2='',cnt={};D.models[0].buckets[HC] && BK.forEach(function(b){cnt[b[1]]=D.models[0].buckets[HC][b[1]].n});
+  var grp={};BK.forEach(function(b){grp[b[0]]=(grp[b[0]]||0)+1});
+  var h='<thead><tr><th class="grp"></th>'+Object.keys(grp).map(function(k){return '<th class="grp" colspan="'+grp[k]+'">'+k+'</th>'}).join('')+'</tr><tr><th style="text-align:left">모델</th>'+BK.map(function(b){return '<th>'+b[2]+'<br><span style="font-family:var(--f-mono);font-size:11px">n='+cnt[b[1]]+'</span></th>'}).join('')+'</tr></thead><tbody>';
+  D.models.slice().sort(function(a,b){return b.recall_at_fppi['2']-a.recall_at_fppi['2']}).forEach(function(m){
+    h+='<tr><td style="text-align:left;white-space:nowrap"><span class="dot" style="background:'+mc(m.name)+'"></span>'+esc(m.name)+'</td>'+BK.map(function(b){var v=m.buckets[HC][b[1]].recall;
+      return '<td class="cell" style="background:color-mix(in srgb,var(--accent) '+Math.round(v*90)+'%,var(--surface));color:'+(v>0.55?'#fff':'var(--ink)')+'">'+pc(v,0)+'</td>'}).join('')+'</tr>'});
+  $('#hm').innerHTML=h+'</tbody>';
+}
+$('#hmSeg').querySelectorAll('button').forEach(function(b){b.onclick=function(){HC=b.dataset.v;$('#hmSeg').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});renderH()}});
+
+/* pairwise */
+function pair(a,b,k){
+  for(var i=0;i<D.pairwise.length;i++){var p=D.pairwise[i];
+    if(p.a===a&&p.b===b)return {m:p[k].mean,lo:p[k].ci[0],hi:p[k].ci[1],s:p[k].significant};
+    if(p.a===b&&p.b===a)return {m:-p[k].mean,lo:-p[k].ci[1],hi:-p[k].ci[0],s:p[k].significant}}
+  return null}
+function renderM(){
+  var k=$('#pwm').value,ms=order,h='<thead><tr><th class="l">행 − 열</th>'+ms.map(function(m){return '<th>'+esc(m.name)+'</th>'}).join('')+'</tr></thead><tbody>';
+  ms.forEach(function(r){h+='<tr><td class="l" style="white-space:nowrap"><span class="dot" style="background:'+mc(r.name)+'"></span>'+esc(r.name)+'</td>'+ms.map(function(c){
+    if(r===c)return '<td class="cell diag">–</td>';var p=pair(r.key,c.key,k);if(!p)return '<td class="cell">?</td>';
+    var cls=p.s?(p.m>0?'sig-up':'sig-dn'):'ns',sg=(p.m>=0?'+':'')+(p.m*100).toFixed(1);
+    return '<td class="cell '+cls+'" title="95% 신뢰구간 '+(p.lo*100).toFixed(1)+' ~ '+(p.hi*100).toFixed(1)+'%p">'+sg+'%p'+(p.s?' ●':'')+'</td>'}).join('')+'</tr>'});
+  $('#mx').innerHTML=h+'</tbody>';
+}
+$('#pwm').onchange=renderM;
+
+/* viewer */
+var PHOTO=0,imgs=[];
+function iou(a,b){var x1=Math.max(a[0],b[0]),y1=Math.max(a[1],b[1]),x2=Math.min(a[2],b[2]),y2=Math.min(a[3],b[3]),i=Math.max(0,x2-x1)*Math.max(0,y2-y1);return i/((a[2]-a[0])*(a[3]-a[1])+(b[2]-b[0])*(b[3]-b[1])-i||1)}
+function ignored(d,regs){return regs.some(function(r){var x1=Math.max(d[0],r[0]),y1=Math.max(d[1],r[1]),x2=Math.min(d[2],r[2]),y2=Math.min(d[3],r[3]),i=Math.max(0,x2-x1)*Math.max(0,y2-y1);return i/((d[2]-d[0])*(d[3]-d[1])||1)>=0.5})}
+function pane(cid,sid,name){
+  var im=D.samples[PHOTO],c=$(cid),ctx=c.getContext('2d'),el=imgs[PHOTO],k=c.width/im.w,conf=+$('#conf').value,m=byName[name];
+  c.height=Math.round(im.h*k);ctx.drawImage(el,0,0,c.width,c.height);
+  ctx.fillStyle='rgba(120,120,130,.35)';im.ign.forEach(function(r){ctx.fillRect(r[0]*k,r[1]*k,(r[2]-r[0])*k,(r[3]-r[1])*k)});
+  var dets=((m.sdets||{})[im.f]||[]).filter(function(d){return d[4]>=conf}).sort(function(a,b){return b[4]-a[4]}),used={},tp=0,fp=[];
+  dets.forEach(function(d){var bi=-1,bv=0.5;im.gt.forEach(function(g,i){if(used[i])return;var v=iou(d,g);if(v>=bv){bv=v;bi=i}});
+    if(bi>=0){used[bi]=1;tp++;ctx.lineWidth=2.5;ctx.strokeStyle=cv('--hit');ctx.setLineDash([]);ctx.strokeRect(im.gt[bi][0]*k,im.gt[bi][1]*k,(im.gt[bi][2]-im.gt[bi][0])*k,(im.gt[bi][3]-im.gt[bi][1])*k)}else if(!ignored(d,im.ign))fp.push(d)});
+  ctx.setLineDash([6,4]);ctx.lineWidth=2.5;ctx.strokeStyle=cv('--miss');var fn=0;
+  im.gt.forEach(function(g,i){if(!used[i]){fn++;ctx.strokeRect(g[0]*k,g[1]*k,(g[2]-g[0])*k,(g[3]-g[1])*k)}});ctx.setLineDash([]);
+  if($('#showFP').checked){ctx.lineWidth=1.5;ctx.strokeStyle=cv('--fp');fp.forEach(function(d){ctx.strokeRect(d[0]*k,d[1]*k,(d[2]-d[0])*k,(d[3]-d[1])*k)})}
+  $(sid).innerHTML='<span><b>'+esc(name)+'</b></span><span>찾음 <b style="color:var(--hit)">'+tp+'</b> / 정답 '+im.gt.length+' (<b>'+Math.round(tp/im.gt.length*100)+'%</b>)</span><span>놓침 <b style="color:var(--miss)">'+fn+'</b></span><span>오탐 <b style="color:var(--fp)">'+fp.length+'</b></span>';
+}
+function drawV(){if(!imgs[PHOTO]||!imgs[PHOTO].complete)return;pane('#cA','#stA',$('#selA').value);pane('#cB','#stB',$('#selB').value);
+  var s=D.samples[PHOTO];$('#vcredit').textContent='CrowdHuman val '+s.f+' · 정답 '+s.gt.length+'명. 비상업 연구용 데이터셋(CC BY-NC 4.0)이라 공유할 때 주의하세요.'}
+
+/* notes + finetune */
+function ul(id,a,fn){$(id).innerHTML=(a||[]).map(fn).join('')}
+ul('#trust',P.trust,function(t){var c=t.verdict==='신뢰'?'v-n':(t.verdict==='주의'?'v-w':'v-b');return '<li><b class="'+c+'">'+esc(t.verdict)+'</b> · <b>'+esc(t.metric)+'</b> — '+esc(t.note)+'</li>'});
+ul('#sig',P.significant,function(t){return '<li>'+esc(t)+'</li>'});
+ul('#caveats',P.caveats,function(t){return '<li>'+esc(t)+'</li>'});
+$('#dsinfo').innerHTML='<li>'+esc(D.dataset.dataset)+' '+esc(D.dataset.version_or_split)+'</li><li>사람이 15명 이상인 이미지 '+D.dataset.pool_size.toLocaleString()+'장 중 무작위 '+D.dataset.n_images+'장 (seed '+D.dataset.seed+')</li><li>정답은 전신 박스, 구분이 안 되는 군중 영역은 점수에서 제외합니다.</li><li>라이선스: '+esc(D.dataset.license)+'</li>';
+(function(){var f=P.finetune;if(!f){$('#ft').innerHTML='<p class="sub">추천 결과를 기다리는 중입니다.</p>';return}
+  $('#ft').innerHTML='<div class="chips"><span class="chip ok">추천 · '+esc(f.model)+'</span><span class="chip">대안 · '+esc(f.fallback)+'</span></div><p>'+esc(f.reason)+'</p><ul>'+(f.settings||[]).map(function(s){return '<li>'+esc(s)+'</li>'}).join('')+'</ul>'})();
+
+/* legend + init */
+function renderLeg(){$('#legend').innerHTML=D.models.map(function(m){return '<span><i style="background:'+mc(m.name)+'"></i>'+esc(m.name)+'</span>'}).join('')}
+function all(){renderLeg();renderA();renderB();renderT();renderH();renderM();drawV()}
+(function(){
+  var opts=order.map(function(m){return '<option>'+esc(m.name)+'</option>'}).join('');$('#selA').innerHTML=opts;$('#selB').innerHTML=opts;
+  $('#selA').value=P.headline_model&&byName[P.headline_model]?P.headline_model:order[0].name;$('#selB').value=order.filter(function(m){return m.name!==$('#selA').value})[order.length-2].name;
+  $('#photoTabs').innerHTML=D.samples.map(function(s,i){return '<button data-i="'+i+'" aria-pressed="'+(i===0)+'">'+s.gt.length+'명 장면</button>'}).join('');
+  $('#photoTabs').querySelectorAll('button').forEach(function(b){b.onclick=function(){PHOTO=+b.dataset.i;$('#photoTabs').querySelectorAll('button').forEach(function(x){x.setAttribute('aria-pressed',x===b)});drawV()}});
+  D.samples.forEach(function(s,i){var im=new Image();im.onload=function(){if(i===PHOTO)drawV()};im.src=s.data;imgs[i]=im});
+  ['#selA','#selB','#showFP'].forEach(function(s){$(s).onchange=drawV});$('#conf').oninput=function(){$('#confv').textContent=(+this.value).toFixed(2);drawV()};
+  all();
+  var mq=window.matchMedia('(prefers-color-scheme: dark)');if(mq.addEventListener)mq.addEventListener('change',all);
+  new MutationObserver(all).observe(document.documentElement,{attributes:true,attributeFilter:['data-theme']});
+})();
+</script>

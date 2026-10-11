@@ -1,0 +1,5 @@
+@font-face { font-family: "Jua"; src: url("../assets/fonts/Jua-Regular.ttf"); }
+@font-face { font-family: "KenneyFuture"; src: url("../assets/fonts/Kenney Future.ttf"); }
+html, body { margin: 0; height: 100%; background: #0b1f0e; overflow: hidden; }
+#game { width: 100vw; height: 100vh; display: flex; align-items: center; justify-content: center; }
+canvas { image-rendering: auto; }

@@ -1,0 +1,257 @@
+<title>리랭킹 정량평가</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* 레이아웃: 하이브리드 리포트와 같은 한 열 리포트. 리랭킹 전후 비교 → K 민감도 → 전체 표 → 질의별 순위 목록 */
+:root{
+  --bg:#f3f6f7; --panel:#ffffff; --ink:#14212b; --ink2:#44556a; --muted:#6c7c8c; --line:#d5dde3; --grid:#e4eaee;
+  --accent:#0a5c70; --accent-soft:#dcecf0;
+  --c-dense:#0072B2; --c-bm25:#D55E00; --c-hyb:#00805f; --c-4:#CC79A7; --c-rr:#6b4fb3;
+  --bad:#b4372c; --good:#00805f;
+  --serif:'Noto Serif KR','Batang',serif; --sans:'Noto Sans KR','Malgun Gothic',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1519; --panel:#151f25; --ink:#e6eef2; --ink2:#a9bac6; --muted:#81939f; --line:#2a3a44; --grid:#212e36;
+  --accent:#5fc0d6; --accent-soft:#17323a;
+  --c-dense:#4aa3e0; --c-bm25:#f0894a; --c-hyb:#2ec4a0; --c-4:#e39ac2; --c-rr:#a994e6;
+  --bad:#ef7b6e; --good:#2ec4a0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1519; --panel:#151f25; --ink:#e6eef2; --ink2:#a9bac6; --muted:#81939f; --line:#2a3a44; --grid:#212e36;
+  --accent:#5fc0d6; --accent-soft:#17323a;
+  --c-dense:#4aa3e0; --c-bm25:#f0894a; --c-hyb:#2ec4a0; --c-4:#e39ac2; --c-rr:#a994e6;
+  --bad:#ef7b6e; --good:#2ec4a0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;padding-inline:16px;padding-block:32px 72px}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:52px}
+h1,h2,h3{font-family:var(--serif);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800}
+h2{font-size:1.4rem;font-weight:800}
+h3{font-size:1.02rem;font-weight:600}
+p{margin:0}
+.lede{color:var(--ink2);max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+section{display:flex;flex-direction:column;gap:18px;min-width:0}
+.sub{color:var(--ink2);max-width:70ch;font-size:.93rem}
+.mono{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts div{background:var(--panel);padding:10px 14px;min-width:0}
+.facts b{display:block;font-family:var(--mono);font-size:1.15rem;font-weight:500}
+.facts span{font-size:.78rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--ink2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.controls{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font:inherit;font-size:.82rem;padding:5px 11px;border:1px solid var(--line);background:var(--panel);color:var(--ink2);cursor:pointer;border-radius:4px}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.seg button:focus-visible,select:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lab{font-size:.78rem;color:var(--muted);margin-right:2px}
+select{font:inherit;font-size:.88rem;padding:7px 10px;border:1px solid var(--line);background:var(--panel);color:var(--ink);border-radius:4px;max-width:100%}
+.hb{display:grid;grid-template-columns:minmax(120px,210px) 1fr;gap:12px 14px;align-items:center}
+.hb .m{font-size:.85rem;color:var(--ink2)}
+.hb .bars{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bar{display:flex;align-items:center;gap:8px;height:17px}
+.bar span.f{display:block;height:100%;border-radius:0 3px 3px 0;min-width:2px}
+.bar em{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.84rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:.76rem;white-space:nowrap;background:var(--panel);position:sticky;top:0}
+td.n,th.n{text-align:right;white-space:nowrap;font-family:var(--mono);font-variant-numeric:tabular-nums}
+tr:last-child td{border-bottom:0}
+td.best{background:var(--accent-soft);color:var(--ink);font-weight:700}
+tr.base td{color:var(--muted)}
+.scroll{max-height:560px;overflow:auto}
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--ink2);max-width:72ch;font-size:.92rem}
+.note b{color:var(--ink)}
+.callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 32px}
+.callouts p{font-size:.9rem;color:var(--ink2)}
+.callouts h3{margin-bottom:4px}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+svg .gl{stroke:var(--grid)}
+svg .ax{stroke:var(--line)}
+/* 순위 목록 */
+.cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(340px,1fr));gap:18px}
+.list{display:flex;flex-direction:column;gap:6px;min-width:0}
+.list h3{font-size:.95rem}
+.it{display:grid;grid-template-columns:30px 1fr auto;gap:10px;padding:9px 12px;background:var(--panel);border:1px solid var(--line);border-radius:4px;align-items:start;min-width:0}
+.it.gold{border-color:var(--good);box-shadow:inset 3px 0 0 var(--good)}
+.rk{font-family:var(--mono);font-size:1.05rem;font-weight:500;color:var(--ink2)}
+.it .tx{font-size:.85rem;line-height:1.5;min-width:0}
+.it .mt{font-size:.72rem;color:var(--muted);margin-top:2px}
+.sc{font-family:var(--mono);font-size:.78rem;color:var(--ink2);text-align:right;white-space:nowrap}
+.mv{font-family:var(--mono);font-size:.74rem}
+.mv.up{color:var(--good)}.mv.dn{color:var(--bad)}
+.tag{display:inline-block;font-size:.68rem;padding:0 6px;border-radius:8px;background:var(--good);color:var(--bg);margin-left:6px}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:4px;font-size:.78rem;line-height:1.4;z-index:9;display:none;max-width:260px}
+footer{color:var(--muted);font-size:.8rem;max-width:72ch}
+@media (max-width:560px){body{font-size:14px}.hb{grid-template-columns:1fr}.cols{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.bar span.f{transition:width .3s}}
+</style>
+
+<main>
+<header style="display:flex;flex-direction:column;gap:14px">
+  <div class="eyebrow">토끼와 거북이 RAG · 검색 실험 3</div>
+  <h1>리랭킹 정량평가</h1>
+  <p class="lede">하이브리드 검색이 가져온 후보를 크로스인코더 리랭커가 질의와 함께 다시 읽고 점수를 매겨, 높은 순으로 재정렬합니다. 같은 질의 60개로 리랭킹 전후를 비교했습니다.</p>
+  <div class="facts" id="facts"></div>
+</header>
+
+<section>
+  <div class="eyebrow">전후 비교</div>
+  <h2 id="head-title"></h2>
+  <p class="sub">첫 단계 검색이 상위 20개를 넘기면 리랭커가 그 20개를 다시 정렬합니다(리랭커 점수만 사용). 막대는 MRR@10이고, 축은 0~1입니다.</p>
+  <div class="legend"><span><i style="background:var(--muted)"></i>리랭킹 전</span><span><i style="background:var(--c-rr)"></i>리랭킹 후 (상위 20개)</span></div>
+  <div class="hb" id="hb"></div>
+  <div class="note" id="head-note"></div>
+</section>
+
+<section>
+  <div class="eyebrow">후보 수 K</div>
+  <h2>리랭커에 몇 개를 넘길까</h2>
+  <p class="sub">가로축은 리랭커가 다시 읽는 상위 후보 수입니다. 51은 child 전체입니다. 세로축은 0.6부터 시작합니다.</p>
+  <div class="controls"><div class="seg" id="k-met"><span class="lab">지표</span></div></div>
+  <div class="legend" id="k-leg"></div>
+  <svg id="k-svg" viewBox="0 0 640 290" role="img" aria-label="후보 수 K에 따른 리랭킹 성능"></svg>
+  <div class="note" id="k-note"></div>
+</section>
+
+<section>
+  <div class="eyebrow">전체 표</div>
+  <h2>첫 단계 검색 × 후보 수 × 점수 방식</h2>
+  <p class="sub">"리랭커+원점수 50:50"은 후보 안에서 리랭커 점수와 원래 점수를 z-score로 맞춘 뒤 반반 섞은 값입니다. 열마다 최고값을 강조했습니다.</p>
+  <div class="controls"><div class="seg" id="t-base"><span class="lab">첫 단계</span></div></div>
+  <div class="tw scroll"><table id="tt"></table></div>
+</section>
+
+<section>
+  <div class="eyebrow">순위 목록</div>
+  <h2>리랭킹으로 순위가 어떻게 바뀌었나</h2>
+  <p class="sub">하이브리드 기본 설정의 상위 20개를 리랭커 점수 높은 순으로 정렬한 상위 5개입니다. 초록 테두리가 정답 child입니다.</p>
+  <div class="controls">
+    <div class="seg" id="q-f"></div>
+    <label class="lab" for="q-sel">질의</label><select id="q-sel"></select>
+  </div>
+  <div class="cols" id="rank"></div>
+  <div class="callouts" id="chg"></div>
+</section>
+
+<section>
+  <div class="eyebrow">해석</div>
+  <h2>이 결과를 어떻게 읽을까</h2>
+  <div class="callouts" id="notes"></div>
+</section>
+<footer id="foot"></footer>
+</main>
+<div id="tip"></div>
+
+<script>
+const D = /*DATA*/;
+const $ = s => document.querySelector(s);
+const f3 = v => v.toFixed(3);
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const R = D.rows;
+const BASES = [...new Set(R.map(r => r.base))];
+const get = (base, method, k) => R.find(r => r.base === base && r.method === method && r.k === k);
+const none = b => R.find(r => r.base === b && r.k === 0);
+const MET = {mrr:'MRR@10', ndcg10:'nDCG@10', hit1:'Hit@1', hit5:'Hit@5', p_hit1:'장 Hit@1'};
+const KS = [5, 10, 20, 51];
+const tip = $('#tip');
+document.addEventListener('mousemove', e => {
+  const t = e.target.closest('[data-tip]');
+  if (!t) { tip.style.display = 'none'; return; }
+  tip.innerHTML = t.dataset.tip; tip.style.display = 'block';
+  tip.style.left = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8) + 'px'; tip.style.top = (e.clientY + 16) + 'px';
+});
+function seg(host, items, cur, on) {
+  items.forEach(([k, label]) => {
+    const b = document.createElement('button'); b.textContent = label; b.type = 'button';
+    b.setAttribute('aria-pressed', k === cur);
+    b.onclick = () => { host.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); on(k); };
+    host.appendChild(b);
+  });
+}
+
+// 개요
+$('#facts').innerHTML = [
+  ['60', '질의 (키워드 30 · 의역 30)'], ['51', 'child 후보 전체'], [D.reranker.split('/')[1], '크로스인코더 리랭커'], [R.length, '평가한 조합 수'],
+].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join('');
+
+// 전후 막대
+const after = b => get(b, '리랭커 점수만', 20);
+const bestAfter = Math.max(...BASES.filter(b => !b.startsWith('리랭커 단독')).map(b => after(b).mrr));
+$('#head-title').textContent = `MRR@10이 모든 첫 단계에서 올라 0.82 안팎으로 모였습니다`;
+$('#hb').innerHTML = BASES.filter(b => !b.startsWith('리랭커 단독')).map(b => {
+  const a = none(b), z = after(b);
+  const bar = (v, col, n) => `<div class="bar" data-tip="${esc(b)}<br>${n} MRR ${f3(v)}"><span class="f" style="width:${(v * 100).toFixed(1)}%;background:${col}"></span><em>${f3(v)}</em></div>`;
+  return `<div class="m">${esc(b)}<br><span class="mono" style="color:${z.mrr >= a.mrr ? 'var(--good)' : 'var(--bad)'}">${z.mrr >= a.mrr ? '+' : ''}${(z.mrr - a.mrr).toFixed(3)}</span></div><div class="bars">${bar(a.mrr, 'var(--muted)', '리랭킹 전')}${bar(z.mrr, 'var(--c-rr)', '리랭킹 후')}</div>`;
+}).join('');
+const dn = none(BASES[0]), dd = after(BASES[0]), hb = none(BASES[2]), hd = after(BASES[2]);
+$('#head-note').innerHTML = `<b>첫 단계가 약할수록 이득이 큽니다.</b> Dense 단독은 ${f3(dn.mrr)}에서 ${f3(dd.mrr)}로 +${(dd.mrr - dn.mrr).toFixed(3)}, 하이브리드 기본 설정은 ${f3(hb.mrr)}에서 ${f3(hd.mrr)}로 +${(hd.mrr - hb.mrr).toFixed(3)} 올랐습니다. Hit@1은 Dense ${f3(dn.hit1)}→${f3(dd.hit1)}, 하이브리드 기본 ${f3(hb.hit1)}→${f3(hd.hit1)}입니다.`;
+
+// K 곡선
+let kMet = 'mrr';
+const SER = [[BASES[0], 'var(--c-dense)'], [BASES[1], 'var(--c-bm25)'], [BASES[2], 'var(--c-hyb)'], [BASES[3], 'var(--c-4)']];
+function drawK() {
+  const svg = $('#k-svg'), W = 640, Ht = 290, L = 46, Rr = 14, T = 12, B = 40, ymin = 0.6, ymax = 0.9;
+  const xs = [0, ...KS], x = i => L + i / (xs.length - 1) * (W - L - Rr), y = v => T + (1 - (v - ymin) / (ymax - ymin)) * (Ht - T - B);
+  let s = '';
+  for (let v = ymin; v <= ymax + 1e-9; v += 0.05) s += `<line class="gl" x1="${L}" x2="${W - Rr}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(2)}</text>`;
+  xs.forEach((k, i) => s += `<text x="${x(i)}" y="${Ht - B + 18}" text-anchor="middle">${k === 0 ? '없음' : 'K=' + k}</text>`);
+  s += `<line class="ax" x1="${L}" x2="${W - Rr}" y1="${Ht - B}" y2="${Ht - B}"/><text x="${(L + W - Rr) / 2}" y="${Ht - 4}" text-anchor="middle">리랭커에 넘기는 상위 후보 수</text>`;
+  const lab = [];
+  SER.forEach(([b, col]) => {
+    const pts = xs.map((k, i) => [i, k === 0 ? none(b)[kMet] : get(b, '리랭커 점수만', k)[kMet], k]);
+    s += `<polyline fill="none" stroke="${col}" stroke-width="2" stroke-linejoin="round" points="${pts.map(p => x(p[0]) + ',' + y(p[1])).join(' ')}"/>`;
+    pts.forEach(p => s += `<circle cx="${x(p[0])}" cy="${y(p[1])}" r="3.4" fill="${col}" stroke="var(--bg)" stroke-width="1.5"/><circle cx="${x(p[0])}" cy="${y(p[1])}" r="11" fill="transparent" data-tip="${esc(b)}<br>${p[2] === 0 ? '리랭킹 없음' : 'K=' + p[2]} · ${MET[kMet]} ${f3(p[1])}"/>`);
+  });
+  svg.innerHTML = s;
+  $('#k-leg').innerHTML = SER.map(([b, c]) => `<span><i style="background:${c}"></i>${esc(b)}</span>`).join('');
+  const k51 = get(BASES[0], '리랭커 점수만', 51)[kMet], k20 = BASES.slice(0, 4).map(b => get(b, '리랭커 점수만', 20)[kMet]);
+  $('#k-note').innerHTML = `<b>K=51(전체)에서는 첫 단계가 무엇이든 ${MET[kMet]}가 ${f3(k51)}로 같습니다.</b> 리랭커가 전체를 다시 읽으면 첫 단계의 순서가 의미를 잃기 때문입니다. 후보가 51개뿐인 이 데이터의 특성이고, 수만 개 문서에서는 첫 단계가 후보를 얼마나 잘 좁히느냐가 중요해집니다. K=20에서 네 첫 단계의 ${MET[kMet]}는 ${f3(Math.min(...k20))}~${f3(Math.max(...k20))}입니다.`;
+}
+seg($('#k-met'), Object.entries(MET), kMet, k => { kMet = k; drawK(); });
+drawK();
+
+// 전체 표
+let tBase = '전체';
+function drawT() {
+  const rows = R.filter(r => tBase === '전체' || r.base === tBase);
+  const cols = [['mrr','MRR@10',r=>r.mrr],['ndcg10','nDCG@10',r=>r.ndcg10],['hit1','Hit@1',r=>r.hit1],['hit3','Hit@3',r=>r.hit3],['hit5','Hit@5',r=>r.hit5],['recall5','Recall@5',r=>r.recall5],['p_hit1','장 Hit@1',r=>r.p_hit1],['kw','MRR 키워드',r=>r.keyword.mrr],['pa','MRR 의역',r=>r.para.mrr]];
+  $('#tt').innerHTML = '<tr><th>첫 단계</th><th>점수 방식</th><th class="n">K</th>' + cols.map(c => `<th class="n">${c[1]}</th>`).join('') + '</tr>' +
+    rows.map(r => `<tr class="${r.k === 0 ? 'base' : ''}"><td>${esc(r.base)}</td><td>${r.method}</td><td class="n">${r.k === 0 ? '—' : r.k}</td>` +
+      cols.map(c => { const v = c[2](r); return `<td class="n${v === Math.max(...rows.map(c[2])) ? ' best' : ''}">${f3(v)}</td>`; }).join('') + '</tr>').join('');
+}
+seg($('#t-base'), [['전체', '전체'], ...BASES.map(b => [b, b.split(' (')[0]])], tBase, k => { tBase = k; drawT(); });
+drawT();
+
+// 순위 목록
+const PQ = D.per_query;
+let qf = 'changed', qi = 0;
+function opts() {
+  const idx = PQ.map((p, i) => i).filter(i => qf === 'all' || (qf === 'up' && PQ[i].gold_rank_after < PQ[i].gold_rank_before) || (qf === 'dn' && PQ[i].gold_rank_after > PQ[i].gold_rank_before) || (qf === 'changed' && PQ[i].gold_rank_after !== PQ[i].gold_rank_before));
+  $('#q-sel').innerHTML = idx.map(i => `<option value="${i}">[${PQ[i].type}] ${esc(PQ[i].q)} (정답 ${PQ[i].gold_rank_before}위→${PQ[i].gold_rank_after}위)</option>`).join('');
+  if (idx.length) { qi = idx[0]; $('#q-sel').value = qi; drawRank(); } else { $('#rank').innerHTML = '<p class="sub">해당하는 질의가 없습니다.</p>'; }
+}
+function drawRank() {
+  const p = PQ[qi];
+  const item = (rank, text, sc, ch, gold, mv) => `<div class="it ${gold ? 'gold' : ''}"><div class="rk">${rank}</div><div class="tx">${esc(text)}<div class="mt">${esc(ch)}${gold ? '<span class="tag">정답</span>' : ''}</div></div><div class="sc">${sc}${mv || ''}</div></div>`;
+  const mv = a => a.before === a.rank ? '' : `<div class="mv ${a.before > a.rank ? 'up' : 'dn'}">${a.before > a.rank ? '▲' : '▼'} ${a.before}위에서</div>`;
+  $('#rank').innerHTML = `<div class="list"><h3>${esc(p.q)}</h3><p class="sub">정답은 하이브리드에서 ${p.gold_rank_before}위, 리랭킹 후 ${p.gold_rank_after}위입니다.</p></div>` +
+    `<div class="list"><h3>리랭킹 후 상위 5개 (점수 높은 순)</h3>${p.after.map(a => item(a.rank, a.text, '점수 ' + a.score, a.chapter, a.gold, mv(a))).join('')}</div>`;
+}
+seg($('#q-f'), [['changed', '순위가 바뀐 질의'], ['up', '정답이 올라간 질의'], ['dn', '정답이 내려간 질의'], ['all', '전체']], qf, k => { qf = k; opts(); });
+$('#q-sel').onchange = e => { qi = +e.target.value; drawRank(); };
+opts();
+const up = PQ.filter(p => p.gold_rank_after < p.gold_rank_before).length, dw = PQ.filter(p => p.gold_rank_after > p.gold_rank_before).length, same = PQ.length - up - dw;
+const top1b = PQ.filter(p => p.gold_rank_before === 1).length, top1a = PQ.filter(p => p.gold_rank_after === 1).length;
+$('#chg').innerHTML = `<div><h3>정답 순위가 올라간 질의 ${up}개</h3><p>변하지 않은 질의 ${same}개, 내려간 질의 ${dw}개입니다. 정답이 1위인 질의는 ${top1b}개에서 ${top1a}개로 늘었습니다.</p></div>`;
+
+// 해석
+const rrAlone = R.find(r => r.base.startsWith('리랭커 단독'));
+$('#notes').innerHTML = `
+<div><h3>리랭킹은 이 평가에서 효과가 컸습니다</h3><p>모든 첫 단계에서 MRR@10이 올랐고, 리랭커만 쓴 최종 성능은 ${f3(rrAlone.mrr)}(Hit@1 ${f3(rrAlone.hit1)})입니다. 이는 리랭킹 없는 하이브리드 최고(0.798)보다 높습니다.</p></div>
+<div><h3>하이브리드가 필요 없어 보이는 이유</h3><p>후보가 51개뿐이라 리랭커가 전부 읽을 수 있습니다. 문서가 많아 K를 작게 잡아야 하는 실제 환경에서는 하이브리드가 좋은 후보를 올려 주는 역할이 남습니다. 이 데이터로는 그 효과를 측정할 수 없습니다.</p></div>
+<div><h3>비용은 측정하지 않았습니다</h3><p>크로스인코더는 질의마다 후보 수만큼 모델을 실행합니다. 지연 시간은 재지 않았고, K가 클수록 늘어납니다. 이 평가에서는 K=10~20이면 전체(51)와 비슷한 성능이었습니다.</p></div>
+<div><h3>한계</h3><p>질의 60개와 정답은 Claude가 만들었고, 표준편차 약 0.06 수준의 노이즈가 있어 0.01~0.02 차이는 구분되지 않습니다. 원점수와 섞는 방식이 리랭커 점수만 쓰는 것보다 낫다는 결과도 일관되지 않았습니다.</p></div>`;
+$('#foot').innerHTML = `리랭커 ${esc(D.reranker)} (fp16). 질의와 child 텍스트 쌍을 입력으로 쓰고, 후보 밖 문서는 원래 순서로 뒤에 둡니다. 코드와 원자료: rag/eval/rerank_eval.py, rerank_results.json.`;
+</script>

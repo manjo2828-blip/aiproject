@@ -1,0 +1,67 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Gemini RAG</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="app" id="app">
+  <div class="backdrop" id="backdrop"></div>
+  <aside class="sidebar" id="sidebar">
+    <div class="side-top">
+      <button class="icon-btn" id="closeSide" title="사이드바 닫기" aria-label="사이드바 닫기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+      </button>
+    </div>
+    <nav class="side-nav">
+      <button class="nav-item" id="newChat">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 013 3L7 19l-4 1 1-4z"/></svg>
+        <span>New chat</span>
+      </button>
+      <div class="nav-item search" id="searchWrap">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="11" cy="11" r="7"/><path d="M20 20l-3.5-3.5"/></svg>
+        <input id="search" type="text" placeholder="채팅 검색" autocomplete="off">
+      </div>
+    </nav>
+    <div class="hist-label">채팅</div>
+    <div class="history" id="history"></div>
+    <div class="side-bottom">
+      <button class="nav-item" id="themeToggle">
+        <svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"></svg>
+        <span id="themeLabel">테마</span>
+      </button>
+    </div>
+  </aside>
+
+  <main class="main">
+    <header class="topbar">
+      <button class="icon-btn" id="openSide" title="사이드바 열기" aria-label="사이드바 열기">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M9 4v16"/></svg>
+      </button>
+      <div class="model-label">Gemini RAG
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 9l6 6 6-6"/></svg>
+      </div>
+    </header>
+
+    <section class="scroll" id="scroll">
+      <div class="empty" id="empty"><h1>무엇을 도와드릴까요?</h1><div class="suggests" id="suggests"></div></div>
+      <div class="thread" id="thread"></div>
+    </section>
+
+    <div class="composer-wrap" id="composerWrap">
+      <form class="composer" id="form">
+        <button type="button" class="icon-btn plus" title="추가" aria-label="추가">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>
+        </button>
+        <textarea id="input" rows="1" placeholder="무엇이든 물어보세요" aria-label="메시지"></textarea>
+        <button type="submit" class="send" id="send" title="전송" aria-label="전송" disabled></button>
+      </form>
+      <p class="disclaimer">Gemini RAG는 실수를 할 수 있습니다. 중요한 정보는 확인하세요.</p>
+    </div>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

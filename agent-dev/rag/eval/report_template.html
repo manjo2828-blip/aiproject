@@ -1,0 +1,419 @@
+<title>하이브리드 서치 정량평가</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=Noto+Sans+KR:wght@400;500;700&family=Noto+Serif+KR:wght@600;800&display=swap">
+<style>
+/* 레이아웃: 좁은 본문 열(최대 1040px) 위에 결과 → 근거 → 신뢰도 순으로 쌓는 리포트. 차트는 카드 없이 본문에 직접 그림. */
+:root{
+  --bg:#f3f6f7; --panel:#ffffff; --ink:#14212b; --ink2:#44556a; --muted:#6c7c8c; --line:#d5dde3; --grid:#e4eaee;
+  --accent:#0a5c70; --accent-soft:#dcecf0;
+  --c-dense:#0072B2; --c-bm25:#D55E00; --c-hyb:#00805f; --c-4:#CC79A7; --c-5:#B38600;
+  --heat0:#eef5f7; --heat1:#0a5c70; --bad:#b4372c; --good:#00805f;
+  --serif:'Noto Serif KR','Batang',serif; --sans:'Noto Sans KR','Malgun Gothic',system-ui,sans-serif; --mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0e1519; --panel:#151f25; --ink:#e6eef2; --ink2:#a9bac6; --muted:#81939f; --line:#2a3a44; --grid:#212e36;
+  --accent:#5fc0d6; --accent-soft:#17323a;
+  --c-dense:#4aa3e0; --c-bm25:#f0894a; --c-hyb:#2ec4a0; --c-4:#e39ac2; --c-5:#e0b53a;
+  --heat0:#16262d; --heat1:#4fb6cd; --bad:#ef7b6e; --good:#2ec4a0; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0e1519; --panel:#151f25; --ink:#e6eef2; --ink2:#a9bac6; --muted:#81939f; --line:#2a3a44; --grid:#212e36;
+  --accent:#5fc0d6; --accent-soft:#17323a;
+  --c-dense:#4aa3e0; --c-bm25:#f0894a; --c-hyb:#2ec4a0; --c-4:#e39ac2; --c-5:#e0b53a;
+  --heat0:#16262d; --heat1:#4fb6cd; --bad:#ef7b6e; --good:#2ec4a0; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--sans);font-size:15px;line-height:1.65;padding-inline:16px;padding-block:32px 72px}
+main{max-width:1040px;margin:0 auto;display:flex;flex-direction:column;gap:56px}
+h1,h2,h3{font-family:var(--serif);text-wrap:balance;margin:0;line-height:1.3}
+h1{font-size:clamp(1.7rem,4.5vw,2.5rem);font-weight:800}
+h2{font-size:1.4rem;font-weight:800}
+h3{font-size:1.02rem;font-weight:600}
+p{margin:0}
+.lede{color:var(--ink2);max-width:68ch}
+.eyebrow{font-family:var(--mono);font-size:.74rem;letter-spacing:.08em;text-transform:uppercase;color:var(--accent)}
+section{display:flex;flex-direction:column;gap:18px;min-width:0}
+.sub{color:var(--ink2);max-width:70ch;font-size:.93rem}
+.mono,td.n,.n{font-family:var(--mono);font-variant-numeric:tabular-nums}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:1px;background:var(--line);border:1px solid var(--line)}
+.facts div{background:var(--panel);padding:10px 14px;min-width:0}
+.facts b{display:block;font-family:var(--mono);font-size:1.15rem;font-weight:500}
+.facts span{font-size:.78rem;color:var(--muted)}
+.legend{display:flex;flex-wrap:wrap;gap:6px 18px;font-size:.85rem;color:var(--ink2)}
+.legend i{display:inline-block;width:12px;height:12px;border-radius:2px;margin-right:6px;vertical-align:-1px}
+.controls{display:flex;flex-wrap:wrap;gap:8px 20px;align-items:center}
+.seg{display:flex;flex-wrap:wrap;gap:4px}
+.seg button{font:inherit;font-size:.82rem;padding:5px 11px;border:1px solid var(--line);background:var(--panel);color:var(--ink2);cursor:pointer;border-radius:4px}
+.seg button[aria-pressed="true"]{background:var(--accent);border-color:var(--accent);color:var(--bg)}
+.seg button:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.lab{font-size:.78rem;color:var(--muted);margin-right:2px}
+/* 헤드라인 막대 */
+.hb{display:grid;grid-template-columns:minmax(84px,130px) 1fr;gap:10px 14px;align-items:center}
+.hb .m{font-size:.85rem;color:var(--ink2)}
+.hb .bars{display:flex;flex-direction:column;gap:3px;min-width:0}
+.bar{display:flex;align-items:center;gap:8px;height:16px}
+.bar span.f{display:block;height:100%;border-radius:0 3px 3px 0;min-width:2px}
+.bar em{font-style:normal;font-family:var(--mono);font-size:.76rem;color:var(--ink2);font-variant-numeric:tabular-nums}
+/* 표 */
+.tw{overflow-x:auto;border:1px solid var(--line);background:var(--panel)}
+table{border-collapse:collapse;width:100%;font-size:.84rem}
+th,td{padding:7px 10px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:.76rem;white-space:nowrap;background:var(--panel);position:sticky;top:0}
+td.n,th.n{text-align:right;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+.cell{position:relative;padding:7px 10px}
+.pill{display:inline-block;font-family:var(--mono);font-size:.76rem;padding:1px 7px;border-radius:9px;background:var(--grid);color:var(--ink2)}
+.pill.r1{background:var(--good);color:var(--bg)}
+.pill.rb{background:var(--bad);color:var(--bg)}
+.note{border-left:3px solid var(--accent);padding:4px 0 4px 14px;color:var(--ink2);max-width:72ch;font-size:.92rem}
+.note b{color:var(--ink)}
+.callouts{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:22px 32px}
+.callouts h3{margin-bottom:4px}
+.callouts p{font-size:.9rem;color:var(--ink2)}
+svg{display:block;width:100%;height:auto;overflow:visible}
+svg text{font-family:var(--mono);font-size:11px;fill:var(--muted)}
+svg .gl{stroke:var(--grid)}
+svg .ax{stroke:var(--line)}
+.heat{display:grid;gap:3px;min-width:0}
+.heat div{padding:8px 4px;text-align:center;font-family:var(--mono);font-size:.78rem;border-radius:2px;font-variant-numeric:tabular-nums}
+.heat .hd{background:none;color:var(--muted);font-size:.72rem}
+#tip{position:fixed;pointer-events:none;background:var(--ink);color:var(--bg);padding:6px 9px;border-radius:4px;font-size:.78rem;line-height:1.4;z-index:9;display:none;max-width:260px}
+.scroll{max-height:560px;overflow:auto}
+.tab{display:flex;flex-direction:column;gap:56px}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--line);position:sticky;top:env(safe-area-inset-top,0px);background:var(--bg);z-index:5;padding-top:6px}
+.tabs button{font:inherit;font-weight:500;font-size:.95rem;padding:9px 20px;border:0;border-bottom:3px solid transparent;background:none;color:var(--muted);cursor:pointer}
+.tabs button[aria-selected="true"]{color:var(--ink);border-bottom-color:var(--accent)}
+.tabs button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+td.best,th.best{background:var(--accent-soft);color:var(--ink);font-weight:700}
+.tw table th.grp{text-align:center;border-bottom:1px solid var(--line)}
+footer{color:var(--muted);font-size:.8rem;max-width:72ch}
+@media (max-width:560px){body{font-size:14px}.hb{grid-template-columns:1fr}}
+@media (prefers-reduced-motion:no-preference){.bar span.f{transition:width .3s}}
+</style>
+
+<main>
+<header style="display:flex;flex-direction:column;gap:14px">
+  <div class="eyebrow">토끼와 거북이 RAG · 검색 실험 2</div>
+  <h1>하이브리드 서치 정량평가</h1>
+  <p class="lede">Structured Parent-Child 청킹과 bge-m3 임베딩은 고정하고, BM25 쪽의 토크나이저·스코어링 방식·파라미터와 결합 가중치를 바꿔 가며 25,117개 설정을 같은 질의 60개로 평가했습니다.</p>
+  <div class="facts" id="facts"></div>
+</header>
+<nav class="tabs" id="tabs" role="tablist"></nav>
+<div id="tab-graph" class="tab"></div>
+<div id="tab-table" class="tab" hidden></div>
+
+<section id="s-head">
+  <div class="eyebrow">결과 요약</div>
+  <h2 id="head-title"></h2>
+  <p class="sub">세 막대는 각각 Dense만, BM25만, 하이브리드의 최고 설정입니다. 최고 설정은 평가에 쓴 질의로 골랐기 때문에 실제보다 높게 나옵니다. 아래 "신뢰도" 절에서 교차검증으로 보정한 값을 따로 보여 줍니다.</p>
+  <div class="legend"><span><i style="background:var(--c-dense)"></i>Dense (bge-m3)</span><span><i style="background:var(--c-bm25)"></i>BM25 단독 최고</span><span><i style="background:var(--c-hyb)"></i>하이브리드 최고</span></div>
+  <div class="hb" id="hb"></div>
+</section>
+
+<section id="s-bmg">
+  <div class="eyebrow">BM25 단독</div>
+  <h2>토크나이저 × 스코어링 방식별 MRR@10</h2>
+  <p class="sub">k1=1.2, b=0.75 기본값입니다. 막대 축은 0~0.8입니다. 위쪽 그룹일수록 토크나이저가 좋은 쪽입니다.</p>
+  <div class="legend"><span><i style="background:var(--c-dense)"></i>BM25 (Okapi)</span><span><i style="background:var(--c-hyb)"></i>BM25L</span><span><i style="background:var(--c-bm25)"></i>BM25+</span><span><i style="background:var(--c-4)"></i>TF-IDF 코사인</span></div>
+  <div class="hb" id="bmg"></div>
+</section>
+
+<section id="s-t1">
+  <div class="eyebrow">핵심 비교</div>
+  <h2>Dense · BM25 · 하이브리드 전체 지표</h2>
+  <p class="sub">열마다 가장 높은 값을 강조했습니다. MRR·nDCG는 @10, 장(parent) 지표는 child 순위를 장 단위로 중복 제거한 뒤 계산한 값입니다.</p>
+  <div class="tw"><table id="t1"></table></div>
+  <div class="tw"><table id="head-cfg"></table></div>
+</section>
+
+<section id="s-t2">
+  <div class="eyebrow">BM25 단독</div>
+  <h2>토크나이저 × 스코어링 전체 표</h2>
+  <p class="sub">기본값(k1=1.2, b=0.75)과 k1·b 그리드 튜닝 최고값을 나란히 놓았습니다. TF-IDF는 파라미터가 없습니다.</p>
+  <div class="tw scroll"><table id="t2"></table></div>
+</section>
+
+<section id="s-wt">
+  <div class="eyebrow">가중치</div>
+  <h2>Dense 비중별 성능 표</h2>
+  <p class="sub">스코어링은 BM25 (Okapi) 기본값입니다. 첫 행은 BM25 단독, 마지막 행은 Dense 단독입니다.</p>
+  <div class="controls"><div class="seg" id="wt-tok"><span class="lab">토크나이저</span></div></div>
+  <div class="controls"><div class="seg" id="wt-fus"><span class="lab">결합</span></div></div>
+  <div class="tw"><table id="wt"></table></div>
+</section>
+
+<section id="s-bm">
+  <div class="eyebrow">BM25 단독</div>
+  <h2>토크나이저가 스코어링 공식보다 크게 좌우합니다</h2>
+  <p class="sub">한국어는 조사가 붙어 단어가 바뀌기 때문에 어떻게 쪼개느냐가 먼저입니다. 같은 토크나이저 안에서 Okapi, BM25L, BM25+, TF-IDF 차이는 0.01~0.02 수준이고, 토크나이저를 바꾸면 0.2까지 벌어집니다. 칸의 숫자는 기본값(k1=1.2, b=0.75)의 MRR@10이고, 괄호는 k1·b를 그리드로 튜닝한 최고값입니다.</p>
+  <div class="tw"><table id="bm-tab"></table></div>
+  <div class="note"><b>명사만 쓰면 크게 떨어집니다.</b> 질의의 핵심이 "깨웠나", "무너졌다" 같은 용언인 경우가 많아서, 명사만 남기면 신호가 사라집니다. 내용 형태소(체언+용언+부사)를 쓴 Kiwi가 가장 좋았습니다.</div>
+</section>
+
+<section id="s-w">
+  <div class="eyebrow">가중치</div>
+  <h2>Dense와 BM25를 얼마나 섞을까</h2>
+  <p class="sub">가로축은 Dense 비중입니다. 0이면 BM25만, 1이면 Dense만입니다. 선형 결합은 두 점수를 정규화한 뒤 <span class="mono">w·dense + (1−w)·bm25</span>로 합치고, RRF는 순위만 사용합니다. 세로축은 0.5부터 시작합니다.</p>
+  <div class="controls">
+    <div class="seg" id="w-tok"><span class="lab">토크나이저</span></div>
+    <div class="seg" id="w-met"><span class="lab">지표</span></div>
+  </div>
+  <div class="legend" id="w-leg"></div>
+  <svg id="w-svg" viewBox="0 0 640 300" role="img" aria-label="Dense 비중에 따른 검색 성능 곡선"></svg>
+  <div class="note" id="w-note"></div>
+</section>
+
+<section id="s-sc">
+  <div class="eyebrow">스코어링 방식</div>
+  <h2>BM25 변형과 TF-IDF 비교</h2>
+  <p class="sub">선형 결합(min-max)에서 스코어링 공식만 바꾼 결과입니다. 이 데이터에서는 네 방식의 곡선이 거의 겹칩니다.</p>
+  <div class="controls"><div class="seg" id="sc-tok"><span class="lab">토크나이저</span></div></div>
+  <div class="legend" id="sc-leg"></div>
+  <svg id="sc-svg" viewBox="0 0 640 280" role="img" aria-label="스코어링 방식별 가중치 곡선"></svg>
+</section>
+
+<section id="s-hm">
+  <div class="eyebrow">파라미터</div>
+  <h2>k1과 b 민감도</h2>
+  <p class="sub">BM25 단독 MRR@10입니다. 토크나이저를 바꿔 보면 최적 칸이 대체로 k1이 큰 쪽(2~3)에 있습니다. 청크가 116자 안팎으로 길이 편차가 작아서 b(길이 정규화)는 토크나이저에 따라 최적 방향이 엇갈립니다.</p>
+  <div class="controls"><div class="seg" id="hm-tok"><span class="lab">토크나이저</span></div></div>
+  <div id="hm"></div>
+</section>
+
+<section id="s-lb">
+  <div class="eyebrow">리더보드</div>
+  <h2>상위 설정</h2>
+  <div class="controls"><div class="seg" id="lb-sel"></div></div>
+  <div class="tw scroll"><table id="lb"></table></div>
+</section>
+
+<section id="s-type">
+  <div class="eyebrow">질의 유형</div>
+  <h2>키워드 질의와 의역 질의</h2>
+  <p class="sub">키워드 30개는 질문에 본문 단어가 그대로 들어 있고, 의역 30개는 같은 뜻을 다른 말로 물은 질문입니다. 막대는 MRR@10입니다.</p>
+  <div class="legend"><span><i style="background:var(--c-dense)"></i>Dense</span><span><i style="background:var(--c-bm25)"></i>BM25 단독 최고</span><span><i style="background:var(--c-hyb)"></i>하이브리드 최고</span></div>
+  <div class="hb" id="ty"></div>
+</section>
+
+<section id="s-cv">
+  <div class="eyebrow">신뢰도</div>
+  <h2>숫자를 어디까지 믿을 수 있나</h2>
+  <div class="callouts" id="cv"></div>
+</section>
+
+<section id="s-q">
+  <div class="eyebrow">질의별 결과</div>
+  <h2>정답이 몇 번째로 나왔나</h2>
+  <p class="sub">최고 하이브리드 설정의 질의별 정답 순위입니다. 칸의 숫자는 정답 child가 처음 나온 순위입니다.</p>
+  <div class="controls"><div class="seg" id="q-f"></div></div>
+  <div class="tw scroll"><table id="qt"></table></div>
+</section>
+
+<footer id="foot"></footer>
+</main>
+<div id="tip"></div>
+
+<script>
+const D = /*DATA*/;
+const $ = s => document.querySelector(s);
+const f3 = v => v.toFixed(3);
+const esc = s => String(s).replace(/[&<>]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;'}[c]));
+const SC = {okapi:'BM25 (Okapi)', bm25l:'BM25L', bm25plus:'BM25+', tfidf:'TF-IDF 코사인'};
+const FUS = {'linear-minmax':'선형 · min-max','linear-zscore':'선형 · z-score','rrf5':'RRF k=5','rrf20':'RRF k=20','rrf60':'RRF k=60'};
+const FCOL = {'linear-minmax':'var(--c-dense)','linear-zscore':'var(--c-hyb)','rrf5':'var(--c-bm25)','rrf20':'var(--c-4)','rrf60':'var(--c-5)'};
+const MET = {mrr:'MRR@10', ndcg10:'nDCG@10', hit1:'Hit@1', p_hit1:'장 Hit@1'};
+const H = D.headline, M = D.meta;
+
+// 태그 / 툴팁
+const tip = $('#tip');
+document.addEventListener('mousemove', e => {
+  const t = e.target.closest('[data-tip]');
+  if (!t) { tip.style.display = 'none'; return; }
+  tip.innerHTML = t.dataset.tip; tip.style.display = 'block';
+  const x = Math.min(e.clientX + 14, innerWidth - tip.offsetWidth - 8);
+  tip.style.left = x + 'px'; tip.style.top = (e.clientY + 16) + 'px';
+});
+function seg(host, items, cur, on) {
+  items.forEach(([k, label]) => {
+    const b = document.createElement('button'); b.textContent = label; b.type = 'button';
+    b.setAttribute('aria-pressed', k === cur); b.onclick = () => {
+      host.querySelectorAll('button').forEach(x => x.setAttribute('aria-pressed', x === b)); on(k);
+    }; host.appendChild(b);
+  });
+}
+
+// 개요
+$('#facts').innerHTML = [
+  [M.n_queries, '질의 (키워드 ' + M.n_keyword + ' · 의역 ' + M.n_para + ')'],
+  [M.n_children, 'child 청크 (평균 ' + Math.round(M.avg_child_chars) + '자)'],
+  [M.n_parents, 'parent 장 (평균 ' + Math.round(M.avg_parent_chars) + '자)'],
+  [M.n_configs.toLocaleString(), '평가한 설정 수'],
+].map(([b, s]) => `<div><b>${b}</b><span>${s}</span></div>`).join('');
+
+// 헤드라인
+const dn = H.best_hybrid.mrr - H.dense.mrr, bn = H.best_hybrid.mrr - H.best_bm25.mrr;
+$('#head-title').textContent = `하이브리드 최고 MRR@10 ${f3(H.best_hybrid.mrr)}, Dense ${f3(H.dense.mrr)} · BM25 ${f3(H.best_bm25.mrr)}`;
+const hbRows = [['mrr','MRR@10'],['ndcg10','nDCG@10'],['hit1','Hit@1'],['hit3','Hit@3'],['hit5','Hit@5'],['p_hit1','장 Hit@1 (parent)'],['p_mrr','장 MRR (parent)']];
+function bars(host, rows, getters, max) {
+  $(host).innerHTML = rows.map(([k, label]) => `<div class="m">${label}</div><div class="bars">` +
+    getters.map(([g, col, name]) => { const v = g(k); return `<div class="bar" data-tip="${name}<br>${label} ${f3(v)}"><span class="f" style="width:${(v / max * 100).toFixed(1)}%;background:${col}"></span><em>${f3(v)}</em></div>`; }).join('') + '</div>').join('');
+}
+bars('#hb', hbRows, [[k => H.dense[k], 'var(--c-dense)', 'Dense'], [k => H.best_bm25[k], 'var(--c-bm25)', 'BM25 최고'], [k => H.best_hybrid[k], 'var(--c-hyb)', '하이브리드 최고']], 1.0);
+const cfgRow = (name, r) => `<tr><td>${name}</td><td>${esc(r.tok || '—')}</td><td>${r.scorer ? SC[r.scorer] : '—'}${r.k1 != null ? ` <span class="mono">k1=${r.k1} b=${r.b}</span>` : ''}</td><td>${r.fusion ? FUS[r.fusion] : '—'}</td><td class="n">${r.w != null ? 'dense ' + r.w + ' / bm25 ' + (1 - r.w).toFixed(1) : '—'}</td></tr>`;
+$('#head-cfg').innerHTML = '<tr><th>구분</th><th>토크나이저</th><th>스코어링</th><th>결합</th><th class="n">가중치</th></tr>' +
+  cfgRow('Dense', {}) + cfgRow('BM25 최고', H.best_bm25) + cfgRow('하이브리드 최고', H.best_hybrid);
+
+// BM25 표
+const toks = M.tokenizers, scs = ['okapi', 'bm25l', 'bm25plus', 'tfidf'];
+const lo = 0.45, hi = 0.75;
+const mix = v => { const t = Math.max(0, Math.min(1, (v - lo) / (hi - lo))); return `color-mix(in srgb, var(--heat1) ${Math.round(t * 70)}%, var(--heat0))`; };
+let t = '<tr><th>토크나이저</th>' + scs.map(s => `<th class="n">${SC[s]}</th>`).join('') + '</tr>';
+toks.forEach(tk => {
+  t += `<tr><td>${esc(tk)}</td>` + scs.map(s => {
+    const r = D.bm25_only.find(x => x.tok === tk && x.scorer === s);
+    const tuned = s === 'tfidf' ? '' : ` <span style="opacity:.75">(${f3(r.tuned.mrr)})</span>`;
+    const dark = (r.default.mrr - lo) / (hi - lo) > .55;
+    return `<td class="n cell" style="background:${mix(r.default.mrr)};color:${dark ? 'var(--bg)' : 'var(--ink)'}" data-tip="${esc(tk)} · ${SC[s]}<br>기본값 MRR ${f3(r.default.mrr)}<br>Hit@1 ${f3(r.default.hit1)} · nDCG ${f3(r.default.ndcg10)}${s !== 'tfidf' ? `<br>튜닝 최고 ${f3(r.tuned.mrr)} (k1=${r.k1}, b=${r.b})` : ''}">${f3(r.default.mrr)}${tuned}</td>`;
+  }).join('') + '</tr>';
+});
+$('#bm-tab').innerHTML = t;
+
+// 선 그래프
+function lineChart(svg, series, yKey, ymin, ymax, xLabel) {
+  const W = 640, Ht = svg.viewBox.baseVal.height, L = 46, R = 14, T = 12, B = 38;
+  const x = w => L + w * (W - L - R), y = v => T + (1 - (v - ymin) / (ymax - ymin)) * (Ht - T - B);
+  let s = '';
+  for (let v = ymin; v <= ymax + 1e-9; v += 0.05) s += `<line class="gl" x1="${L}" x2="${W - R}" y1="${y(v)}" y2="${y(v)}"/><text x="${L - 8}" y="${y(v) + 4}" text-anchor="end">${v.toFixed(2)}</text>`;
+  for (let w = 0; w <= 1.001; w += 0.2) s += `<text x="${x(w)}" y="${Ht - B + 18}" text-anchor="middle">${w.toFixed(1)}</text>`;
+  s += `<line class="ax" x1="${L}" x2="${W - R}" y1="${Ht - B}" y2="${Ht - B}"/>`;
+  s += `<text x="${L}" y="${Ht - 4}" text-anchor="start">← BM25만</text><text x="${W - R}" y="${Ht - 4}" text-anchor="end">Dense만 →</text><text x="${(L + W - R) / 2}" y="${Ht - 4}" text-anchor="middle">${xLabel}</text>`;
+  series.forEach(se => {
+    s += `<polyline fill="none" stroke="${se.col}" stroke-width="2" stroke-linejoin="round" points="${se.pts.map(p => x(p.w) + ',' + y(p[yKey])).join(' ')}"/>`;
+    se.pts.forEach(p => { s += `<circle cx="${x(p.w)}" cy="${y(p[yKey])}" r="3.2" fill="${se.col}" stroke="var(--bg)" stroke-width="1.5"/><circle cx="${x(p.w)}" cy="${y(p[yKey])}" r="10" fill="transparent" data-tip="${se.name}<br>Dense ${p.w.toFixed(1)} · ${yKey === 'mrr' ? 'MRR' : yKey} ${f3(p[yKey])}"/>`; });
+  });
+  svg.innerHTML = s;
+}
+let wTok = '형태소(Kiwi)', wMet = 'mrr';
+function drawW() {
+  const ser = Object.keys(FUS).map(fu => ({name: FUS[fu], col: FCOL[fu], pts: D.curves[wTok + '|' + fu]}));
+  $('#w-leg').innerHTML = ser.map(s => `<span><i style="background:${s.col}"></i>${s.name}</span>`).join('');
+  lineChart($('#w-svg'), ser, wMet, 0.5, 0.85, 'Dense 비중 w');
+  const best = ser.map(s => s.pts.reduce((a, p) => p[wMet] > a[wMet] ? p : a)).map((p, i) => [ser[i].name, p]).sort((a, b) => b[1][wMet] - a[1][wMet])[0];
+  const st = D.stability[wTok + '|linear-zscore'];
+  $('#w-note').innerHTML = `<b>${esc(wTok)}</b>에서 ${MET[wMet]}가 가장 높은 지점은 <b>${best[0]}, Dense ${best[1].w}</b>(${f3(best[1][wMet])})입니다. 선형 z-score 결합은 w 0.1~0.9 전 구간의 MRR이 ${f3(st.min)}~${f3(st.max)}(평균 ${f3(st.mean)})입니다.`;
+}
+seg($('#w-tok'), toks.map(k => [k, k]), wTok, k => { wTok = k; drawW(); });
+seg($('#w-met'), Object.entries(MET), wMet, k => { wMet = k; drawW(); });
+drawW();
+
+let scTok = '형태소(Kiwi)';
+function drawSc() {
+  const cols = {okapi:'var(--c-dense)', bm25l:'var(--c-hyb)', bm25plus:'var(--c-bm25)', tfidf:'var(--c-4)'};
+  const ser = scs.map(s => ({name: SC[s], col: cols[s], pts: D.scorer_curves[scTok + '|' + s]}));
+  $('#sc-leg').innerHTML = ser.map(s => `<span><i style="background:${s.col}"></i>${s.name}</span>`).join('');
+  lineChart($('#sc-svg'), ser, 'mrr', 0.5, 0.85, 'Dense 비중 w (MRR@10)');
+}
+seg($('#sc-tok'), [['형태소(Kiwi)', '형태소(Kiwi)'], ['문자 2-gram', '문자 2-gram']], scTok, k => { scTok = k; drawSc(); });
+drawSc();
+
+// 히트맵
+let hmTok = '형태소(Kiwi)';
+function drawHm() {
+  const g = D.bm25_param[hmTok], bs = M.bs, ks = M.k1s;
+  const flat = g.flat(), mn = Math.min(...flat), mx = Math.max(...flat);
+  let h = `<div class="heat" style="grid-template-columns:56px repeat(${bs.length},minmax(0,1fr));max-width:560px"><div class="hd"></div>` + bs.map(b => `<div class="hd">b=${b}</div>`).join('');
+  ks.forEach((k, i) => { h += `<div class="hd" style="text-align:right;padding-right:8px">k1=${k}</div>` + bs.map((b, j) => {
+    const v = g[i][j], tt = (v - mn) / (mx - mn + 1e-9);
+    return `<div style="background:color-mix(in srgb, var(--heat1) ${Math.round(tt * 85)}%, var(--heat0));color:${tt > .5 ? 'var(--bg)' : 'var(--ink)'}" data-tip="k1=${k}, b=${b}<br>MRR ${f3(v)}">${f3(v)}</div>`; }).join(''); });
+  $('#hm').innerHTML = h + '</div>';
+}
+seg($('#hm-tok'), toks.map(k => [k, k]), hmTok, k => { hmTok = k; drawHm(); });
+drawHm();
+
+// 리더보드
+let lbSel = 'default';
+function drawLb() {
+  const rows = lbSel === 'default' ? D.leaderboard_default : D.leaderboard;
+  $('#lb').innerHTML = '<tr><th>#</th><th>토크나이저</th><th>스코어링</th><th>결합</th><th class="n">Dense w</th><th class="n">MRR</th><th class="n">nDCG</th><th class="n">Hit@1</th><th class="n">Hit@5</th><th class="n">장 Hit@1</th></tr>' +
+    rows.map((r, i) => `<tr><td class="n">${i + 1}</td><td>${esc(r.tok)}</td><td>${SC[r.scorer]}${r.k1 != null ? ` <span class="mono">k1=${r.k1} b=${r.b}</span>` : ''}</td><td>${FUS[r.fusion]}</td><td class="n">${r.w}</td><td class="n"><b>${f3(r.mrr)}</b></td><td class="n">${f3(r.ndcg10)}</td><td class="n">${f3(r.hit1)}</td><td class="n">${f3(r.hit5)}</td><td class="n">${f3(r.p_hit1)}</td></tr>`).join('');
+}
+seg($('#lb-sel'), [['default', 'k1·b 기본값만 (상위 15)'], ['all', '전체 25,117개 중 (상위 30)']], lbSel, k => { lbSel = k; drawLb(); });
+drawLb();
+
+// 유형별
+bars('#ty', [['keyword', '키워드 질의'], ['para', '의역 질의']].map(([k, l]) => [k, l]),
+  [[k => H.dense[k].mrr, 'var(--c-dense)', 'Dense'], [k => H.best_bm25[k].mrr, 'var(--c-bm25)', 'BM25 최고'], [k => H.best_hybrid[k].mrr, 'var(--c-hyb)', '하이브리드 최고']], 1.0);
+
+// 신뢰도
+const cv = D.cv;
+$('#cv').innerHTML = `
+<div><h3>선택 효과를 뺀 값은 ${f3(cv.dev_selected_hybrid.test)}</h3><p>질의를 반으로 나눠 한쪽에서 25,117개 중 최고 하이브리드를 고르고 나머지 절반에서 재면 MRR이 ${f3(cv.dev_selected_hybrid.test)}(표준편차 ${f3(cv.dev_selected_hybrid.test_std)})입니다. 골랐던 절반에서는 ${f3(cv.dev_selected_hybrid.dev)}였습니다. 같은 방식으로 Dense는 ${f3(cv.dense_test)}, BM25 최고 선택은 ${f3(cv.dev_selected_bm25.test)}입니다(200회 반복).</p></div>
+<div><h3>그리드를 다 돌리지 않아도 됩니다</h3><p>Kiwi 형태소 + Okapi 기본값(k1=1.2, b=0.75) + min-max 선형 결합 + Dense 0.5로 고정하면 같은 절반 검증에서 MRR ${f3(cv.fixed_default_hybrid_test)}이 나옵니다. 튜닝으로 고른 설정(${f3(cv.dev_selected_hybrid.test)})보다 높습니다. 다만 이 고정 설정의 토크나이저는 전체 결과를 본 뒤에 정했으므로 완전한 홀드아웃은 아닙니다.</p></div>
+<div><h3>작은 차이는 구분되지 않습니다</h3><p>질의 ${M.n_queries}개, child ${M.n_children}개로 평가했고 절반 분할의 표준편차가 약 0.06입니다. 0.02~0.03 차이는 노이즈 범위라서 "Okapi가 BM25L보다 낫다" 같은 결론은 낼 수 없습니다. 반면 하이브리드(기본 파라미터, w 0.1~0.9 평균)가 Dense 단독(0.676)보다 높은 방향은 명사만을 뺀 5개 토크나이저에서 모두 같아서 비교적 믿을 만합니다.</p></div>
+<div><h3>평가 데이터의 한계</h3><p>질의와 정답 구절은 Claude가 이 소설 한 편을 보고 직접 만들었습니다. 정답은 "근거 구절을 포함하는 child"로 정했으므로 그 외 child가 답을 담고 있어도 오답으로 셉니다. 문서가 짧은 동화 한 편이라 다른 도메인에는 그대로 일반화되지 않습니다.</p></div>`;
+
+// 질의별
+let qf = 'all';
+function drawQ() {
+  const rows = D.per_query.filter(p => qf === 'all' || (qf === 'fail' && p.rank_hybrid > 1) || (qf === p.type));
+  const pill = r => `<span class="pill ${r === 1 ? 'r1' : r > 10 ? 'rb' : ''}">${r}</span>`;
+  $('#qt').innerHTML = '<tr><th>유형</th><th>질의</th><th>정답 장</th><th class="n">Dense</th><th class="n">BM25</th><th class="n">하이브리드</th><th>하이브리드 1위 child</th></tr>' +
+    rows.map(p => `<tr><td>${p.type}</td><td>${esc(p.q)}</td><td>${esc(p.gold_chapter.join(', '))}</td><td class="n">${pill(p.rank_dense)}</td><td class="n">${pill(p.rank_bm25)}</td><td class="n">${pill(p.rank_hybrid)}</td><td style="color:var(--ink2);min-width:220px">${esc(p.top1_hybrid)}…</td></tr>`).join('');
+}
+const nf = D.per_query.filter(p => p.rank_hybrid > 1).length;
+seg($('#q-f'), [['all', '전체 60'], ['fail', `1위 실패 ${nf}`], ['키워드', '키워드'], ['의역', '의역']], qf, k => { qf = k; drawQ(); });
+drawQ();
+
+// ───── 표 탭 ─────
+const bestCls = (vals, v) => v === Math.max(...vals) ? ' best' : '';
+(function () {
+  const rows = [['Dense (bge-m3)', H.dense], ['BM25 단독 최고', H.best_bm25], ['하이브리드 최고', H.best_hybrid]];
+  const cols = [['mrr','MRR@10',r=>r.mrr],['ndcg10','nDCG@10',r=>r.ndcg10],['hit1','Hit@1',r=>r.hit1],['hit3','Hit@3',r=>r.hit3],['hit5','Hit@5',r=>r.hit5],['recall5','Recall@5',r=>r.recall5],['p_hit1','장 Hit@1',r=>r.p_hit1],['p_mrr','장 MRR',r=>r.p_mrr],['kw','MRR 키워드',r=>r.keyword.mrr],['pa','MRR 의역',r=>r.para.mrr]];
+  $('#t1').innerHTML = '<tr><th>설정</th>' + cols.map(c => `<th class="n">${c[1]}</th>`).join('') + '</tr>' +
+    rows.map(([n, r]) => `<tr><td><b>${n}</b></td>` + cols.map(c => { const v = c[2](r); return `<td class="n${bestCls(rows.map(x => c[2](x[1])), v)}">${f3(v)}</td>`; }).join('') + '</tr>').join('');
+})();
+(function () {
+  const rows = D.bm25_only;
+  const dc = [['mrr','MRR'],['ndcg10','nDCG'],['hit1','Hit@1'],['p_hit1','장 Hit@1']];
+  const allD = k => rows.map(r => r.default[k]), allT = k => rows.map(r => r.tuned[k]);
+  $('#t2').innerHTML = '<tr><th rowspan="2">토크나이저</th><th rowspan="2">스코어링</th><th class="grp" colspan="4">기본값 (k1=1.2, b=0.75)</th><th class="grp" colspan="4">튜닝 최고</th></tr><tr>' +
+    dc.map(c => `<th class="n">${c[1]}</th>`).join('') + dc.map(c => `<th class="n">${c[1]}</th>`).join('') + '<th class="n">k1</th><th class="n">b</th></tr>' +
+    rows.map(r => `<tr><td>${esc(r.tok)}</td><td>${SC[r.scorer]}</td>` +
+      dc.map(c => `<td class="n${bestCls(allD(c[0]), r.default[c[0]])}">${f3(r.default[c[0]])}</td>`).join('') +
+      dc.map(c => `<td class="n${bestCls(allT(c[0]), r.tuned[c[0]])}">${f3(r.tuned[c[0]])}</td>`).join('') +
+      `<td class="n">${r.scorer === 'tfidf' ? '—' : r.k1}</td><td class="n">${r.scorer === 'tfidf' ? '—' : r.b}</td></tr>`).join('');
+})();
+let wtTok = '형태소(Kiwi)', wtFus = 'linear-zscore';
+function drawWt() {
+  const pts = D.curves[wtTok + '|' + wtFus];
+  const cs = [['mrr','MRR@10'],['ndcg10','nDCG@10'],['hit1','Hit@1'],['p_hit1','장 Hit@1'],['p_mrr','장 MRR']];
+  $('#wt').innerHTML = '<tr><th>Dense 비중</th><th>BM25 비중</th>' + cs.map(c => `<th class="n">${c[1]}</th>`).join('') + '</tr>' +
+    pts.map(p => `<tr><td class="n">${p.w.toFixed(1)}${p.w === 1 ? ' (Dense만)' : ''}</td><td class="n">${(1 - p.w).toFixed(1)}${p.w === 0 ? ' (BM25만)' : ''}</td>` +
+      cs.map(c => `<td class="n${bestCls(pts.map(x => x[c[0]]), p[c[0]])}">${f3(p[c[0]])}</td>`).join('') + '</tr>').join('');
+}
+seg($('#wt-tok'), toks.map(k => [k, k]), wtTok, k => { wtTok = k; drawWt(); });
+seg($('#wt-fus'), Object.entries(FUS), wtFus, k => { wtFus = k; drawWt(); });
+drawWt();
+
+// ───── 그래프: 토크나이저 × 스코어링 막대 ─────
+(function () {
+  const cols = {okapi:'var(--c-dense)', bm25l:'var(--c-hyb)', bm25plus:'var(--c-bm25)', tfidf:'var(--c-4)'};
+  const get = (tk, s) => D.bm25_only.find(x => x.tok === tk && x.scorer === s).default.mrr;
+  bars('#bmg', toks.map(k => [k, k]), scs.map(s => [k => get(k, s), cols[s], SC[s]]), 0.8);
+})();
+
+// ───── 탭 구성: 기존 섹션을 그래프/표 탭으로 배치 ─────
+(function () {
+  const G = $('#tab-graph'), T = $('#tab-table');
+  ['s-head', 's-bmg', 's-w', 's-sc', 's-hm', 's-type'].forEach(id => G.appendChild($('#' + id)));
+  ['s-t1', 's-bm', 's-t2', 's-wt', 's-lb', 's-q'].forEach(id => T.appendChild($('#' + id)));
+  const tabs = $('#tabs');
+  [['graph', '그래프'], ['table', '표']].forEach(([k, l], i) => {
+    const b = document.createElement('button'); b.type = 'button'; b.textContent = l; b.setAttribute('role', 'tab'); b.setAttribute('aria-selected', i === 0);
+    b.onclick = () => {
+      tabs.querySelectorAll('button').forEach(x => x.setAttribute('aria-selected', x === b));
+      G.hidden = k !== 'graph'; T.hidden = k !== 'table';
+    };
+    tabs.appendChild(b);
+  });
+})();
+
+$('#foot').innerHTML =`코퍼스: ${esc(M.chunking)}. 임베딩 ${M.model}(dense, 정규화 코사인), 질의 접두어 없음. 순위 동점은 고정 시드의 임의 순서로 처리했습니다. parent 지표는 child 순위를 장 단위로 중복 제거한 순서에서 계산하며, 실제 파이프라인이 반환하는 단위와 같습니다. 코드와 원자료: rag/eval/hybrid_eval.py, results.json.`;
+</script>

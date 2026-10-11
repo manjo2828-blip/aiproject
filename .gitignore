@@ -14,3 +14,9 @@ aiprj/bench/finetune/cache/
 aiprj/bench/finetune/train/pretrained/
 *.onnx
 *.pth
+
+# 비밀키/로그
+.env
+*.env
+*.err.log
+*.out.log

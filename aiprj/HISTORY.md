@@ -112,3 +112,9 @@
 - 1600px 군중 사진: CPU4 514ms vs GPU 122ms(4.2x). CPU·GPU 출력 동일(박스 최대차 2e-4px). RT-DETR-R18vd 도 4.4x(460→102ms).
 - 스레드 8개는 4개보다 이득 없음. io-binding 이득 없음(연산 한계). FP16/DirectML/Iris Xe 미측정.
 - 결론: 지연이 중요하면 MX450 사용 가치 있음(+별도 환경 1.4GB CUDA 패키지, CPU 폴백 유지). 산출물 bench/gpu_check/.
+
+## 2026-10-11 12:00 — 전/후처리 리서치·환경 재구성·정적 데모
+- researcher(sonnet)×2: wiki/models/crowd-prepost-research.md, serving-research.md 작성 (우선순위 목록 포함).
+- 이 PC 에는 .venv·가중치·캐시가 없어 재구성: .venv(py3.11, onnxruntime-gpu 1.22), bench/weights(yolox_m/x, rtdetr_r18vd/r50vd), 홀드아웃 테스트셋 bench/prepost/data_test(CrowdHuman val seed 43, 100장).
+- 정적 데모 아티팩트(bench/prepost/demo.html, build_demo.py): https://claude.ai/artifact/RgfhT1Ti2KKptrGBYMvBC4
+- 다음: 전/후처리 순차 실험(개발 100장으로 선정, 테스트 100장으로 검증) → 서빙 최적화 → 부하테스트 → 기존 평가 아티팩트 갱신.

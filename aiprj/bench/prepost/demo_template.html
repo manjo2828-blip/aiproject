@@ -1,0 +1,208 @@
+<title>사람 검출 파이프라인 데모</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+KR:wght@400;500;700&family=IBM+Plex+Mono:wght@400;500&display=swap">
+<style>
+/* Layout: one working bench. Pipeline strip on top, then image + controls side by side, result readout under, roadmap last. */
+:root{
+  --bg:#f4f6f9; --surface:#ffffff; --surface2:#eceff4; --ink:#12161d; --ink2:#454d5b; --ink3:#6b7482; --line:#d6dbe4;
+  --accent:#2a78d6; --hit:#1a7f4b; --miss:#d93025; --fp:#d97a00; --good:#1a7f4b; --warn:#a15c00;
+  --f-body:'IBM Plex Sans KR','Noto Sans KR','Malgun Gothic',system-ui,sans-serif; --f-mono:'IBM Plex Mono',ui-monospace,Consolas,monospace;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --bg:#0f1319; --surface:#171c24; --surface2:#1f2630; --ink:#eaedf2; --ink2:#b7bfcc; --ink3:#8d97a6; --line:#2c3441;
+  --accent:#4a93ec; --hit:#4cc38a; --miss:#ff6b61; --fp:#f0a030; --good:#4cc38a; --warn:#e0a040; color-scheme:dark}}
+:root[data-theme="dark"]{
+  --bg:#0f1319; --surface:#171c24; --surface2:#1f2630; --ink:#eaedf2; --ink2:#b7bfcc; --ink3:#8d97a6; --line:#2c3441;
+  --accent:#4a93ec; --hit:#4cc38a; --miss:#ff6b61; --fp:#f0a030; --good:#4cc38a; --warn:#e0a040; color-scheme:dark}
+*{box-sizing:border-box}
+body{background:var(--bg);color:var(--ink);font-family:var(--f-body);line-height:1.6;padding-inline:16px;padding-block:28px 64px;margin:0}
+.wrap{max-width:1080px;margin-inline:auto;display:flex;flex-direction:column;gap:36px}
+h1{font-size:clamp(26px,5vw,36px);line-height:1.2;margin:0;font-weight:700;text-wrap:balance;letter-spacing:-.01em}
+h2{font-size:19px;margin:0;font-weight:700;text-wrap:balance}
+p{margin:0}
+.kicker{font-size:12px;font-weight:700;letter-spacing:.08em;text-transform:uppercase;color:var(--accent);margin-bottom:8px}
+.sub{color:var(--ink2);max-width:70ch;margin-top:8px}
+.status{margin-top:14px;padding:12px 14px;background:var(--surface);border:1px solid var(--line);border-left:4px solid var(--warn);border-radius:6px;max-width:74ch;font-size:14px;color:var(--ink2)}
+.status b{color:var(--ink)}
+section{min-width:0;display:flex;flex-direction:column;gap:12px}
+.hint{color:var(--ink2);font-size:14px;max-width:70ch}
+/* pipeline strip */
+.strip{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:0;border:1px solid var(--line);border-radius:8px;background:var(--surface);overflow:hidden}
+.st{padding:12px;border-right:1px solid var(--line);display:flex;flex-direction:column;gap:3px;min-width:0}
+.st:last-child{border-right:0}
+.st .k{font-size:11.5px;color:var(--ink3);font-weight:700}
+.st .v{font-family:var(--f-mono);font-size:13px;overflow-wrap:anywhere}
+.st .d{font-size:12px;color:var(--ink3)}
+.st.ctl{background:color-mix(in srgb,var(--accent) 8%,var(--surface))}
+@media (max-width:860px){.strip{grid-template-columns:repeat(2,minmax(0,1fr))}.st{border-bottom:1px solid var(--line)}}
+/* bench */
+.bench{display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:16px;align-items:start}
+@media (max-width:900px){.bench{grid-template-columns:minmax(0,1fr)}}
+.stage{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:12px;display:flex;flex-direction:column;gap:10px;min-width:0}
+canvas#cv{width:100%;height:auto;display:block;border-radius:6px;background:var(--surface2)}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.tabs button{font:inherit;font-size:13px;padding:5px 11px;border-radius:99px;border:1px solid var(--line);background:var(--surface);color:var(--ink2);cursor:pointer}
+.tabs button[aria-pressed="true"]{background:var(--ink);color:var(--bg);border-color:var(--ink)}
+button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.panel{background:var(--surface);border:1px solid var(--line);border-radius:8px;padding:14px;display:flex;flex-direction:column;gap:14px;min-width:0}
+.f{display:flex;flex-direction:column;gap:5px}
+.f label,.f .lb{font-size:13px;color:var(--ink2);display:flex;justify-content:space-between;gap:8px}
+.f .lb b,.f label b{font-family:var(--f-mono);font-weight:500;color:var(--ink)}
+select{font:inherit;font-size:14px;padding:7px 8px;border:1px solid var(--line);border-radius:6px;background:var(--surface);color:var(--ink);width:100%}
+input[type=range]{accent-color:var(--accent);width:100%}
+.chk{display:flex;gap:8px;align-items:center;font-size:13.5px;color:var(--ink2)}
+.small{font-size:12.5px;color:var(--ink3)}
+.leg{display:flex;flex-wrap:wrap;gap:6px 16px;font-size:13px;color:var(--ink2)}
+.leg i{display:inline-block;width:14px;height:10px;margin-right:6px;vertical-align:middle;border:2px solid}
+/* readout */
+.read{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px}
+.m{background:var(--surface2);border-radius:6px;padding:10px 12px;display:flex;flex-direction:column;gap:2px;min-width:0}
+.m .n{font-family:var(--f-mono);font-size:24px;line-height:1.15;font-variant-numeric:tabular-nums}
+.m .t{font-size:12px;color:var(--ink3)}
+.m.hit .n{color:var(--hit)} .m.miss .n{color:var(--miss)} .m.fp .n{color:var(--fp)}
+.bar{height:10px;border-radius:5px;background:var(--surface2);overflow:hidden;display:flex}
+.bar i{display:block;height:100%}
+/* tables */
+.tablewrap{overflow-x:auto;border:1px solid var(--line);border-radius:8px;background:var(--surface)}
+table{border-collapse:collapse;width:100%;min-width:640px;font-size:13.5px}
+th,td{padding:8px 10px;text-align:right;border-bottom:1px solid var(--line);white-space:nowrap;font-variant-numeric:tabular-nums}
+th:first-child,td:first-child,th.l,td.l{text-align:left}
+th{font-size:12px;color:var(--ink3);font-weight:500;background:var(--surface2)}
+td.m2{font-family:var(--f-mono);font-size:13px}
+tr:last-child td{border-bottom:0}
+tr.cur td{background:color-mix(in srgb,var(--accent) 9%,var(--surface))}
+.chip{font-family:var(--f-mono);font-size:11.5px;padding:2px 8px;border-radius:99px;background:var(--surface2);color:var(--ink2);border:1px solid var(--line)}
+.chip.todo{color:var(--warn)} .chip.done{color:var(--good)}
+.road td.l:nth-child(2){white-space:normal;min-width:260px}
+.credits{font-size:12.5px;color:var(--ink3)}
+@media (prefers-reduced-motion:reduce){*{transition:none!important}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="kicker">사람 검출 · 정적 데모</div>
+  <h1>사람 검출 파이프라인 데모</h1>
+  <p class="sub">군중 사진 6장과 5개 모델의 실제 검출 결과를 담았습니다. 모델, 신뢰도, 중복 제거 기준을 바꾸면 찾은 사람 수와 놓친 사람이 바로 다시 계산됩니다. 서버나 모델은 돌지 않고, 브라우저에서 미리 저장한 결과를 걸러내기만 합니다.</p>
+  <div class="status"><b>현재 상태:</b> 표준 파이프라인(리사이즈 → 모델 → 디코딩 → 신뢰도 → NMS)의 기준선입니다. 전/후처리 개선(고해상도, 타일, 플립, 앙상블 등)은 아직 측정 전이라 맨 아래 목록에 '미측정'으로 두었습니다.</div>
+</header>
+
+<section>
+  <div><h2>파이프라인</h2></div>
+  <div class="strip" id="strip"></div>
+</section>
+
+<section>
+  <div><h2>직접 조절해 보기</h2><p class="hint">사진은 CrowdHuman 검증 세트(사람이 직접 라벨링)에서 뽑았습니다. 정답은 가려진 사람과 아주 작은 사람까지 모두 포함하므로, 어떤 모델도 전부 찾지는 못합니다.</p></div>
+  <div class="tabs" id="tabs" role="group" aria-label="사진 선택"></div>
+  <div class="bench">
+    <div class="stage">
+      <canvas id="cv" width="900" height="600" role="img" aria-label="검출 결과가 겹쳐진 사진"></canvas>
+      <div class="leg"><span><i style="border-color:var(--hit)"></i>찾음</span><span><i style="border-color:var(--miss);border-style:dashed"></i>놓침</span><span><i style="border-color:var(--fp);border-width:1px"></i>오탐</span></div>
+    </div>
+    <div class="panel">
+      <div class="f"><label for="mdl">모델</label><select id="mdl"></select><div class="small" id="mnote"></div></div>
+      <div class="f"><label for="conf">신뢰도 기준 <b id="confv">0.30</b></label><input type="range" id="conf" min="0.1" max="0.9" step="0.05" value="0.3"><div class="small">이 값 이상인 박스만 사람으로 칩니다.</div></div>
+      <div class="f"><label for="nms">NMS 겹침 기준 <b id="nmsv">끔</b></label><input type="range" id="nms" min="0.3" max="1" step="0.05" value="1"><div class="small">오른쪽 끝이면 끔. 낮출수록 겹친 박스를 더 많이 지웁니다.</div></div>
+      <label class="chk"><input type="checkbox" id="showFP" checked> 오탐 박스 보기</label>
+      <label class="chk"><input type="checkbox" id="showGT" checked> 놓친 사람 보기</label>
+      <div class="f"><div class="lb">모델 입력(전처리 결과)</div><canvas id="pre" width="320" height="320" style="width:100%;max-width:240px;height:auto;border-radius:6px;background:var(--surface2)" role="img" aria-label="모델에 들어가는 640 정사각 입력 미리보기"></canvas><div class="small" id="prenote"></div></div>
+    </div>
+  </div>
+  <div class="read" id="read" aria-live="polite"></div>
+  <div class="bar" id="bar" aria-hidden="true"></div>
+  <p class="small" id="readnote"></p>
+</section>
+
+<section>
+  <div><h2>모델별 기준선</h2><p class="hint">100장 전체 평가 결과입니다. 오탐을 이미지당 2개까지 허용했을 때 찾은 사람 비율(recall@FPPI=2)이 같은 조건 비교 기준입니다. 지연은 CPU 4스레드 중앙값입니다.</p></div>
+  <div class="tablewrap"><table id="mt"><thead><tr><th>모델</th><th>recall@FPPI=2</th><th>FPPI=5</th><th>AP50</th><th>지연(ms)</th><th>크기(MB)</th><th class="l">라이선스</th></tr></thead><tbody></tbody></table></div>
+</section>
+
+<section>
+  <div><h2>다음에 측정할 전/후처리</h2><p class="hint">학습 없이 적용하는 기법만 모았습니다. 효과는 아직 이 데이터에서 재지 않았고, 순서대로 추가하며 측정합니다. 문헌 수치는 다른 데이터셋 기준이라 그대로 기대하면 안 됩니다.</p></div>
+  <div class="tablewrap"><table class="road" id="rd"><thead><tr><th>기법</th><th class="l">내용</th><th class="l">단계</th><th class="l">상태</th></tr></thead><tbody></tbody></table></div>
+  <p class="credits">이미지와 정답: CrowdHuman (Shao et al., 2018), CC BY-NC 4.0, 비상업 연구 용도. 일부 사진에 스톡 사진 워터마크가 있습니다.</p>
+</section>
+</div>
+
+<script>
+/*DATA*/
+var $=function(i){return document.getElementById(i)};
+var ROAD=[
+ ["NMS 겹침 기준·신뢰도 조정","기준을 바꿔 가며 개수 오차와 F1 확인","후처리"],
+ ["입력 해상도 확대 (800/960/1280)","작은 사람을 더 크게 보여줌. 지연은 해상도에 비례","전처리"],
+ ["타일 추론 (겹침 25%) + 전체 이미지","조각마다 추론해 합침. 잘린 박스는 포함 비율로 병합","전·후처리"],
+ ["좌우 플립 TTA","뒤집은 결과를 합쳐 흔들리는 박스를 안정화","추론"],
+ ["WBF / NMW 병합","여러 결과 박스를 가중 평균. 점수 걸러낸 뒤 적용","후처리"],
+ ["YOLOX + RT-DETR 앙상블","서로 다른 모델이 놓친 사람을 보완","추론·후처리"],
+ ["Soft-NMS, DIoU-NMS","겹친 박스를 지우는 대신 점수만 낮추거나 중심 거리까지 고려","후처리"],
+ ["밀집도 적응형 NMS (학습 없는 근사)","붐비는 곳은 NMS 기준을 높임","후처리"],
+ ["박스 비율·최소 크기 필터","사람이 아닌 가로로 긴 박스, 너무 작은 박스 제거","후처리"],
+ ["점수 조합 (obj×cls 등)","YOLOX 점수 계산 방식 비교","디코딩"],
+ ["어두운 사진 CLAHE·감마","어두운 이미지에만 대비 보정","전처리"],
+ ["사람 수 보정 회귀","검출 수, 박스 크기, 겹침 비율로 실제 수 추정 (1~3개 계수)","집계"]];
+var cur=0, M=D.models, mk={}; M.forEach(function(m){mk[m.key]=m});
+var imgs=D.images.map(function(o){var im=new Image();im.src=o.img;o.el=im;return o});
+
+function iou(a,b){var x1=Math.max(a[0],b[0]),y1=Math.max(a[1],b[1]),x2=Math.min(a[2],b[2]),y2=Math.min(a[3],b[3]);
+ var i=Math.max(0,x2-x1)*Math.max(0,y2-y1);var u=(a[2]-a[0])*(a[3]-a[1])+(b[2]-b[0])*(b[3]-b[1])-i;return u>0?i/u:0}
+function nms(ds,thr){var o=ds.slice().sort(function(a,b){return b[4]-a[4]}),keep=[];
+ o.forEach(function(d){for(var k=0;k<keep.length;k++){if(iou(d,keep[k])>thr)return}keep.push(d)});return keep}
+function evalImg(o,key,conf,nthr){
+ var ds=o.dets[key].filter(function(d){return d[4]>=conf});
+ if(nthr<1)ds=nms(ds,nthr);
+ ds.sort(function(a,b){return b[4]-a[4]});
+ var used=new Array(o.gt.length).fill(false),hits=[],fps=[];
+ ds.forEach(function(d){var best=-1,bi=0.5;
+  for(var g=0;g<o.gt.length;g++){if(used[g])continue;var v=iou(d,o.gt[g]);if(v>=bi){bi=v;best=g}}
+  if(best>=0){used[best]=true;hits.push(d)}else{
+   var ign=o.regions.some(function(r){var x1=Math.max(d[0],r[0]),y1=Math.max(d[1],r[1]),x2=Math.min(d[2],r[2]),y2=Math.min(d[3],r[3]);
+    var a=(d[2]-d[0])*(d[3]-d[1]);return a>0&&Math.max(0,x2-x1)*Math.max(0,y2-y1)/a>0.5});
+   if(!ign)fps.push(d)}});
+ var miss=[];o.gt.forEach(function(g,i){if(!used[i])miss.push(g)});
+ return {n:ds.length,hits:hits,fps:fps,miss:miss};
+}
+function strip(m,conf,nthr){
+ var s=[["입력","JPEG 사진","원본 해상도"],["전처리",m.inp.split(" (")[0],m.inp.indexOf("(")>0?m.inp.slice(m.inp.indexOf("(")):""],
+  ["모델",m.name,"추론 약 "+m.lat+"ms (CPU)"],["디코딩",m.nms?"격자 → 박스, 점수=obj×cls":"박스 300개 직접 출력","사람 클래스만 사용"],
+  ["신뢰도",conf.toFixed(2)+" 이상","조절 가능"],["NMS",nthr<1?("겹침 "+nthr.toFixed(2)+" 초과 제거"):"추가 적용 안 함",m.nms?"모델 기본 0.45 적용 후 저장":"NMS 없는 모델"]];
+ $("strip").innerHTML=s.map(function(x,i){return '<div class="st'+(i>=4?' ctl':'')+'"><div class="k">'+x[0]+'</div><div class="v">'+x[1]+'</div><div class="d">'+x[2]+'</div></div>'}).join("");
+}
+function drawPre(o,m){var c=$("pre"),x=c.getContext("2d"),S=c.width;x.fillStyle=m.nms?"#727272":"#000";x.fillRect(0,0,S,S);
+ if(m.nms){var r=Math.min(S/o.w,S/o.h);x.drawImage(o.el,0,0,o.w*r,o.h*r)}else x.drawImage(o.el,0,0,S,S);
+ $("prenote").textContent=m.nms?"비율을 유지하고 남는 곳을 회색으로 채웁니다.":"비율과 상관없이 정사각형으로 늘립니다.";}
+function render(){
+ var o=imgs[cur],key=$("mdl").value,m=mk[key],conf=+$("conf").value,nthr=+$("nms").value;
+ $("confv").textContent=conf.toFixed(2);$("nmsv").textContent=nthr>=1?"끔":nthr.toFixed(2);
+ $("mnote").textContent=m.nms?"NMS 포함 모델로, 저장된 결과는 이미 0.45 기준으로 정리돼 있습니다. 여기서는 더 엄격하게만 바꿀 수 있습니다.":"NMS 없이 박스를 바로 내는 모델입니다. 겹침 기준을 켜면 중복 박스가 줄어듭니다.";
+ var r=evalImg(o,key,conf,nthr),c=$("cv");
+ c.width=o.w;c.height=o.h;var x=c.getContext("2d");x.drawImage(o.el,0,0,o.w,o.h);
+ var cs=getComputedStyle(document.documentElement),col=function(n){return cs.getPropertyValue(n).trim()||"#888"};
+ var lw=Math.max(1.5,o.w/500);
+ function box(b,color,w,dash){x.strokeStyle=color;x.lineWidth=w;x.setLineDash(dash||[]);x.strokeRect(b[0],b[1],b[2]-b[0],b[3]-b[1])}
+ if($("showGT").checked)r.miss.forEach(function(b){box(b,col("--miss"),lw,[lw*3,lw*2])});
+ if($("showFP").checked)r.fps.forEach(function(b){box(b,col("--fp"),lw*0.7)});
+ r.hits.forEach(function(b){box(b,col("--hit"),lw*1.2)});
+ var ng=o.gt.length,tp=r.hits.length,fp=r.fps.length,fn=ng-tp,err=r.n-ng;
+ $("read").innerHTML=
+  '<div class="m"><div class="n">'+r.n+'</div><div class="t">검출한 박스 (정답 '+ng+'명)</div></div>'+
+  '<div class="m hit"><div class="n">'+tp+'</div><div class="t">찾은 사람 · '+(ng?Math.round(tp/ng*100):0)+'%</div></div>'+
+  '<div class="m miss"><div class="n">'+fn+'</div><div class="t">놓친 사람</div></div>'+
+  '<div class="m fp"><div class="n">'+fp+'</div><div class="t">오탐 박스</div></div>'+
+  '<div class="m"><div class="n">'+(err>0?'+':'')+err+'</div><div class="t">수 오차 (검출 − 정답)</div></div>';
+ var tot=Math.max(ng,r.n,1);
+ $("bar").innerHTML='<i style="width:'+tp/tot*100+'%;background:var(--hit)"></i><i style="width:'+fp/tot*100+'%;background:var(--fp)"></i><i style="width:'+fn/tot*100+'%;background:var(--miss);opacity:.55"></i>';
+ $("readnote").textContent="막대는 초록 찾음 · 주황 오탐 · 빨강 놓침 비율입니다. 박스 수가 정답과 비슷해도 위치가 틀린 박스(오탐)와 놓친 사람이 섞여 있을 수 있습니다.";
+ strip(m,conf,nthr);drawPre(o,m);
+ document.querySelectorAll("#tabs button").forEach(function(b,i){b.setAttribute("aria-pressed",i===cur)});
+ document.querySelectorAll("#mt tbody tr").forEach(function(tr){tr.className=tr.dataset.k===key?"cur":""});
+}
+$("tabs").innerHTML=imgs.map(function(o,i){return '<button data-i="'+i+'" aria-pressed="false">사진 '+(i+1)+' · '+o.gt.length+'명</button>'}).join("");
+$("tabs").addEventListener("click",function(e){var b=e.target.closest("button");if(b){cur=+b.dataset.i;render()}});
+$("mdl").innerHTML=M.map(function(m){return '<option value="'+m.key+'">'+m.name+'</option>'}).join("");
+["mdl","conf","nms","showFP","showGT"].forEach(function(i){$(i).addEventListener("input",render)});
+$("mt").querySelector("tbody").innerHTML=M.map(function(m){return '<tr data-k="'+m.key+'"><td>'+m.name+'</td><td class="m2">'+m.r2.toFixed(1)+'%</td><td class="m2">'+m.r5.toFixed(1)+'%</td><td class="m2">'+m.ap50.toFixed(1)+'%</td><td class="m2">'+m.lat+'</td><td class="m2">'+m.mb+'</td><td class="l">'+m.lic+'</td></tr>'}).join("");
+$("rd").querySelector("tbody").innerHTML=ROAD.map(function(r){return '<tr><td class="l">'+r[0]+'</td><td class="l">'+r[1]+'</td><td class="l">'+r[2]+'</td><td class="l"><span class="chip todo">미측정</span></td></tr>'}).join("");
+imgs[0].el.onload=render; if(imgs[0].el.complete)render();
+imgs.forEach(function(o,i){if(i)o.el.onload=function(){if(i===cur)render()}});
+</script>
